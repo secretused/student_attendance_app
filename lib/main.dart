@@ -1,3 +1,5 @@
+import 'package:attendanc_management_app/authentication/login_user.dart';
+import 'package:attendanc_management_app/authentication/register_user.dart';
 import 'package:flutter/material.dart';
 import 'management_home.dart';
 
@@ -43,13 +45,19 @@ class MyHomePageState extends State<MyHomePage> {
         backgroundColor: Color.fromARGB(255, 67, 176, 190),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () => () {},
+            icon: Icon(Icons.person),
+            onPressed: () async {
+              // ユーザ登録・ログイン
+              Navigator.push(
+                context,
+                NavigationFade(LoginPage()),
+              );
+            },
           ),
         ],
       ),
       body: Container(
-        color: Color.fromARGB(255, 223, 198, 135),
+        // color: Color.fromARGB(255, 223, 198, 135),
         child: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

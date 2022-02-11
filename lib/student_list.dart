@@ -15,7 +15,7 @@ class StudentList extends StatelessWidget {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        color: Color.fromARGB(255, 223, 198, 135),
+        // color: Color.fromARGB(255, 223, 198, 135),
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
