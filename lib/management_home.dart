@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'main.dart';
-import 'student_list.dart';
+import 'student_list/student_list.dart';
 
 class ManagementHome extends StatelessWidget {
   MyHomePageState main_data = MyHomePageState();

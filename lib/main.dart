@@ -1,9 +1,14 @@
 import 'package:attendanc_management_app/authentication/login_user.dart';
 import 'package:attendanc_management_app/authentication/register_user.dart';
+import 'package:attendanc_management_app/mypage/my_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'management_home.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -47,11 +52,20 @@ class MyHomePageState extends State<MyHomePage> {
           IconButton(
             icon: Icon(Icons.person),
             onPressed: () async {
-              // ユーザ登録・ログイン
-              Navigator.push(
-                context,
-                NavigationFade(LoginPage()),
-              );
+              // ログイン判断
+              if (FirebaseAuth.instance.currentUser != null) {
+                print("Pushed");
+                Navigator.push(
+                  context,
+                  NavigationButtonCutIn(MyPage()),
+                );
+              } else {
+                // ユーザ登録・ログイン
+                Navigator.push(
+                  context,
+                  NavigationFade(LoginPage()),
+                );
+              }
             },
           ),
         ],
@@ -171,6 +185,27 @@ class MyHomePageState extends State<MyHomePage> {
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         final Offset begin = Offset(0.0, 1.5); // 下から上
         // final Offset begin = Offset(0.0, -1.0); // 上から下
+        final Offset end = Offset.zero;
+        final Animatable<Offset> tween = Tween(begin: begin, end: end)
+            .chain(CurveTween(curve: Curves.easeInOut));
+        final Animation<Offset> offsetAnimation = animation.drive(tween);
+        return SlideTransition(
+          position: offsetAnimation,
+          child: child,
+        );
+      },
+    );
+  }
+
+  // ページ遷移(右から左)
+  PageRouteBuilder<dynamic> NavigationButtonCutIn(page_name) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return page_name;
+      },
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        final Offset begin = Offset(1.0, 0.0); // 右から左
+        // final Offset begin = Offset(-1.0, 0.0); // 左から右
         final Offset end = Offset.zero;
         final Animatable<Offset> tween = Tween(begin: begin, end: end)
             .chain(CurveTween(curve: Curves.easeInOut));
