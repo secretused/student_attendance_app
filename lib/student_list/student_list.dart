@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'main.dart';
+import '../main.dart';
 import 'add_student.dart';
 
 class StudentList extends StatelessWidget {
