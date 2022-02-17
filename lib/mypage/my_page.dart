@@ -26,6 +26,8 @@ class MyPage extends StatelessWidget {
                     context,
                     main_data.NavigationFade(EditProfilePage(model.name!)),
                   );
+                  // 編集戻ったら反映されてるようにしたい
+                  // model.fechUser();
                 },
               );
             }),

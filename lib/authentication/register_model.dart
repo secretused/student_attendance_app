@@ -85,7 +85,7 @@ class RegisterModel extends ChangeNotifier {
           'name': name,
           'email': email,
           'grade': grade,
-          'class': classroom,
+          'classroom': classroom,
           'department': department,
         });
       }

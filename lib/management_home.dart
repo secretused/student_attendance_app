@@ -1,3 +1,4 @@
+import 'package:attendanc_management_app/student_list/temp.dart';
 import 'package:flutter/material.dart';
 import 'main.dart';
 import 'student_list/student_list.dart';
@@ -38,7 +39,7 @@ class ManagementHome extends StatelessWidget {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              main_data.NavigationFade(StudentList()),
+                              main_data.NavigationFade(StudentListHome()),
                             );
                           },
                           backgroundColor: Color.fromARGB(255, 240, 130, 41),
@@ -56,7 +57,12 @@ class ManagementHome extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       ButtonDesign(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            main_data.NavigationButtomSlide(TempClass()),
+                          );
+                        },
                         backgroundColor: Color.fromARGB(255, 61, 214, 125),
                         text: "出席管理",
                         icon: Icon(

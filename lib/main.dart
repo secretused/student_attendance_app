@@ -1,6 +1,7 @@
 import 'package:attendanc_management_app/authentication/login_user.dart';
 import 'package:attendanc_management_app/authentication/register_user.dart';
 import 'package:attendanc_management_app/mypage/my_page.dart';
+import 'package:attendanc_management_app/scan_qr_code/qr_code.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Attendance-Management',
       theme: ThemeData(
-        primarySwatch: Colors.cyan,
+        primarySwatch: Colors.lightBlue,
       ),
       home: const MyHomePage(title: '入館管理'),
     );
@@ -95,7 +96,20 @@ class MyHomePageState extends State<MyHomePage> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        if (FirebaseAuth.instance.currentUser != null) {
+                          Navigator.push(
+                            context,
+                            NavigationFade(QrScanView()),
+                          );
+                        } else {
+                          // ユーザ登録・ログイン
+                          Navigator.push(
+                            context,
+                            NavigationFade(LoginPage()),
+                          );
+                        }
+                      },
                     ),
                   ),
                   Padding(

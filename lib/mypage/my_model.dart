@@ -31,7 +31,7 @@ class MyModel extends ChangeNotifier {
     this.name = data?["name"];
     this.grade = data?["grade"];
     this.department = data?["department"];
-    this.classroom = data?["class"];
+    this.classroom = data?["classroom"];
 
     notifyListeners();
   }

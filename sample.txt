@@ -1,0 +1,27 @@
+student_model参考
+https://zenn.dev/ryo_t/articles/5dd6970f2e3f06
+https://zenn.dev/ryo_t/articles/0a367221d40f11
+https://zenn.dev/tsubasa_ryuto/articles/a8b65d8a364214
+
+student_list segment参考
+https://blog.mbaas.nifcloud.com/entry/2020/05/13/135358
+
+データ リスト表示
+https://rayt-log.com/%E3%80%90flutter%E3%80%91map%E5%9E%8B%E9%85%8D%E5%88%97%E3%81%A7listtile%E3%81%A7%E8%A4%87%E6%95%B0%E8%A1%A8%E7%A4%BA%E3%81%99%E3%82%8B/
+https://zenn.dev/ryouhei_furugen/articles/ebcd36964b0182
+
+Provider
+https://note.com/mxiskw/n/na3ff6ffb527a
+
+QR Code
+https://www.kamo-it.org/blog/36/
+
+podfile 
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      flutter_additional_ios_build_settings(target)
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '9.0'
+    end
+  end
+end
