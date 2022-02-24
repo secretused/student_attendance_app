@@ -65,7 +65,7 @@ class RegisterPage extends StatelessWidget {
                           },
                         ),
                         SizedBox(
-                          height: 20,
+                          height: 10,
                         ),
                         TextField(
                           controller: model.titleController,
@@ -86,7 +86,7 @@ class RegisterPage extends StatelessWidget {
                           },
                         ),
                         SizedBox(
-                          height: 16,
+                          height: 13,
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(

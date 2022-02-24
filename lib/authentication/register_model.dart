@@ -70,13 +70,20 @@ class RegisterModel extends ChangeNotifier {
 
     if (email != null && password != null) {
       // firebase authでユーザー作成
-      final userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email!, password: password!);
+      final userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email!,
+        password: password!,
+      );
+
       // IDとかがuserに入る
-      final user = userCredential.user;
+      var user = userCredential.user;
 
       if (user != null) {
         final uid = user.uid;
+        await user.updateDisplayName(name);
+        await user.reload();
+        user = FirebaseAuth.instance.currentUser!;
 
         // firestoreに追加
         final doc = FirebaseFirestore.instance.collection('users').doc(uid);

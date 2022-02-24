@@ -1,15 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class QRModel extends ChangeNotifier {
-  final uidController = TextEditingController();
-  final timeStampController = TextEditingController();
-  final attendanceController = TextEditingController();
-
   String? uid;
-  int? timeStamp;
+  String? name;
   String? attendance;
+
+  String? createdAt = DateFormat('yyyy年MM月dd日').format(DateTime.now());
 
   bool isLoading = false;
 
@@ -28,8 +27,8 @@ class QRModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setTimeStamp(int date) {
-    this.timeStamp = timeStamp;
+  void setName(String name) {
+    this.name = name;
     notifyListeners();
   }
 
@@ -39,17 +38,17 @@ class QRModel extends ChangeNotifier {
   }
 
   Future signUp() async {
-    this.uid = uidController.text;
-    this.timeStamp = int.parse(timeStampController.text);
-    this.attendance = attendanceController.text;
+    var user = FirebaseAuth.instance.currentUser;
+    String? collectionName = createdAt! + name!;
 
-    if (uid != null) {
-      // firestoreに追加
-      final doc =
-          FirebaseFirestore.instance.collection('attendaceLists').doc(uid);
+    if (user != null) {
+      final doc = FirebaseFirestore.instance
+          .collection("attendances")
+          .doc(collectionName);
       await doc.set({
         'uid': uid,
-        'timeStamp': timeStamp,
+        'createdAt': Timestamp.now(),
+        'name': name,
         'attendance': attendance,
       });
     }

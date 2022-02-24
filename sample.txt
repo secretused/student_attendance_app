@@ -1,3 +1,6 @@
+displayName登録
+https://getstream.io/blog/serverless-auth-flutter-firebase/
+
 student_model参考
 https://zenn.dev/ryo_t/articles/5dd6970f2e3f06
 https://zenn.dev/ryo_t/articles/0a367221d40f11
@@ -11,6 +14,9 @@ https://rayt-log.com/%E3%80%90flutter%E3%80%91map%E5%9E%8B%E9%85%8D%E5%88%97%E3%
 https://zenn.dev/ryouhei_furugen/articles/ebcd36964b0182
 
 Provider
+https://zenn.dev/chooyan/articles/93599ae313e6f7 => 重要
+https://teratail.com/questions/292962 => 重要
+http://mashi.exciton.jp/archives/268
 https://note.com/mxiskw/n/na3ff6ffb527a
 
 QR Code
@@ -25,3 +31,155 @@ post_install do |installer|
     end
   end
 end
+
+import 'package:attendanc_management_app/scan_qr_code/qr_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../mypage/my_model.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+
+class AttendaveRegister extends StatelessWidget {
+  String qrcode;
+  AttendaveRegister(this.qrcode);
+
+  String? uid;
+  int? timeStamp;
+  String? attendance;
+  final currentUser = FirebaseAuth.instance.currentUser;
+
+  String? data;
+
+  String? name;
+  String? email;
+  String? department;
+  String? classroom;
+
+  @override
+  Widget build(BuildContext context) {
+    this.uid = currentUser!.uid;
+    this.timeStamp = DateTime.now().millisecondsSinceEpoch;
+    this.attendance = "出席";
+
+    final double deviceWidth = MediaQuery.of(context).size.width;
+    final double deviceHeight = MediaQuery.of(context).size.height;
+    return ChangeNotifierProvider<QRModel>(
+      create: (_) => QRModel(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("出席登録"),
+          backgroundColor: Color.fromARGB(255, 67, 176, 190),
+        ),
+        body: Container(
+          height: double.infinity,
+          width: double.infinity,
+          child: Consumer<QRModel>(builder: (context, model, child) {
+            return Stack(children: [
+              StreamBuilder<QuerySnapshot>(
+                stream:
+                    FirebaseFirestore.instance.collection('users').snapshots(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 50.0),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: deviceHeight * 0.4,
+                              width: deviceWidth * 0.8,
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                              ),
+                              child: Column(
+                                children: snapshot.data!.docs
+                                    .map((DocumentSnapshot document) {
+                                  return ListTile(
+                                    title: Text(document.get('name')),
+                                  );
+                                }).toList(),
+                                // SizedBox(
+                                //   height: 10,
+                                // ),
+                                // Text(
+                                //   "生徒情報",
+                                //   style: TextStyle(
+                                //       fontSize: 30,
+                                //       fontWeight: FontWeight.bold),
+                                // ),
+                                // SizedBox(
+                                //   height: 10,
+                                // ),
+                                // Text("$uid"),
+                                // Text("$timeStamp"),
+                                // Text("$attendance"),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Color.fromARGB(255, 66, 140, 224),
+                            onPrimary: Colors.black,
+                          ),
+                          onPressed: () async {
+                            if (uid == uid) {
+                              model.setUid(uid!);
+                              model.setTimeStamp(timeStamp!);
+                              model.setAttendance(attendance!);
+                            }
+                            model.startLoading();
+
+                            // 追加の処理
+                            try {
+                              await model.signUp();
+                              print("ここまで");
+                              Navigator.of(context).pop();
+                            } catch (e) {
+                              final snackBar = SnackBar(
+                                backgroundColor: Colors.red,
+                                content: Text(e.toString()),
+                              );
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            } finally {
+                              model.endLoading();
+                            }
+                          },
+                          child: Text('登録する'),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ]);
+          }),
+        ),
+      ),
+    );
+    // throw UnimplementedError();
+  }
+
+  void getUserData() async {
+    List<DocumentSnapshot> documentList = [];
+    final user_data = await FirebaseFirestore.instance
+        .collection('users')
+        .where("uid", isEqualTo: uid)
+        .get();
+    documentList = user_data.docs;
+    documentList.map((document) {
+      name = document["name"];
+      email = document["email"];
+      classroom = document["classroom"];
+      department = document["department"];
+    }).toList();
+  }
+}
