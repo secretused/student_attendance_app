@@ -1,5 +1,6 @@
 import 'package:attendanc_management_app/student_list/temp.dart';
 import 'package:flutter/material.dart';
+import 'select_date.dart/select_date.dart';
 import 'main.dart';
 import 'student_list/student_list.dart';
 
@@ -10,7 +11,10 @@ class ManagementHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("管理画面"),
+          title: Text(
+            "管理画面",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
           backgroundColor: Color.fromARGB(255, 67, 176, 190),
         ),
         body: Container(
@@ -27,7 +31,12 @@ class ManagementHome extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         ButtonDesign(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              main_data.NavigationFade(SelectDateHome()),
+                            );
+                          },
                           backgroundColor: Color.fromARGB(255, 51, 166, 243),
                           text: "出席管理",
                           icon: Icon(

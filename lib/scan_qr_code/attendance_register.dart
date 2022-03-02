@@ -29,7 +29,10 @@ class AttendaveRegister extends StatelessWidget {
       create: (_) => QRModel(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text("出席登録"),
+          title: Text(
+            "出席登録",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
           backgroundColor: Color.fromARGB(255, 67, 176, 190),
         ),
         body: Center(
@@ -106,7 +109,6 @@ class AttendaveRegister extends StatelessWidget {
                           model.startLoading();
                           model.setName(name!);
                           model.setUid(uid!);
-                          model.setAttendance(attendance!);
 
                           // 追加の処理
                           try {

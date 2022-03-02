@@ -6,9 +6,9 @@ import 'package:intl/intl.dart';
 class QRModel extends ChangeNotifier {
   String? uid;
   String? name;
-  String? attendance;
 
   String? createdAt = DateFormat('yyyy年MM月dd日').format(DateTime.now());
+  String? time = DateFormat('hh:mm').format(DateTime.now());
 
   bool isLoading = false;
 
@@ -32,11 +32,6 @@ class QRModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setAttendance(String attendance) {
-    this.attendance = attendance;
-    notifyListeners();
-  }
-
   Future signUp() async {
     var user = FirebaseAuth.instance.currentUser;
     String? collectionName = createdAt! + name!;
@@ -47,9 +42,9 @@ class QRModel extends ChangeNotifier {
           .doc(collectionName);
       await doc.set({
         'uid': uid,
-        'createdAt': Timestamp.now(),
+        'createdAt': createdAt,
+        'time': time,
         'name': name,
-        'attendance': attendance,
       });
     }
   }

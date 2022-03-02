@@ -49,7 +49,10 @@ class MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(
+          widget.title,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         backgroundColor: Color.fromARGB(255, 67, 176, 190),
         actions: <Widget>[
           IconButton(

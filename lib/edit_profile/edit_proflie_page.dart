@@ -12,7 +12,10 @@ class EditProfilePage extends StatelessWidget {
       create: (_) => EditProfileModel(name),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('プロフィール編集'),
+          title: Text(
+            'プロフィール編集',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
           backgroundColor: Color.fromARGB(255, 67, 176, 190),
         ),
         body: Center(

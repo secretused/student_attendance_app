@@ -9,7 +9,10 @@ class QR_Scan_Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("QR読み取り"),
+        title: Text(
+          "QR読み取り",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         backgroundColor: Color.fromARGB(255, 67, 176, 190),
       ),
       body: Container(

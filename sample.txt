@@ -21,165 +21,52 @@ https://note.com/mxiskw/n/na3ff6ffb527a
 
 QR Code
 https://www.kamo-it.org/blog/36/
+https://masamarun.com/flutter-qrcode-scanner/
 
-podfile 
-post_install do |installer|
-  installer.pods_project.targets.each do |target|
-    target.build_configurations.each do |config|
-      flutter_additional_ios_build_settings(target)
-      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '9.0'
-    end
+Calender 
+https://flutter.keicode.com/basics/datepicker.php
+
+attendance
+https://zenn.dev/captain_blue/articles/flutter-firestore-realtime-changes
+
+# Uncomment this line to define a global platform for your project
+platform :ios, '12.0'
+
+# CocoaPods analytics sends network stats synchronously affecting flutter build latency.
+ENV['COCOAPODS_DISABLE_STATS'] = 'true'
+
+project 'Runner', {
+  'Debug' => :debug,
+  'Profile' => :release,
+  'Release' => :release,
+}
+
+def flutter_root
+  generated_xcode_build_settings_path = File.expand_path(File.join('..', 'Flutter', 'Generated.xcconfig'), __FILE__)
+  unless File.exist?(generated_xcode_build_settings_path)
+    raise "#{generated_xcode_build_settings_path} must exist. If you're running pod install manually, make sure flutter pub get is executed first"
   end
+
+  File.foreach(generated_xcode_build_settings_path) do |line|
+    matches = line.match(/FLUTTER_ROOT\=(.*)/)
+    return matches[1].strip if matches
+  end
+  raise "FLUTTER_ROOT not found in #{generated_xcode_build_settings_path}. Try deleting Generated.xcconfig, then run flutter pub get"
 end
 
-import 'package:attendanc_management_app/scan_qr_code/qr_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelper'), flutter_root)
 
-import '../mypage/my_model.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
+flutter_ios_podfile_setup
 
-class AttendaveRegister extends StatelessWidget {
-  String qrcode;
-  AttendaveRegister(this.qrcode);
+target 'Runner' do
+  use_frameworks!
+  use_modular_headers!
+  pod 'FirebaseFirestore', :git => 'https://github.com/invertase/firestore-ios-sdk-frameworks.git', :tag => '8.11.0'
+  flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+end
 
-  String? uid;
-  int? timeStamp;
-  String? attendance;
-  final currentUser = FirebaseAuth.instance.currentUser;
-
-  String? data;
-
-  String? name;
-  String? email;
-  String? department;
-  String? classroom;
-
-  @override
-  Widget build(BuildContext context) {
-    this.uid = currentUser!.uid;
-    this.timeStamp = DateTime.now().millisecondsSinceEpoch;
-    this.attendance = "出席";
-
-    final double deviceWidth = MediaQuery.of(context).size.width;
-    final double deviceHeight = MediaQuery.of(context).size.height;
-    return ChangeNotifierProvider<QRModel>(
-      create: (_) => QRModel(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text("出席登録"),
-          backgroundColor: Color.fromARGB(255, 67, 176, 190),
-        ),
-        body: Container(
-          height: double.infinity,
-          width: double.infinity,
-          child: Consumer<QRModel>(builder: (context, model, child) {
-            return Stack(children: [
-              StreamBuilder<QuerySnapshot>(
-                stream:
-                    FirebaseFirestore.instance.collection('users').snapshots(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 50.0),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              height: deviceHeight * 0.4,
-                              width: deviceWidth * 0.8,
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey),
-                              ),
-                              child: Column(
-                                children: snapshot.data!.docs
-                                    .map((DocumentSnapshot document) {
-                                  return ListTile(
-                                    title: Text(document.get('name')),
-                                  );
-                                }).toList(),
-                                // SizedBox(
-                                //   height: 10,
-                                // ),
-                                // Text(
-                                //   "生徒情報",
-                                //   style: TextStyle(
-                                //       fontSize: 30,
-                                //       fontWeight: FontWeight.bold),
-                                // ),
-                                // SizedBox(
-                                //   height: 10,
-                                // ),
-                                // Text("$uid"),
-                                // Text("$timeStamp"),
-                                // Text("$attendance"),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Color.fromARGB(255, 66, 140, 224),
-                            onPrimary: Colors.black,
-                          ),
-                          onPressed: () async {
-                            if (uid == uid) {
-                              model.setUid(uid!);
-                              model.setTimeStamp(timeStamp!);
-                              model.setAttendance(attendance!);
-                            }
-                            model.startLoading();
-
-                            // 追加の処理
-                            try {
-                              await model.signUp();
-                              print("ここまで");
-                              Navigator.of(context).pop();
-                            } catch (e) {
-                              final snackBar = SnackBar(
-                                backgroundColor: Colors.red,
-                                content: Text(e.toString()),
-                              );
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
-                            } finally {
-                              model.endLoading();
-                            }
-                          },
-                          child: Text('登録する'),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ]);
-          }),
-        ),
-      ),
-    );
-    // throw UnimplementedError();
-  }
-
-  void getUserData() async {
-    List<DocumentSnapshot> documentList = [];
-    final user_data = await FirebaseFirestore.instance
-        .collection('users')
-        .where("uid", isEqualTo: uid)
-        .get();
-    documentList = user_data.docs;
-    documentList.map((document) {
-      name = document["name"];
-      email = document["email"];
-      classroom = document["classroom"];
-      department = document["department"];
-    }).toList();
-  }
-}
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    flutter_additional_ios_build_settings(target)
+  end
+end

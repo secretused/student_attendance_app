@@ -21,7 +21,10 @@ class StudentList extends State<StudentListHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("生徒管理"),
+        title: Text(
+          "生徒管理",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         backgroundColor: Color.fromARGB(255, 67, 176, 190),
       ),
       body: Container(

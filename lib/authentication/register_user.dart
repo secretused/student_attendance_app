@@ -11,7 +11,10 @@ class RegisterPage extends StatelessWidget {
       create: (_) => RegisterModel(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('新規登録'),
+          title: Text(
+            '新規登録',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
           // backgroundColor: Color.fromARGB(255, 67, 176, 190),
         ),
         body: Container(

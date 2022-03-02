@@ -6,11 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:attendanc_management_app/main.dart';
 
 import 'attendance_register.dart';
-// import 'package:attendanc_management_app/scan_qr_code/qr_home.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:flutter/foundation.dart';
-// import 'package:provider/provider.dart';
-// import 'qr_model.dart';
 
 class MyQRCode extends StatefulWidget {
   @override
@@ -24,7 +19,10 @@ class _MyHomePageState extends State {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('QR Code Scanner'),
+        title: Text(
+          'QR Code Scanner',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         backgroundColor: Color.fromARGB(255, 67, 176, 190),
       ),
       body: Center(

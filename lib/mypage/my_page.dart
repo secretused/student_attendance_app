@@ -15,7 +15,10 @@ class MyPage extends StatelessWidget {
       create: (_) => MyModel()..fechUser(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('マイページ'),
+          title: Text(
+            'マイページ',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
           backgroundColor: Color.fromARGB(255, 67, 176, 190),
           actions: <Widget>[
             Consumer<MyModel>(builder: (context, model, child) {

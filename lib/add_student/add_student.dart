@@ -8,7 +8,10 @@ class AddStudent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("生徒登録"),
+        title: Text(
+          "生徒登録",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         backgroundColor: Color.fromARGB(255, 67, 176, 190),
       ),
       body: Container(
