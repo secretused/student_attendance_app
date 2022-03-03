@@ -29,15 +29,12 @@ class MyPage extends StatelessWidget {
                     context,
                     main_data.NavigationFade(EditProfilePage(model.name!)),
                   );
-                  // 編集戻ったら反映されてるようにしたい
-                  // model.fechUser();
                 },
               );
             }),
           ],
         ),
         body: Container(
-          // color: Color.fromARGB(255, 223, 198, 135),
           child: Center(
             child: Consumer<MyModel>(builder: (context, model, child) {
               return Stack(

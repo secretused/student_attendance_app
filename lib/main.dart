@@ -60,7 +60,6 @@ class MyHomePageState extends State<MyHomePage> {
             onPressed: () async {
               // ログイン判断
               if (FirebaseAuth.instance.currentUser != null) {
-                print("Pushed");
                 Navigator.push(
                   context,
                   NavigationButtonCutIn(MyPage()),
@@ -149,10 +148,18 @@ class MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          NavigationFade(ManagementHome()),
-                        );
+                        if (FirebaseAuth.instance.currentUser != null) {
+                          Navigator.push(
+                            context,
+                            NavigationFade(ManagementHome()),
+                          );
+                        } else {
+                          // ユーザ登録・ログイン
+                          Navigator.push(
+                            context,
+                            NavigationFade(LoginPage()),
+                          );
+                        }
                       },
                     ),
                   ),

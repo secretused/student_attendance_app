@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +15,7 @@ class StudentListHome extends StatefulWidget {
 
 class StudentList extends State<StudentListHome> {
   MyHomePageState main_data = MyHomePageState();
-  int _groupValue = 0;
+  int _groupValue = 1;
   var _controller = ScrollController();
 
   @override
@@ -27,29 +28,65 @@ class StudentList extends State<StudentListHome> {
         ),
         backgroundColor: Color.fromARGB(255, 67, 176, 190),
       ),
-      body: Container(
-        // height: double.infinity,
-        width: double.infinity,
-        // color: Color.fromARGB(255, 223, 198, 135),
-        child: CupertinoSegmentedControl<int>(
-          padding: EdgeInsets.all(10),
-          groupValue: _groupValue,
-          borderColor: Color.fromARGB(255, 66, 140, 224),
-          // pressedColor: Color.fromARGB(255, 66, 140, 224),
-          // selectedColor: Colors.black,
-          unselectedColor: Colors.white,
-          children: {
-            0: buildSegment("一期生"),
-            1: buildSegment("二期生"),
-            2: buildSegment("三期生")
-          },
-          onValueChanged: (groupValue) {
-            setState(() {
-              _groupValue = groupValue;
-            });
-            ListViewWidget();
-          },
-        ),
+      body: Column(
+        children: [
+          Container(
+            // height: double.infinity,
+            width: double.infinity,
+
+            child: CupertinoSegmentedControl<int>(
+              padding: EdgeInsets.all(10),
+              groupValue: _groupValue,
+              borderColor: Color.fromARGB(255, 66, 140, 224),
+              // pressedColor: Color.fromARGB(255, 66, 140, 224),
+              // selectedColor: Colors.black,
+              unselectedColor: Colors.white,
+              children: {
+                1: buildSegment("一期生"),
+                2: buildSegment("二期生"),
+                3: buildSegment("三期生")
+              },
+              onValueChanged: (groupValue) {
+                setState(() {
+                  _groupValue = groupValue;
+                });
+              },
+            ),
+          ),
+          Container(
+            child: StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection('users')
+                  .where("grade", isEqualTo: _groupValue.toString())
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: const CircularProgressIndicator(),
+                  );
+                }
+                if (snapshot.hasError) {
+                  return const Text('Something went wrong');
+                }
+                return Expanded(
+                  child: ListView(
+                    children:
+                        snapshot.data!.docs.map((DocumentSnapshot document) {
+                      final data = document.data()! as Map<String, dynamic>;
+                      return Card(
+                        child: ListTile(
+                          title: Text('${data['name']}'),
+                          subtitle: Text('${data['email']}'),
+                          trailing: Text('${data['classroom']}'),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                );
+              },
+            ),
+          )
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
@@ -70,47 +107,4 @@ class StudentList extends State<StudentListHome> {
           style: TextStyle(fontSize: 15),
         ),
       );
-}
-
-class ListViewWidget extends StatelessWidget {
-  late int gotgroupValue;
-  // ListViewWidget({required this.gotgroupValue});
-  final student_list = StudentList();
-
-  @override
-  Widget build(BuildContext context) {
-    print(student_list);
-    return ChangeNotifierProvider<StudentListModel>(
-      create: (_) => StudentListModel()..getStudents(),
-      child: Container(
-        child: Consumer<StudentListModel>(
-          builder: (context, model, child) {
-            final students = model.students;
-            // 値渡している
-            gotgroupValue = student_list._groupValue;
-            return Stack(
-              children: [
-                ListView.builder(
-                  itemCount: students.length, // moviesの長さだけ表示
-                  itemBuilder: (BuildContext context, int index) {
-                    return Column(
-                      children: [
-                        ListTile(
-                          // ここにif (student[index].grad e== N)で条件分岐したい
-                          // NをgotgroupValueで受け取った値で判断する
-                          title: Text(students[index].name), // タイトル
-                          subtitle: Text(students[index].email),
-                          trailing: Text(students[index].classroom),
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              ],
-            );
-          },
-        ),
-      ),
-    );
-  }
 }

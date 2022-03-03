@@ -83,7 +83,7 @@ class LoginPage extends StatelessWidget {
                           onPressed: () async {
                             // 画面遷移
                             await Navigator.push(context,
-                                await main_data.NavigationFade(RegisterPage()));
+                                await main_data.NavigationFade(RegisterHome()));
                           },
                           child: Text(
                             '新規登録の方はこちら',

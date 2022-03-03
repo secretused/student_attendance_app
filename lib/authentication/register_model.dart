@@ -1,11 +1,14 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class RegisterModel extends ChangeNotifier {
-  final titleController = TextEditingController();
+  final emailController = TextEditingController();
   final authorController = TextEditingController();
   final nameController = TextEditingController();
+  final communityController = TextEditingController();
   final gradeController = TextEditingController();
   final classController = TextEditingController();
   final departmentController = TextEditingController();
@@ -14,9 +17,12 @@ class RegisterModel extends ChangeNotifier {
   String? password;
 
   String? name;
+  String? communityName;
   String? grade;
   String? classroom;
   String? department;
+
+  bool? isHost;
 
   bool isLoading = false;
 
@@ -45,6 +51,11 @@ class RegisterModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setCommunity(String community) {
+    this.communityName = community;
+    notifyListeners();
+  }
+
   void setGrade(String grade) {
     this.grade = grade;
     notifyListeners();
@@ -60,10 +71,16 @@ class RegisterModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setHost(bool isHost) {
+    this.isHost = isHost;
+    notifyListeners();
+  }
+
   Future signUp() async {
-    this.email = titleController.text;
+    this.email = emailController.text;
     this.password = authorController.text;
     this.name = nameController.text;
+    this.communityName = communityController.text;
     this.grade = gradeController.text;
     this.classroom = classController.text;
     this.department = departmentController.text;
@@ -79,21 +96,23 @@ class RegisterModel extends ChangeNotifier {
       // IDとかがuserに入る
       var user = userCredential.user;
 
-      if (user != null) {
+      if (user != null && name != null && communityName != null) {
         final uid = user.uid;
         await user.updateDisplayName(name);
         await user.reload();
         user = FirebaseAuth.instance.currentUser!;
 
         // firestoreに追加
-        final doc = FirebaseFirestore.instance.collection('users').doc(uid);
+        final doc = FirebaseFirestore.instance.collection("users").doc(uid);
         await doc.set({
           'uid': uid,
           'name': name,
           'email': email,
+          'community': communityName,
           'grade': grade,
           'classroom': classroom,
           'department': department,
+          'isHost': isHost,
         });
       }
     }

@@ -1,7 +1,15 @@
-import 'package:attendanc_management_app/student_list/temp.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'select_date.dart/select_date.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
+
+import 'package:attendanc_management_app/mypage/my_model.dart';
+import 'edit_profile/edit_proflie_page.dart';
 import 'main.dart';
+import 'add_institute/add_community.dart';
+import 'change_QR.dart/change_QR.dart';
+import 'select_date.dart/select_date.dart';
 import 'student_list/student_list.dart';
 
 class ManagementHome extends StatelessWidget {
@@ -9,7 +17,9 @@ class ManagementHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ChangeNotifierProvider<MyModel>(
+      create: (_) => MyModel()..fechUser(),
+      child: Scaffold(
         appBar: AppBar(
           title: Text(
             "管理画面",
@@ -20,80 +30,105 @@ class ManagementHome extends StatelessWidget {
         body: Container(
           height: double.infinity,
           width: double.infinity,
-          // color: Color.fromARGB(255, 223, 198, 135),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 40.0),
-                child: Container(
-                  child: Row(
+          child: Consumer<MyModel>(builder: (context, model, child) {
+            // コミュニティの有無を確認
+            var community_data = FirebaseFirestore.instance
+                .collection('community')
+                .where("createdAt", isEqualTo: model.community)
+                .snapshots();
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 40.0),
+                  child: Container(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         ButtonDesign(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              main_data.NavigationFade(SelectDateHome()),
-                            );
+                          onPressed: () async {
+                            print(community_data);
+                            if (model.isHost == true &&
+                                community_data != null) {
+                              await Navigator.push(
+                                context,
+                                main_data.NavigationFade(SelectDateHome()),
+                              );
+                            }
                           },
                           backgroundColor: Color.fromARGB(255, 51, 166, 243),
                           text: "出席管理",
                           icon: Icon(
                             Icons.home,
-                            size: 60,
+                            size: 70,
                           ),
                         ),
                         ButtonDesign(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              main_data.NavigationFade(StudentListHome()),
-                            );
+                          onPressed: () async {
+                            if (model.isHost == true) {
+                              await Navigator.push(
+                                context,
+                                main_data.NavigationFade(StudentListHome()),
+                              );
+                            }
                           },
                           backgroundColor: Color.fromARGB(255, 240, 130, 41),
                           text: "生徒管理",
                           icon: Icon(
                             Icons.account_circle,
-                            size: 60,
+                            size: 70,
                           ),
                         ),
-                      ]),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-              Container(
-                child: Row(
+                Container(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       ButtonDesign(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            main_data.NavigationButtomSlide(TempClass()),
-                          );
+                        onPressed: () async {
+                          if (model.isHost == true) {
+                            await Navigator.push(
+                              context,
+                              main_data.NavigationFade(
+                                  AddInstitute(model.community)),
+                            );
+                          }
                         },
                         backgroundColor: Color.fromARGB(255, 61, 214, 125),
-                        text: "出席管理",
+                        text: "機関登録",
                         icon: Icon(
-                          Icons.add,
-                          size: 60,
+                          Icons.add_business,
+                          size: 70,
                         ),
                       ),
                       ButtonDesign(
-                        onPressed: () {},
+                        onPressed: () async {
+                          if (model.isHost == true) {
+                            await Navigator.push(
+                              context,
+                              main_data.NavigationFade(ChangeQRCode()),
+                            );
+                          }
+                        },
                         backgroundColor: Color.fromARGB(255, 241, 121, 195),
-                        text: "生徒管理",
+                        text: "QR変更",
                         icon: Icon(
-                          Icons.add,
-                          size: 60,
+                          Icons.qr_code_2_sharp,
+                          size: 70,
                         ),
                       ),
-                    ]),
-              ),
-            ],
-          ),
-        ));
-    // throw UnimplementedError();
+                    ],
+                  ),
+                ),
+              ],
+            );
+          }),
+        ),
+      ),
+    );
   }
 }
 

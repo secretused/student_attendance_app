@@ -1,40 +1,32 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
-
-import 'register_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-void main() => runApp(
-      MaterialApp(home: RegisterHome()),
-    );
+import 'community_model.dart';
 
-class RegisterHome extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return RegisterPage();
+class AddInstitute extends StatelessWidget {
+  String? community;
+  AddInstitute(String? community) {
+    this.community = community;
   }
-}
 
-class RegisterPage extends State<RegisterHome> {
-  bool isHost = false;
-  void _changeSwitch(bool e) => setState(() => isHost = e);
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<RegisterModel>(
-      create: (_) => RegisterModel(),
+    return ChangeNotifierProvider<CommunityModel>(
+      create: (_) => CommunityModel(community),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Text(
-            '新規登録',
+            '団体登録',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           backgroundColor: Color.fromARGB(255, 67, 176, 190),
         ),
         body: Container(
           child: Center(
-            child: Consumer<RegisterModel>(builder: (context, model, child) {
+            child: Consumer<CommunityModel>(builder: (context, model, child) {
               return Stack(
                 children: [
                   Padding(
@@ -42,28 +34,28 @@ class RegisterPage extends State<RegisterHome> {
                     child: Column(
                       children: [
                         TextField(
-                          controller: model.nameController,
+                          controller: model.communityController,
+                          enabled: false,
                           decoration: InputDecoration(
-                            hintText: '名前',
-                            suffix: Text(
-                              '必須',
-                              style: TextStyle(color: Colors.red, fontSize: 13),
-                            ),
+                            hintText: community,
+                          ),
+                        ),
+                        TextField(
+                          controller: model.departmentController,
+                          decoration: InputDecoration(
+                            hintText: '支店・部署名',
                           ),
                           onChanged: (text) {
-                            model.setName(text);
+                            model.setDepartment(text);
                           },
                         ),
                         TextField(
-                          controller: model.communityController,
+                          controller: model.emailController,
                           decoration: InputDecoration(
-                            hintText: '所属団体名',
-                            suffix: Text('必須',
-                                style:
-                                    TextStyle(color: Colors.red, fontSize: 13)),
+                            hintText: 'メールアドレス',
                           ),
                           onChanged: (text) {
-                            model.setCommunity(text);
+                            model.setEmail(text);
                           },
                         ),
                         TextField(
@@ -71,71 +63,40 @@ class RegisterPage extends State<RegisterHome> {
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly
                           ],
-                          controller: model.gradeController,
+                          controller: model.phoneNumberController,
                           decoration: InputDecoration(
-                            hintText: '期生・学年',
+                            hintText: '電話番号',
                           ),
                           onChanged: (text) {
-                            model.setGrade(text);
+                            model.setPhoneNumber(text);
                           },
                         ),
                         TextField(
-                          controller: model.departmentController,
+                          controller: model.linkController,
                           decoration: InputDecoration(
-                            hintText: '部署・学科',
+                            hintText: '関連リンク',
                           ),
                           onChanged: (text) {
-                            model.setDepartment(text);
+                            model.setLink(text);
                           },
                         ),
                         TextField(
-                          controller: model.classController,
+                          controller: model.QRLinkController,
                           decoration: InputDecoration(
-                            hintText: 'クラス',
+                            hintText: 'QRコード読み取り先リンク',
+                            suffix: Text('必須',
+                                style:
+                                    TextStyle(color: Colors.red, fontSize: 13)),
                           ),
                           onChanged: (text) {
-                            model.setClass(text);
+                            model.setQRLink(text);
                           },
                         ),
                         SizedBox(
                           height: 10,
                         ),
-                        TextField(
-                          controller: model.emailController,
-                          decoration: InputDecoration(
-                              hintText: 'Email',
-                              suffix: Text('必須',
-                                  style: TextStyle(
-                                      color: Colors.red, fontSize: 13))),
-                          onChanged: (text) {
-                            model.setEmail(text);
-                          },
-                        ),
-                        TextField(
-                          controller: model.authorController,
-                          decoration: InputDecoration(
-                              hintText: 'パスワード',
-                              suffix: Text('必須',
-                                  style: TextStyle(
-                                      color: Colors.red, fontSize: 13))),
-                          onChanged: (text) {
-                            model.setPassword(text);
-                          },
-                        ),
                         SizedBox(
                           height: 20,
-                        ),
-                        Text("団体責任者・管理者"),
-                        Switch(
-                          value: isHost,
-                          onChanged: (value) {
-                            setState(
-                              () {
-                                isHost = value;
-                              },
-                            );
-                            model.setHost(isHost);
-                          },
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
@@ -147,7 +108,7 @@ class RegisterPage extends State<RegisterHome> {
 
                             // 追加の処理
                             try {
-                              await model.signUp();
+                              await model.addCommunity();
                               Navigator.of(context).pop();
                             } catch (e) {
                               final snackBar = SnackBar(
