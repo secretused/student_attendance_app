@@ -31,11 +31,6 @@ class ManagementHome extends StatelessWidget {
           height: double.infinity,
           width: double.infinity,
           child: Consumer<MyModel>(builder: (context, model, child) {
-            // コミュニティの有無を確認
-            var community_data = FirebaseFirestore.instance
-                .collection('community')
-                .where("createdAt", isEqualTo: model.community)
-                .snapshots();
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -47,12 +42,11 @@ class ManagementHome extends StatelessWidget {
                       children: [
                         ButtonDesign(
                           onPressed: () async {
-                            print(community_data);
-                            if (model.isHost == true &&
-                                community_data != null) {
+                            if (model.isHost == true) {
                               await Navigator.push(
                                 context,
-                                main_data.NavigationFade(SelectDateHome()),
+                                main_data.NavigationFade(
+                                    SelectDateHome(model.community)),
                               );
                             }
                           },
@@ -68,7 +62,8 @@ class ManagementHome extends StatelessWidget {
                             if (model.isHost == true) {
                               await Navigator.push(
                                 context,
-                                main_data.NavigationFade(StudentListHome()),
+                                main_data.NavigationFade(
+                                    StudentListHome(model.community)),
                               );
                             }
                           },
@@ -114,9 +109,9 @@ class ManagementHome extends StatelessWidget {
                           }
                         },
                         backgroundColor: Color.fromARGB(255, 241, 121, 195),
-                        text: "QR変更",
+                        text: "登録情報変更",
                         icon: Icon(
-                          Icons.qr_code_2_sharp,
+                          Icons.security,
                           size: 70,
                         ),
                       ),

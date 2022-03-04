@@ -5,16 +5,28 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../add_institute/add_community.dart';
+import '../main.dart';
 import '../mypage/my_model.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AttendaveRegister extends StatelessWidget {
+  MyHomePageState main_data = MyHomePageState();
+
   String? uid;
   String? email;
   String? name;
   String? attendance;
+  String? community;
   String? createdAt = DateFormat('MM-dd HH:mm').format(DateTime.now());
   final currentUser = FirebaseAuth.instance.currentUser;
+
+  String? sameCommunity;
+  bool? isHost;
+
+  AttendaveRegister(String? community, bool? isHost) {
+    this.community = community;
+    this.isHost = isHost;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +61,7 @@ class AttendaveRegister extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
-                            height: deviceHeight * 0.25,
+                            height: deviceHeight * 0.275,
                             width: deviceWidth * 0.75,
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.grey),
@@ -74,6 +86,12 @@ class AttendaveRegister extends StatelessWidget {
                               ),
                               Text(
                                 "$email",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                ),
+                              ),
+                              Text(
+                                "$community",
                                 style: TextStyle(
                                   fontSize: 18,
                                 ),
@@ -109,21 +127,39 @@ class AttendaveRegister extends StatelessWidget {
                           model.startLoading();
                           model.setName(name!);
                           model.setUid(uid!);
+                          model.setCommunity(community!);
 
+                          FirebaseFirestore.instance
+                              .collection('community')
+                              .doc(community)
+                              .snapshots()
+                              .listen((DocumentSnapshot snapshot) {
+                            this.sameCommunity = snapshot.get('community');
+                          });
                           // 追加の処理
-                          try {
-                            await model.signUp();
-                            Navigator.popUntil(
-                                context, (route) => route.isFirst);
-                          } catch (e) {
-                            final snackBar = SnackBar(
-                              backgroundColor: Colors.red,
-                              content: Text(e.toString()),
-                            );
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
-                          } finally {
-                            model.endLoading();
+                          if (sameCommunity != null) {
+                            try {
+                              await model.atendding();
+                              Navigator.popUntil(
+                                  context, (route) => route.isFirst);
+                            } catch (e) {
+                              final snackBar = SnackBar(
+                                backgroundColor: Colors.red,
+                                content: Text(e.toString()),
+                              );
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            } finally {
+                              model.endLoading();
+                            }
+                          } else {
+                            if (isHost == true) {
+                              await Navigator.push(
+                                context,
+                                main_data.NavigationFade(
+                                    AddInstitute(community)),
+                              );
+                            }
                           }
                         },
                         child: Text('出席する'),

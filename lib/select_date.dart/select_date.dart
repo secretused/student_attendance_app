@@ -7,14 +7,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../main.dart';
 
-void main() => runApp(
-      MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: SelectDateHome(),
-      ),
-    );
-
 class SelectDateHome extends StatefulWidget {
+  String? gotCommunity;
+  SelectDateHome(String? community) {
+    this.gotCommunity = community;
+  }
+
   @override
   State<StatefulWidget> createState() {
     return SelectDate();
@@ -41,6 +39,7 @@ class SelectDate extends State<SelectDateHome> {
           stream: FirebaseFirestore.instance
               .collection('attendances')
               .where("createdAt", isEqualTo: _labelText)
+              .where("community", isEqualTo: widget.gotCommunity)
               .snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {

@@ -9,6 +9,11 @@ import '../add_student/add_student.dart';
 import 'student_model.dart';
 
 class StudentListHome extends StatefulWidget {
+  String? communityName;
+  StudentListHome(String? community) {
+    this.communityName = community;
+  }
+
   @override
   StudentList createState() => StudentList();
 }
@@ -58,6 +63,7 @@ class StudentList extends State<StudentListHome> {
               stream: FirebaseFirestore.instance
                   .collection('users')
                   .where("grade", isEqualTo: _groupValue.toString())
+                  .where("community", isEqualTo: widget.communityName)
                   .snapshots(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {

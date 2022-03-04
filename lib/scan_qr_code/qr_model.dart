@@ -6,11 +6,13 @@ import 'package:intl/intl.dart';
 class QRModel extends ChangeNotifier {
   String? uid;
   String? name;
+  String? community;
 
   String? createdAt = DateFormat('yyyy年MM月dd日').format(DateTime.now());
   String? time = DateFormat('hh:mm').format(DateTime.now());
 
   bool isLoading = false;
+  var user = FirebaseAuth.instance.currentUser;
 
   void startLoading() {
     isLoading = true;
@@ -32,8 +34,12 @@ class QRModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future signUp() async {
-    var user = FirebaseAuth.instance.currentUser;
+  void setCommunity(String community) {
+    this.community = community;
+    notifyListeners();
+  }
+
+  Future atendding() async {
     String? collectionName = createdAt! + name!;
 
     if (user != null) {
@@ -43,6 +49,7 @@ class QRModel extends ChangeNotifier {
       await doc.set({
         'uid': uid,
         'createdAt': createdAt,
+        'community': community,
         'time': time,
         'name': name,
       });

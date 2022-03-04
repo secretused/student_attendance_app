@@ -4,7 +4,9 @@ import 'dart:io';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter/material.dart';
 import 'package:attendanc_management_app/main.dart';
+import 'package:provider/provider.dart';
 
+import '../mypage/my_model.dart';
 import 'attendance_register.dart';
 
 class MyQRCode extends StatefulWidget {
@@ -17,47 +19,52 @@ class _MyHomePageState extends State {
   final main_data = MyHomePageState();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'QR Code Scanner',
-          style: TextStyle(fontWeight: FontWeight.bold),
+    return ChangeNotifierProvider<MyModel>(
+      create: (_) => MyModel()..fechUser(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'QR Code Scanner',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          backgroundColor: Color.fromARGB(255, 67, 176, 190),
         ),
-        backgroundColor: Color.fromARGB(255, 67, 176, 190),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: 130, //横幅
-              height: 130, //高さ
-              child: ElevatedButton(
-                child: const Icon(
-                  Icons.qr_code_2,
-                  size: 100,
-                ),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.white,
-                  onPrimary: Colors.black,
-                  shape: const CircleBorder(
-                    side: BorderSide(
-                      color: Colors.black,
-                      width: 1,
-                      style: BorderStyle.solid,
+        body: Center(
+          child: Consumer<MyModel>(builder: (context, model, child) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 130, //横幅
+                  height: 130, //高さ
+                  child: ElevatedButton(
+                    child: const Icon(
+                      Icons.qr_code_2,
+                      size: 100,
                     ),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.white,
+                      onPrimary: Colors.black,
+                      shape: const CircleBorder(
+                        side: BorderSide(
+                          color: Colors.black,
+                          width: 1,
+                          style: BorderStyle.solid,
+                        ),
+                      ),
+                    ),
+                    onPressed: () => scanQrCode(model.community, model.isHost),
                   ),
                 ),
-                onPressed: () => scanQrCode(),
-              ),
-            ),
-          ],
+              ],
+            );
+          }),
         ),
       ),
     );
   }
 
-  Future scanQrCode() async {
+  Future scanQrCode(String? community, bool? isHost) async {
     final qrCode = await FlutterBarcodeScanner.scanBarcode(
       '#EB394B',
       'Cancel',
@@ -72,7 +79,7 @@ class _MyHomePageState extends State {
     if (qrCode == "https://techford.jp/") {
       Navigator.push(
         context,
-        main_data.NavigationFade(AttendaveRegister()),
+        main_data.NavigationFade(AttendaveRegister(community, isHost)),
       );
     } else {
       print("QRコードが違います");

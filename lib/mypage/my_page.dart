@@ -51,12 +51,15 @@ class MyPage extends StatelessWidget {
                           ),
                         ),
                         Text(model.email ?? "メールアドレスなし"),
+                        SizedBox(
+                          height: 7,
+                        ),
+                        Text(model.community ?? "メールアドレスなし"),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(model.department ?? "学部なし"),
                             Text(model.grade ?? "学年なし"),
-                            Text("期生"),
                           ],
                         ),
                         Text(model.classroom ?? "入力なし"),

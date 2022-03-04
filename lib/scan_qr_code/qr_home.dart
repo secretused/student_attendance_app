@@ -18,7 +18,6 @@ class QR_Scan_Home extends StatelessWidget {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        // color: Color.fromARGB(255, 223, 198, 135),
         child: Center(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -47,7 +46,6 @@ class QR_Scan_Home extends StatelessWidget {
                         context,
                         main_date.NavigationFade(MyQRCode()),
                       );
-                      print(result);
                     },
                   ),
                 ),

@@ -1,4 +1,5 @@
 import 'dart:ffi';
+import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,6 +20,8 @@ class CommunityModel extends ChangeNotifier {
   String? link;
   String? QRLink;
 
+  String? gotData;
+  bool sameName = true;
   bool isLoading = false;
 
   CommunityModel(String? community) {
@@ -70,7 +73,19 @@ class CommunityModel extends ChangeNotifier {
     // IDとかがuserに入る
     var user = FirebaseAuth.instance.currentUser!;
 
-    if (user != null && communityName != null && QRLink != null) {
+    final snapshot = await FirebaseFirestore.instance
+        .collection('community')
+        .doc(communityName)
+        .get();
+    final data = snapshot.data();
+    this.gotData = data?["community"];
+    if (gotData != communityName) {
+      this.sameName = true;
+    } else {
+      this.sameName = false;
+    }
+
+    if (user != null && sameName == true && QRLink != null) {
       final uid = user.uid;
       user = FirebaseAuth.instance.currentUser!;
 
@@ -86,6 +101,8 @@ class CommunityModel extends ChangeNotifier {
         'link': link,
         'QRLink': QRLink,
       });
+    } else {
+      print("エラー");
     }
   }
 }
