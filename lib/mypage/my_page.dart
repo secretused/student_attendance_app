@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../authentication/login_user.dart';
 import '../setting.dart';
 import 'my_model.dart';
 import 'package:attendanc_management_app/edit_profile/edit_proflie_page.dart';

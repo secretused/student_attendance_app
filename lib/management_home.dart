@@ -100,7 +100,8 @@ class ManagementHome extends StatelessWidget {
                           if (model.isHost == true) {
                             await Navigator.push(
                               context,
-                              setting_data.NavigationFade(ChangeQRCode()),
+                              setting_data.NavigationFade(
+                                  ChangeQRCode(model.community)),
                             );
                           }
                         },

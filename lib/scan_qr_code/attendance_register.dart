@@ -9,7 +9,7 @@ import '../add_institute/add_community.dart';
 import '../mypage/my_model.dart';
 import '../setting.dart';
 
-class AttendaveRegister extends StatelessWidget {
+class AttendanceRegister extends StatelessWidget {
   SettingClass setting_data = SettingClass();
 
   String? uid;
@@ -23,9 +23,10 @@ class AttendaveRegister extends StatelessWidget {
   String? sameCommunity;
   bool? isHost;
 
-  AttendaveRegister(String? community, bool? isHost) {
+  AttendanceRegister(String? community, bool? isHost, String? sameCommunity) {
     this.community = community;
     this.isHost = isHost;
+    this.sameCommunity = sameCommunity;
   }
 
   @override
@@ -52,6 +53,7 @@ class AttendaveRegister extends StatelessWidget {
             height: deviceHeight * 0.5,
             width: double.infinity,
             child: Consumer<QRModel>(builder: (context, model, child) {
+              print("$sameCommunity遷移元");
               return Stack(children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 50.0),
@@ -128,14 +130,6 @@ class AttendaveRegister extends StatelessWidget {
                           model.setName(name!);
                           model.setUid(uid!);
                           model.setCommunity(community!);
-
-                          FirebaseFirestore.instance
-                              .collection('community')
-                              .doc(community)
-                              .snapshots()
-                              .listen((DocumentSnapshot snapshot) {
-                            this.sameCommunity = snapshot.get('community');
-                          });
                           // 追加の処理
                           if (sameCommunity != null) {
                             try {

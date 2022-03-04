@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,8 +16,9 @@ class MyQRCode extends StatefulWidget {
 }
 
 class _MyHomePageState extends State {
-  String qrCode = '';
   SettingClass setting_data = SettingClass();
+  String qrCode = '';
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<MyModel>(
@@ -65,6 +67,14 @@ class _MyHomePageState extends State {
   }
 
   Future scanQrCode(String? community, bool? isHost) async {
+    late String? sameCommunity;
+    FirebaseFirestore.instance
+        .collection('community')
+        .doc(community)
+        .snapshots()
+        .listen((DocumentSnapshot snapshot) {
+      sameCommunity = snapshot.get('community');
+    });
     final qrCode = await FlutterBarcodeScanner.scanBarcode(
       '#EB394B',
       'Cancel',
@@ -77,9 +87,10 @@ class _MyHomePageState extends State {
       this.qrCode = qrCode;
     });
     if (qrCode == "https://techford.jp/") {
-      Navigator.push(
+      await Navigator.push(
         context,
-        setting_data.NavigationFade(AttendaveRegister(community, isHost)),
+        setting_data.NavigationFade(
+            AttendanceRegister(community, isHost, sameCommunity)),
       );
     } else {
       print("QRコードが違います");

@@ -29,6 +29,11 @@ https://flutter.keicode.com/basics/datepicker.php
 attendance
 https://zenn.dev/captain_blue/articles/flutter-firestore-realtime-changes
 
+Futureのawaitの処理をずらす方法と
+lateによる初期化せずに値を使い非同期で値をすぐに扱える方法(qrcode?model.dart)
+https://qiita.com/nukotsuka/items/66236723bf17c4574608
+https://note.com/hatchoutschool/n/n003c6c19dcab
+
 # Uncomment this line to define a global platform for your project
 platform :ios, '12.0'
 
