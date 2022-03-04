@@ -9,6 +9,8 @@ import 'management_home.dart';
 import 'package:attendanc_management_app/mypage/my_page.dart';
 import 'package:attendanc_management_app/scan_qr_code/qr_code.dart';
 
+import 'setting.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -45,6 +47,8 @@ class MyHomePageState extends State<MyHomePage> {
   final myController = TextEditingController();
   late String name;
 
+  SettingClass setting_data = SettingClass();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,13 +66,13 @@ class MyHomePageState extends State<MyHomePage> {
               if (FirebaseAuth.instance.currentUser != null) {
                 Navigator.push(
                   context,
-                  NavigationButtonCutIn(MyPage()),
+                  setting_data.NavigationButtonCutIn(MyPage()),
                 );
               } else {
                 // ユーザ登録・ログイン
                 Navigator.push(
                   context,
-                  NavigationFade(LoginPage()),
+                  setting_data.NavigationFade(LoginPage()),
                 );
               }
             },
@@ -104,13 +108,13 @@ class MyHomePageState extends State<MyHomePage> {
                         if (FirebaseAuth.instance.currentUser != null) {
                           Navigator.push(
                             context,
-                            NavigationFade(MyQRCode()),
+                            setting_data.NavigationFade(MyQRCode()),
                           );
                         } else {
                           // ユーザ登録・ログイン
                           Navigator.push(
                             context,
-                            NavigationFade(LoginPage()),
+                            setting_data.NavigationFade(LoginPage()),
                           );
                         }
                       },
@@ -151,13 +155,13 @@ class MyHomePageState extends State<MyHomePage> {
                         if (FirebaseAuth.instance.currentUser != null) {
                           Navigator.push(
                             context,
-                            NavigationFade(ManagementHome()),
+                            setting_data.NavigationFade(ManagementHome()),
                           );
                         } else {
                           // ユーザ登録・ログイン
                           Navigator.push(
                             context,
-                            NavigationFade(LoginPage()),
+                            setting_data.NavigationFade(LoginPage()),
                           );
                         }
                       },
@@ -182,65 +186,65 @@ class MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  // ページ遷移(フェードイン)
-  PageRouteBuilder<dynamic> NavigationFade(page_name) {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) {
-        return page_name;
-      },
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        final double begin = 0.0;
-        final double end = 5.0;
-        final Animatable<double> tween = Tween(begin: begin, end: end)
-            .chain(CurveTween(curve: Curves.easeInOut));
-        final Animation<double> doubleAnimation = animation.drive(tween);
-        return FadeTransition(
-          opacity: doubleAnimation,
-          child: child,
-        );
-      },
-    );
-  }
+  // // ページ遷移(フェードイン)
+  // PageRouteBuilder<dynamic> NavigationFade(page_name) {
+  //   return PageRouteBuilder(
+  //     pageBuilder: (context, animation, secondaryAnimation) {
+  //       return page_name;
+  //     },
+  //     transitionsBuilder: (context, animation, secondaryAnimation, child) {
+  //       final double begin = 0.0;
+  //       final double end = 5.0;
+  //       final Animatable<double> tween = Tween(begin: begin, end: end)
+  //           .chain(CurveTween(curve: Curves.easeInOut));
+  //       final Animation<double> doubleAnimation = animation.drive(tween);
+  //       return FadeTransition(
+  //         opacity: doubleAnimation,
+  //         child: child,
+  //       );
+  //     },
+  //   );
+  // }
 
-  // ページ遷移(下から上)
-  PageRouteBuilder<dynamic> NavigationButtomSlide(page_name) {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) {
-        return page_name;
-      },
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        final Offset begin = Offset(0.0, 1.5); // 下から上
-        // final Offset begin = Offset(0.0, -1.0); // 上から下
-        final Offset end = Offset.zero;
-        final Animatable<Offset> tween = Tween(begin: begin, end: end)
-            .chain(CurveTween(curve: Curves.easeInOut));
-        final Animation<Offset> offsetAnimation = animation.drive(tween);
-        return SlideTransition(
-          position: offsetAnimation,
-          child: child,
-        );
-      },
-    );
-  }
+  // // ページ遷移(下から上)
+  // PageRouteBuilder<dynamic> NavigationButtomSlide(page_name) {
+  //   return PageRouteBuilder(
+  //     pageBuilder: (context, animation, secondaryAnimation) {
+  //       return page_name;
+  //     },
+  //     transitionsBuilder: (context, animation, secondaryAnimation, child) {
+  //       final Offset begin = Offset(0.0, 1.5); // 下から上
+  //       // final Offset begin = Offset(0.0, -1.0); // 上から下
+  //       final Offset end = Offset.zero;
+  //       final Animatable<Offset> tween = Tween(begin: begin, end: end)
+  //           .chain(CurveTween(curve: Curves.easeInOut));
+  //       final Animation<Offset> offsetAnimation = animation.drive(tween);
+  //       return SlideTransition(
+  //         position: offsetAnimation,
+  //         child: child,
+  //       );
+  //     },
+  //   );
+  // }
 
-  // ページ遷移(右から左)
-  PageRouteBuilder<dynamic> NavigationButtonCutIn(page_name) {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) {
-        return page_name;
-      },
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        final Offset begin = Offset(1.0, 0.0); // 右から左
-        // final Offset begin = Offset(-1.0, 0.0); // 左から右
-        final Offset end = Offset.zero;
-        final Animatable<Offset> tween = Tween(begin: begin, end: end)
-            .chain(CurveTween(curve: Curves.easeInOut));
-        final Animation<Offset> offsetAnimation = animation.drive(tween);
-        return SlideTransition(
-          position: offsetAnimation,
-          child: child,
-        );
-      },
-    );
-  }
+  // // ページ遷移(右から左)
+  // PageRouteBuilder<dynamic> NavigationButtonCutIn(page_name) {
+  //   return PageRouteBuilder(
+  //     pageBuilder: (context, animation, secondaryAnimation) {
+  //       return page_name;
+  //     },
+  //     transitionsBuilder: (context, animation, secondaryAnimation, child) {
+  //       final Offset begin = Offset(1.0, 0.0); // 右から左
+  //       // final Offset begin = Offset(-1.0, 0.0); // 左から右
+  //       final Offset end = Offset.zero;
+  //       final Animatable<Offset> tween = Tween(begin: begin, end: end)
+  //           .chain(CurveTween(curve: Curves.easeInOut));
+  //       final Animation<Offset> offsetAnimation = animation.drive(tween);
+  //       return SlideTransition(
+  //         position: offsetAnimation,
+  //         child: child,
+  //       );
+  //     },
+  //   );
+  // }
 }

@@ -1,19 +1,15 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 
 import 'package:attendanc_management_app/mypage/my_model.dart';
-import 'edit_profile/edit_proflie_page.dart';
-import 'main.dart';
 import 'add_institute/add_community.dart';
 import 'change_QR.dart/change_QR.dart';
 import 'select_date.dart/select_date.dart';
+import 'setting.dart';
 import 'student_list/student_list.dart';
 
 class ManagementHome extends StatelessWidget {
-  MyHomePageState main_data = MyHomePageState();
+  SettingClass setting_data = SettingClass();
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +41,7 @@ class ManagementHome extends StatelessWidget {
                             if (model.isHost == true) {
                               await Navigator.push(
                                 context,
-                                main_data.NavigationFade(
+                                setting_data.NavigationFade(
                                     SelectDateHome(model.community)),
                               );
                             }
@@ -62,13 +58,13 @@ class ManagementHome extends StatelessWidget {
                             if (model.isHost == true) {
                               await Navigator.push(
                                 context,
-                                main_data.NavigationFade(
+                                setting_data.NavigationFade(
                                     StudentListHome(model.community)),
                               );
                             }
                           },
                           backgroundColor: Color.fromARGB(255, 240, 130, 41),
-                          text: "生徒管理",
+                          text: "ユーザー管理",
                           icon: Icon(
                             Icons.account_circle,
                             size: 70,
@@ -87,7 +83,7 @@ class ManagementHome extends StatelessWidget {
                           if (model.isHost == true) {
                             await Navigator.push(
                               context,
-                              main_data.NavigationFade(
+                              setting_data.NavigationFade(
                                   AddInstitute(model.community)),
                             );
                           }
@@ -104,7 +100,7 @@ class ManagementHome extends StatelessWidget {
                           if (model.isHost == true) {
                             await Navigator.push(
                               context,
-                              main_data.NavigationFade(ChangeQRCode()),
+                              setting_data.NavigationFade(ChangeQRCode()),
                             );
                           }
                         },

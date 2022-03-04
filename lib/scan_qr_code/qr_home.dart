@@ -1,9 +1,10 @@
 import 'package:attendanc_management_app/scan_qr_code/qr_code.dart';
 import 'package:flutter/material.dart';
-import 'package:attendanc_management_app/main.dart';
+
+import '../setting.dart';
 
 class QR_Scan_Home extends StatelessWidget {
-  final main_date = MyHomePageState();
+  SettingClass setting_data = SettingClass();
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +45,7 @@ class QR_Scan_Home extends StatelessWidget {
                     onPressed: () async {
                       var result = await Navigator.push(
                         context,
-                        main_date.NavigationFade(MyQRCode()),
+                        setting_data.NavigationFade(MyQRCode()),
                       );
                     },
                   ),

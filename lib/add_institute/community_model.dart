@@ -23,6 +23,7 @@ class CommunityModel extends ChangeNotifier {
   String? gotData;
   bool sameName = true;
   bool isLoading = false;
+  bool error = false;
 
   CommunityModel(String? community) {
     this.communityName = community;
@@ -102,7 +103,7 @@ class CommunityModel extends ChangeNotifier {
         'QRLink': QRLink,
       });
     } else {
-      print("エラー");
+      this.error = true;
     }
   }
 }

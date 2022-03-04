@@ -6,11 +6,11 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../add_institute/add_community.dart';
-import '../main.dart';
 import '../mypage/my_model.dart';
+import '../setting.dart';
 
 class AttendaveRegister extends StatelessWidget {
-  MyHomePageState main_data = MyHomePageState();
+  SettingClass setting_data = SettingClass();
 
   String? uid;
   String? email;
@@ -71,7 +71,7 @@ class AttendaveRegister extends StatelessWidget {
                                 height: 10,
                               ),
                               Text(
-                                "生徒情報",
+                                "ユーザー情報",
                                 style: TextStyle(
                                     fontSize: 30, fontWeight: FontWeight.bold),
                               ),
@@ -156,7 +156,7 @@ class AttendaveRegister extends StatelessWidget {
                             if (isHost == true) {
                               await Navigator.push(
                                 context,
-                                main_data.NavigationFade(
+                                setting_data.NavigationFade(
                                     AddInstitute(community)),
                               );
                             }

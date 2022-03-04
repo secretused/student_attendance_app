@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'community_model.dart';
+import '../setting.dart';
 
 class AddInstitute extends StatelessWidget {
   String? community;
@@ -109,7 +110,18 @@ class AddInstitute extends StatelessWidget {
                             // 追加の処理
                             try {
                               await model.addCommunity();
-                              Navigator.of(context).pop();
+                              if (model.error != true) {
+                                Navigator.of(context).pop();
+                              } else {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return ErrorModal(
+                                        error_message:
+                                            "既にこの団体は存在しています\n他の団体名でログインしてください");
+                                  },
+                                );
+                              }
                             } catch (e) {
                               final snackBar = SnackBar(
                                 backgroundColor: Colors.red,

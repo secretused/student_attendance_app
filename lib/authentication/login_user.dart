@@ -1,11 +1,11 @@
+import '../setting.dart';
 import 'login_model.dart';
 import 'register_user.dart';
-import 'package:attendanc_management_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
-  MyHomePageState main_data = MyHomePageState();
+  SettingClass setting_data = SettingClass();
 
   @override
   Widget build(BuildContext context) {
@@ -82,8 +82,10 @@ class LoginPage extends StatelessWidget {
                         TextButton(
                           onPressed: () async {
                             // 画面遷移
-                            await Navigator.push(context,
-                                await main_data.NavigationFade(RegisterHome()));
+                            await Navigator.push(
+                                context,
+                                await setting_data.NavigationFade(
+                                    RegisterHome()));
                           },
                           child: Text(
                             '新規登録の方はこちら',

@@ -1,13 +1,13 @@
-import 'package:attendanc_management_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../authentication/login_user.dart';
+import '../setting.dart';
 import 'my_model.dart';
 import 'package:attendanc_management_app/edit_profile/edit_proflie_page.dart';
 
 class MyPage extends StatelessWidget {
-  MyHomePageState main_data = MyHomePageState();
+  SettingClass setting_data = SettingClass();
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class MyPage extends StatelessWidget {
                 onPressed: () async {
                   Navigator.push(
                     context,
-                    main_data.NavigationFade(EditProfilePage(model.name!)),
+                    setting_data.NavigationFade(EditProfilePage(model.name!)),
                   );
                 },
               );

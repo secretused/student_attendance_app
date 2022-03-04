@@ -3,10 +3,10 @@ import 'dart:io';
 
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter/material.dart';
-import 'package:attendanc_management_app/main.dart';
 import 'package:provider/provider.dart';
 
 import '../mypage/my_model.dart';
+import '../setting.dart';
 import 'attendance_register.dart';
 
 class MyQRCode extends StatefulWidget {
@@ -16,7 +16,7 @@ class MyQRCode extends StatefulWidget {
 
 class _MyHomePageState extends State {
   String qrCode = '';
-  final main_data = MyHomePageState();
+  SettingClass setting_data = SettingClass();
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<MyModel>(
@@ -79,7 +79,7 @@ class _MyHomePageState extends State {
     if (qrCode == "https://techford.jp/") {
       Navigator.push(
         context,
-        main_data.NavigationFade(AttendaveRegister(community, isHost)),
+        setting_data.NavigationFade(AttendaveRegister(community, isHost)),
       );
     } else {
       print("QRコードが違います");

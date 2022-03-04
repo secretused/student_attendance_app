@@ -1,12 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
-import 'package:quiver/iterables.dart';
 
-import '../main.dart';
 import '../add_student/add_student.dart';
-import 'student_model.dart';
+import '../setting.dart';
 
 class StudentListHome extends StatefulWidget {
   String? communityName;
@@ -19,7 +16,7 @@ class StudentListHome extends StatefulWidget {
 }
 
 class StudentList extends State<StudentListHome> {
-  MyHomePageState main_data = MyHomePageState();
+  SettingClass setting_data = SettingClass();
   int _groupValue = 1;
   var _controller = ScrollController();
 
@@ -28,7 +25,7 @@ class StudentList extends State<StudentListHome> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "生徒管理",
+          "ユーザー管理",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: Color.fromARGB(255, 67, 176, 190),
@@ -49,7 +46,8 @@ class StudentList extends State<StudentListHome> {
               children: {
                 1: buildSegment("一期生"),
                 2: buildSegment("二期生"),
-                3: buildSegment("三期生")
+                3: buildSegment("三期生"),
+                4: buildSegment("四期生")
               },
               onValueChanged: (groupValue) {
                 setState(() {
@@ -99,7 +97,8 @@ class StudentList extends State<StudentListHome> {
         onPressed: () {
           Navigator.push(
             context,
-            main_data.NavigationButtomSlide(AddStudent()),
+            setting_data.NavigationButtomSlide(
+                AddStudent(widget.communityName)),
           );
         },
       ),
