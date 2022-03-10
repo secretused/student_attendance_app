@@ -47,7 +47,7 @@ class QRChangeModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future logOut() async {
-    await FirebaseAuth.instance.signOut();
-  }
+  // Future logOut() async {
+  //   await FirebaseAuth.instance.signOut();
+  // }
 }

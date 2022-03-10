@@ -14,7 +14,6 @@ class StudentModel extends ChangeNotifier {
 }
 
 class StudentListModel extends ChangeNotifier {
-  late int count;
   List<StudentModel> students = [];
   // FireStoreデータ取得
   Future getStudents() async {

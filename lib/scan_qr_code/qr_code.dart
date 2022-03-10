@@ -68,12 +68,14 @@ class _MyHomePageState extends State {
 
   Future scanQrCode(String? community, bool? isHost) async {
     late String? sameCommunity;
+    late String? QRCodeLink;
     FirebaseFirestore.instance
         .collection('community')
         .doc(community)
         .snapshots()
         .listen((DocumentSnapshot snapshot) {
       sameCommunity = snapshot.get('community');
+      QRCodeLink = snapshot.get('QRLink');
     });
     final qrCode = await FlutterBarcodeScanner.scanBarcode(
       '#EB394B',
@@ -86,14 +88,19 @@ class _MyHomePageState extends State {
     setState(() {
       this.qrCode = qrCode;
     });
-    if (qrCode == "https://techford.jp/") {
+    if (qrCode == QRCodeLink) {
       await Navigator.push(
         context,
         setting_data.NavigationFade(
             AttendanceRegister(community, isHost, sameCommunity)),
       );
     } else {
-      print("QRコードが違います");
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return ErrorModal(error_message: "QRコードが違います\n正しいQRコードを試してください");
+        },
+      );
     }
   }
 }

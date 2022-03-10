@@ -1,18 +1,20 @@
 import 'package:attendanc_management_app/edit_profile/edit_profile_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import '../setting.dart';
 import 'edit_institute_model.dart';
 
-class EditInstitutePage extends StatelessWidget {
+class EditInstitutePageHome extends StatefulWidget {
+  @override
   String? communityName;
   String? department;
   String? email;
   String? phoneNumber;
   String? link;
   String? QRLink;
-
-  EditInstitutePage(
+  EditInstitutePageHome(
     String? communityName,
     String? department,
     String? email,
@@ -28,11 +30,19 @@ class EditInstitutePage extends StatelessWidget {
     this.QRLink = QRLink;
   }
 
+  State<StatefulWidget> createState() {
+    return EditInstitutePage();
+  }
+}
+
+class EditInstitutePage extends State<EditInstitutePageHome> {
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<EditInstituteModel>(
-      create: (_) => EditInstituteModel(
-          communityName, department, email, phoneNumber, link, QRLink),
+      create: (_) => EditInstituteModel(widget.communityName, widget.department,
+          widget.email, widget.phoneNumber, widget.link, widget.QRLink),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
@@ -51,7 +61,9 @@ class EditInstitutePage extends StatelessWidget {
                   TextField(
                     controller: model.communityController,
                     decoration: InputDecoration(
-                      hintText: '名前',
+                      hintText: '団体名',
+                      suffix: Text('必須',
+                          style: TextStyle(color: Colors.red, fontSize: 13)),
                     ),
                     onChanged: (text) {
                       model.setCommunity(text);
@@ -60,7 +72,7 @@ class EditInstitutePage extends StatelessWidget {
                   TextField(
                     controller: model.departmentController,
                     decoration: InputDecoration(
-                      hintText: '名前',
+                      hintText: '支店・部署名',
                     ),
                     onChanged: (text) {
                       model.setDepartment(text);
@@ -69,16 +81,18 @@ class EditInstitutePage extends StatelessWidget {
                   TextField(
                     controller: model.emailController,
                     decoration: InputDecoration(
-                      hintText: '名前',
+                      hintText: 'メールアドレス',
                     ),
                     onChanged: (text) {
                       model.setEmail(text);
                     },
                   ),
                   TextField(
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     controller: model.phoneNumberController,
                     decoration: InputDecoration(
-                      hintText: '名前',
+                      hintText: '電話番号',
                     ),
                     onChanged: (text) {
                       model.setPhoneNumber(text);
@@ -96,7 +110,9 @@ class EditInstitutePage extends StatelessWidget {
                   TextField(
                     controller: model.QRLinkController,
                     decoration: InputDecoration(
-                      hintText: '名前',
+                      hintText: 'QRコード読み取り先リンク',
+                      suffix: Text('必須',
+                          style: TextStyle(color: Colors.red, fontSize: 13)),
                     ),
                     onChanged: (text) {
                       model.setQRLink(text);
@@ -113,26 +129,75 @@ class EditInstitutePage extends StatelessWidget {
                       primary: Color.fromARGB(255, 66, 140, 224),
                       onPrimary: Colors.black,
                     ),
-                    // 団体を削除する処理が必要
-                    onPressed: () {},
-                    // model.isUpdated()
-                    //     ? () async {
-                    //         // 追加の処理
-                    //         try {
-                    //           await model.update();
-                    //           Navigator.of(context).pop(model.name);
-                    //         } catch (e) {
-                    //           final snackBar = SnackBar(
-                    //             backgroundColor: Colors.red,
-                    //             content: Text(e.toString()),
-                    //           );
-                    //           ScaffoldMessenger.of(context)
-                    //               .showSnackBar(snackBar);
-                    //         }
-                    //       }
-                    //     : null,
+                    onPressed: model.isUpdated()
+                        ? () async {
+                            setState(() {
+                              isLoading = true;
+                            });
+                            try {
+                              // ローディング処理
+                              await model.update();
+                              if (model.sameName == true) {
+                                // ローディング開始
+                                setState(() {
+                                  isLoading = false;
+                                });
+
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return ErrorModal(
+                                        error_message:
+                                            "既にこの団体は存在しています\n他の団体名を設定してください");
+                                  },
+                                );
+                              } else {
+                                if (model.QRLink!.isEmpty) {
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return ErrorModal(
+                                          error_message: "QRリンクが入力されていません");
+                                    },
+                                  );
+                                } else {
+                                  // ローディング終了
+                                  isLoading = false;
+                                  Navigator.of(context)
+                                      .pop(model.communityName);
+                                }
+                              }
+                            } catch (e) {
+                              if (model.communityName!.isEmpty) {
+                                setState(() {
+                                  isLoading = false;
+                                });
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return ErrorModal(
+                                        error_message: "団体名が入力されていません");
+                                  },
+                                );
+                              } else {
+                                final snackBar = SnackBar(
+                                  backgroundColor: Colors.red,
+                                  content: Text(e.toString()),
+                                );
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                              }
+                            } finally {
+                              model.endLoading();
+                            }
+                          }
+                        : null,
                     child: Text('更新する'),
                   ),
+                  CirculeLoadingAction(visible: isLoading)
                 ],
               ),
             );

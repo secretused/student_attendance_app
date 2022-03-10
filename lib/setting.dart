@@ -89,7 +89,10 @@ class ErrorModal extends StatelessWidget {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(error_message),
+          Text(
+            error_message,
+            textAlign: TextAlign.center,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -117,5 +120,35 @@ class ErrorModal extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+// くるくる処理
+class CirculeLoadingAction extends StatelessWidget {
+  CirculeLoadingAction({required this.visible});
+
+  //表示状態
+  final bool visible;
+
+  @override
+  Widget build(BuildContext context) {
+    final double deviceWidth = MediaQuery.of(context).size.width;
+    return visible
+        ? Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(top: 13.0),
+                  child: SizedBox(
+                    child: LinearProgressIndicator(),
+                    height: 5.0,
+                    width: deviceWidth * 0.90,
+                  ),
+                ),
+              ],
+            ),
+          )
+        : Container();
   }
 }

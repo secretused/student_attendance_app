@@ -32,7 +32,7 @@ class ChangeQRCode extends StatelessWidget {
                 onPressed: () async {
                   Navigator.push(
                     context,
-                    setting_data.NavigationFade(EditInstitutePage(
+                    setting_data.NavigationFade(EditInstitutePageHome(
                         model.communityName!,
                         model.department!,
                         model.email!,
@@ -114,17 +114,17 @@ class ChangeQRCode extends StatelessWidget {
                         SizedBox(
                           height: 20,
                         ),
-                        TextButton(
-                            onPressed: () async {
-                              await model.logOut();
-                              Navigator.of(context).pop();
-                            },
-                            child: Text(
-                              "ログアウト",
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 66, 140, 224),
-                              ),
-                            ))
+                        // TextButton(
+                        //     onPressed: () async {
+                        //       await model.logOut();
+                        //       Navigator.of(context).pop();
+                        //     },
+                        //     child: Text(
+                        //       "ログアウト",
+                        //       style: TextStyle(
+                        //         color: Color.fromARGB(255, 66, 140, 224),
+                        //       ),
+                        //     ))
                       ],
                     ),
                   ),

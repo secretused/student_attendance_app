@@ -34,6 +34,13 @@ lateによる初期化せずに値を使い非同期で値をすぐに扱える�
 https://qiita.com/nukotsuka/items/66236723bf17c4574608
 https://note.com/hatchoutschool/n/n003c6c19dcab
 
+Loading
+https://qiita.com/quqjp/items/4e5cb808f829161bc259
+
+変数をStringで記述する方法
+"${user?.email}"
+
+
 # Uncomment this line to define a global platform for your project
 platform :ios, '12.0'
 
