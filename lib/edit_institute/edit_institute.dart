@@ -131,6 +131,7 @@ class EditInstitutePage extends State<EditInstitutePageHome> {
                     ),
                     onPressed: model.isUpdated()
                         ? () async {
+                            // ローディング開始
                             setState(() {
                               isLoading = true;
                             });
@@ -138,12 +139,14 @@ class EditInstitutePage extends State<EditInstitutePageHome> {
                               // ローディング処理
                               await model.update();
                               if (model.sameName == true) {
-                                // ローディング開始
+                                // 1-1
+                                print("1-1");
                                 setState(() {
                                   isLoading = false;
                                 });
 
                                 showDialog(
+                                  barrierDismissible: false,
                                   context: context,
                                   builder: (BuildContext context) {
                                     return ErrorModal(
@@ -152,30 +155,82 @@ class EditInstitutePage extends State<EditInstitutePageHome> {
                                   },
                                 );
                               } else {
+                                //  1-2-E(あるかも)
+                                print("1-2-E(あるかも)");
                                 if (model.QRLink!.isEmpty) {
+                                  // 2-1
                                   setState(() {
                                     isLoading = false;
                                   });
                                   showDialog(
+                                    barrierDismissible: false,
                                     context: context,
                                     builder: (BuildContext context) {
                                       return ErrorModal(
                                           error_message: "QRリンクが入力されていません");
                                     },
                                   );
+                                } else if (model.change_institute_name ==
+                                    true) {
+                                  //  1-2
+                                  print("1-2");
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+                                  var isCancel = await showDialog(
+                                    barrierDismissible: false,
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return ValidaterModal(
+                                        title: "団体名称変更",
+                                        validate_message:
+                                            "全てのユーザー情報が変更されます\n本当に団体情報を変更しますか？",
+                                        validate_button: "変更",
+                                        validate_cancel: "キャンセル",
+                                      );
+                                    },
+                                  );
+                                  if (isCancel != true) {
+                                    print("名前アップデート");
+                                    model.changeInstitute();
+                                    Navigator.popUntil(
+                                        context, (route) => route.isFirst);
+                                  }
                                 } else {
-                                  // ローディング終了
-                                  isLoading = false;
-                                  Navigator.of(context)
-                                      .pop(model.communityName);
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+                                  // 2-2
+                                  print("2-2");
+                                  var isCancel = await showDialog(
+                                    barrierDismissible: false,
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return ValidaterModal(
+                                        title: "確認画面",
+                                        validate_message: "団体情報を変更しますか？",
+                                        validate_button: "変更",
+                                        validate_cancel: "キャンセル",
+                                      );
+                                    },
+                                  );
+                                  if (isCancel != true) {
+                                    print("名前以外アップデート");
+                                    model.updateInstitute();
+                                    Navigator.popUntil(
+                                        context, (route) => route.isFirst);
+                                  }
                                 }
                               }
                             } catch (e) {
                               if (model.communityName!.isEmpty) {
+                                //  1-2-E
+                                print("1-2-E");
                                 setState(() {
                                   isLoading = false;
                                 });
                                 showDialog(
+                                  barrierDismissible: false,
                                   context: context,
                                   builder: (BuildContext context) {
                                     return ErrorModal(
@@ -190,8 +245,6 @@ class EditInstitutePage extends State<EditInstitutePageHome> {
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(snackBar);
                               }
-                            } finally {
-                              model.endLoading();
                             }
                           }
                         : null,

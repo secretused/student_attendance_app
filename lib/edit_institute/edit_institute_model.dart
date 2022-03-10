@@ -18,6 +18,8 @@ class EditInstituteModel extends ChangeNotifier {
   bool isLoading = false;
 
   late bool? sameName = false;
+  late bool? change_institute_name = false;
+  // late bool? changeDialog = false;
 
   final communityController = TextEditingController();
   final departmentController = TextEditingController();
@@ -41,16 +43,6 @@ class EditInstituteModel extends ChangeNotifier {
     phoneNumberController.text = phoneNumber!;
     linkController.text = link!;
     QRLinkController.text = QRLink!;
-  }
-
-  void startLoading() {
-    isLoading = true;
-    notifyListeners();
-  }
-
-  void endLoading() {
-    isLoading = false;
-    notifyListeners();
   }
 
   void setCommunity(String community) {
@@ -113,38 +105,28 @@ class EditInstituteModel extends ChangeNotifier {
     await Future.delayed(Duration(seconds: 1));
     if (communityName != nowCommunityName) {
       if (sameCommunity.runtimeType == String) {
-        // 同じ団体あり
+        // 同じ団体あり 1-1
+        print("model: 1-1");
         sameName = true;
       } else {
-        // 同じ団体なし
-        changeInstitute();
-        sameName = false;
+        // 同じ団体なし 1-2
+        print("model: 1-2");
+        // sameName = false;
+        change_institute_name = true;
       }
     } else {
       // 団体名以外変更
-      if (QRLink!.isEmpty) {
-        sameName = false;
-      } else {
-        await FirebaseFirestore.instance
-            .collection('community')
-            .doc(nowCommunityName)
-            .update({
-          'community': communityName,
-          'department': department,
-          'email': email,
-          'phoneNumber': int.parse(phoneNumber!),
-          'link': link,
-          'QRLink': QRLink,
-        });
-      }
+      //   // 2-1
+      //   // 2-2
     }
   }
 
-  // nowCommunityNameを持つ他の既存コレクションを変更する
   // usersコレクション変更
   Future changeInstitute() async {
     final current_user = FirebaseAuth.instance.currentUser;
     final uid = current_user?.uid;
+    //  1-2-E(あるかも)
+    print("model: 1-2-E(あるかも)");
     await FirebaseFirestore.instance
         .collection('users')
         .where("community", isEqualTo: nowCommunityName)
@@ -174,6 +156,21 @@ class EditInstituteModel extends ChangeNotifier {
         FirebaseFirestore.instance.collection("community").doc(communityName);
     await doc.set({
       'uid': uid,
+      'community': communityName,
+      'department': department,
+      'email': email,
+      'phoneNumber': int.parse(phoneNumber!),
+      'link': link,
+      'QRLink': QRLink,
+    });
+  }
+
+  @override
+  void updateInstitute() async {
+    FirebaseFirestore.instance
+        .collection('community')
+        .doc(nowCommunityName)
+        .update({
       'community': communityName,
       'department': department,
       'email': email,

@@ -96,6 +96,7 @@ class _MyHomePageState extends State {
       );
     } else {
       showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (BuildContext context) {
           return ErrorModal(error_message: "QRコードが違います\n正しいQRコードを試してください");

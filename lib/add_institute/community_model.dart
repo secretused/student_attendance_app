@@ -88,7 +88,6 @@ class CommunityModel extends ChangeNotifier {
 
     if (user != null && sameName == true && QRLink != null) {
       final uid = user.uid;
-      // user = FirebaseAuth.instance.currentUser!;
 
       // firestoreに追加
       final doc =

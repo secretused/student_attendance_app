@@ -114,6 +114,7 @@ class AddInstitute extends StatelessWidget {
                                 Navigator.of(context).pop();
                               } else {
                                 showDialog(
+                                  barrierDismissible: false,
                                   context: context,
                                   builder: (BuildContext context) {
                                     return ErrorModal(

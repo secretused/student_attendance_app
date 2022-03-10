@@ -123,6 +123,61 @@ class ErrorModal extends StatelessWidget {
   }
 }
 
+// 確認モーダルUI
+class ValidaterModal extends StatelessWidget {
+  const ValidaterModal({
+    required this.title,
+    required this.validate_message,
+    required this.validate_button,
+    required this.validate_cancel,
+    Key? key,
+  }) : super(key: key);
+
+  final String title;
+  final String validate_message;
+  final String validate_button;
+  final String validate_cancel;
+
+  @override
+  Widget build(BuildContext context) {
+    late bool is_cancel = false;
+    return AlertDialog(
+      title: Text(
+        title,
+        textAlign: TextAlign.center,
+      ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(validate_message),
+          Padding(
+            padding: const EdgeInsets.only(top: 10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    is_cancel = true;
+                    Navigator.pop(context, is_cancel);
+                  },
+                  child: Text(validate_cancel),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context, is_cancel);
+                  },
+                  child: Text(validate_button),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
 // くるくる処理
 class CirculeLoadingAction extends StatelessWidget {
   CirculeLoadingAction({required this.visible});
