@@ -106,11 +106,9 @@ class EditInstituteModel extends ChangeNotifier {
     if (communityName != nowCommunityName) {
       if (sameCommunity.runtimeType == String) {
         // 同じ団体あり 1-1
-        print("model: 1-1");
         sameName = true;
       } else {
         // 同じ団体なし 1-2
-        print("model: 1-2");
         // sameName = false;
         change_institute_name = true;
       }
@@ -126,7 +124,6 @@ class EditInstituteModel extends ChangeNotifier {
     final current_user = FirebaseAuth.instance.currentUser;
     final uid = current_user?.uid;
     //  1-2-E(あるかも)
-    print("model: 1-2-E(あるかも)");
     await FirebaseFirestore.instance
         .collection('users')
         .where("community", isEqualTo: nowCommunityName)

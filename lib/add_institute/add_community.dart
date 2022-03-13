@@ -6,16 +6,25 @@ import 'package:provider/provider.dart';
 import 'community_model.dart';
 import '../setting.dart';
 
-class AddInstitute extends StatelessWidget {
+class AddInstituteHome extends StatefulWidget {
+  @override
   String? community;
-  AddInstitute(String? community) {
+  AddInstituteHome(String? community) {
     this.community = community;
   }
+
+  State<StatefulWidget> createState() {
+    return AddInstitute();
+  }
+}
+
+class AddInstitute extends State<AddInstituteHome> {
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<CommunityModel>(
-      create: (_) => CommunityModel(community),
+      create: (_) => CommunityModel(widget.community),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
@@ -38,7 +47,7 @@ class AddInstitute extends StatelessWidget {
                           controller: model.communityController,
                           enabled: false,
                           decoration: InputDecoration(
-                            hintText: community,
+                            hintText: widget.community,
                           ),
                         ),
                         TextField(
@@ -105,13 +114,40 @@ class AddInstitute extends StatelessWidget {
                             onPrimary: Colors.black,
                           ),
                           onPressed: () async {
-                            model.startLoading();
-
                             // 追加の処理
                             try {
                               await model.addCommunity();
                               if (model.error != true) {
-                                Navigator.of(context).pop();
+                                if (!model.QRLink!.isEmpty) {
+                                  var isCancel = await showDialog(
+                                    barrierDismissible: false,
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return ValidaterModal(
+                                        title: "確認画面",
+                                        validate_message: "この内容で登録しますか？",
+                                        validate_button: "登録",
+                                        validate_cancel: "キャンセル",
+                                      );
+                                    },
+                                  );
+                                  if (isCancel != true) {
+                                    setState(() {
+                                      isLoading = true;
+                                    });
+                                    model.addInstitute();
+                                    Navigator.pop(context);
+                                  }
+                                } else {
+                                  showDialog(
+                                    barrierDismissible: false,
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return ErrorModal(
+                                          error_message: "QRリンクを入力してください");
+                                    },
+                                  );
+                                }
                               } else {
                                 showDialog(
                                   barrierDismissible: false,
@@ -130,12 +166,11 @@ class AddInstitute extends StatelessWidget {
                               );
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(snackBar);
-                            } finally {
-                              model.endLoading();
                             }
                           },
                           child: Text('登録する'),
                         ),
+                        CirculeLoadingAction(visible: isLoading)
                       ],
                     ),
                   ),

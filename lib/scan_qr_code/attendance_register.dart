@@ -151,7 +151,7 @@ class AttendanceRegister extends StatelessWidget {
                               await Navigator.push(
                                 context,
                                 setting_data.NavigationFade(
-                                    AddInstitute(community)),
+                                    AddInstituteHome(community)),
                               );
                             }
                           }

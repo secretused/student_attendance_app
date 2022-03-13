@@ -84,7 +84,7 @@ class ManagementHome extends StatelessWidget {
                             await Navigator.push(
                               context,
                               setting_data.NavigationFade(
-                                  AddInstitute(model.community)),
+                                  AddInstituteHome(model.community)),
                             );
                           }
                         },

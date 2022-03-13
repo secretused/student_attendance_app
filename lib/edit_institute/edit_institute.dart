@@ -140,7 +140,6 @@ class EditInstitutePage extends State<EditInstitutePageHome> {
                               await model.update();
                               if (model.sameName == true) {
                                 // 1-1
-                                print("1-1");
                                 setState(() {
                                   isLoading = false;
                                 });
@@ -156,7 +155,6 @@ class EditInstitutePage extends State<EditInstitutePageHome> {
                                 );
                               } else {
                                 //  1-2-E(あるかも)
-                                print("1-2-E(あるかも)");
                                 if (model.QRLink!.isEmpty) {
                                   // 2-1
                                   setState(() {
@@ -173,7 +171,7 @@ class EditInstitutePage extends State<EditInstitutePageHome> {
                                 } else if (model.change_institute_name ==
                                     true) {
                                   //  1-2
-                                  print("1-2");
+
                                   setState(() {
                                     isLoading = false;
                                   });
@@ -191,7 +189,6 @@ class EditInstitutePage extends State<EditInstitutePageHome> {
                                     },
                                   );
                                   if (isCancel != true) {
-                                    print("名前アップデート");
                                     model.changeInstitute();
                                     Navigator.popUntil(
                                         context, (route) => route.isFirst);
@@ -201,7 +198,6 @@ class EditInstitutePage extends State<EditInstitutePageHome> {
                                     isLoading = false;
                                   });
                                   // 2-2
-                                  print("2-2");
                                   var isCancel = await showDialog(
                                     barrierDismissible: false,
                                     context: context,
@@ -215,7 +211,6 @@ class EditInstitutePage extends State<EditInstitutePageHome> {
                                     },
                                   );
                                   if (isCancel != true) {
-                                    print("名前以外アップデート");
                                     model.updateInstitute();
                                     Navigator.popUntil(
                                         context, (route) => route.isFirst);
@@ -225,7 +220,6 @@ class EditInstitutePage extends State<EditInstitutePageHome> {
                             } catch (e) {
                               if (model.communityName!.isEmpty) {
                                 //  1-2-E
-                                print("1-2-E");
                                 setState(() {
                                   isLoading = false;
                                 });

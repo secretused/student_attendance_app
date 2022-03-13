@@ -97,8 +97,7 @@ class StudentList extends State<StudentListHome> {
         onPressed: () {
           Navigator.push(
             context,
-            setting_data.NavigationButtomSlide(
-                AddStudent(widget.communityName)),
+            setting_data.NavigationButtomSlide(AddMember(widget.communityName)),
           );
         },
       ),

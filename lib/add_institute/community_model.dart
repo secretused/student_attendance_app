@@ -16,7 +16,7 @@ class CommunityModel extends ChangeNotifier {
   String? communityName;
   String? department;
   String? email;
-  String? phoneNumber;
+  String? phoneNumber = "0000000000";
   String? link;
   String? QRLink;
 
@@ -86,23 +86,32 @@ class CommunityModel extends ChangeNotifier {
       this.sameName = false;
     }
 
-    if (user != null && sameName == true && QRLink != null) {
-      final uid = user.uid;
-
-      // firestoreに追加
-      final doc =
-          FirebaseFirestore.instance.collection("community").doc(communityName);
-      await doc.set({
-        'uid': uid,
-        'community': communityName,
-        'department': department,
-        'email': email,
-        'phoneNumber': int.parse(phoneNumber!),
-        'link': link,
-        'QRLink': QRLink,
-      });
+    if (user != null && sameName == true) {
+      // 確認モーダル
+      if (phoneNumber!.isEmpty) {
+        this.phoneNumber = "0000000000";
+      }
     } else {
       this.error = true;
     }
+  }
+
+  // firestoreに団体追加
+  @override
+  void addInstitute() async {
+    print(phoneNumber);
+    var user = FirebaseAuth.instance.currentUser!;
+    final uid = user.uid;
+    final doc =
+        FirebaseFirestore.instance.collection("community").doc(communityName);
+    await doc.set({
+      'uid': uid,
+      'community': communityName,
+      'department': department,
+      'email': email,
+      'phoneNumber': int.parse(phoneNumber!),
+      'link': link,
+      'QRLink': QRLink,
+    });
   }
 }

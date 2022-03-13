@@ -23,6 +23,7 @@ class SelectDate extends State<SelectDateHome> {
   var _labelText = '日付選択';
 
   final main_date = MyHomePageState();
+  late bool showButton = false;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +34,15 @@ class SelectDate extends State<SelectDateHome> {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: Color.fromARGB(255, 67, 176, 190),
+        actions: <Widget>[
+          Visibility(
+            child: IconButton(
+              icon: Icon(Icons.edit),
+              onPressed: () async {},
+            ),
+            visible: showButton,
+          ),
+        ],
       ),
       body: Container(
         child: StreamBuilder<QuerySnapshot>(
@@ -66,7 +76,6 @@ class SelectDate extends State<SelectDateHome> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(FontAwesomeIcons.solidCalendarAlt),
-        // child: Icon(Icons.calendar_view_week_rounded),
         onPressed: () {
           _selectDate(context);
         },
@@ -75,6 +84,7 @@ class SelectDate extends State<SelectDateHome> {
   }
 
   Future<void> _selectDate(BuildContext context) async {
+    late String isList;
     final DateTime? selected = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -82,8 +92,27 @@ class SelectDate extends State<SelectDateHome> {
       lastDate: DateTime(2023),
     );
     if (selected != null) {
+      // 出席データあるか
+      _labelText = (DateFormat('yyyy年MM月dd日')).format(selected);
+      final getCommunity = await FirebaseFirestore.instance
+          .collection('attendances')
+          .where("createdAt", isEqualTo: _labelText)
+          .where("community", isEqualTo: widget.gotCommunity)
+          .get();
+      final community_data = getCommunity.docs;
+      try {
+        community_data.map((data) {
+          isList = data["name"];
+        }).toList();
+        if (isList != null) {
+          showButton = true;
+        }
+      } catch (e) {
+        showButton = false;
+      }
       setState(() {
-        _labelText = (DateFormat('yyyy年MM月dd日')).format(selected);
+        _labelText = _labelText;
+        showButton = showButton;
       });
     }
   }
