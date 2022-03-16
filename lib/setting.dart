@@ -68,6 +68,28 @@ class SettingClass extends StatelessWidget {
       },
     );
   }
+
+// 閉じるボタン
+  Widget closeButton(
+    BuildContext context,
+    double buttonSize,
+    Function() onPressed,
+  ) {
+    return SizedBox(
+      width: buttonSize * 1.2,
+      height: buttonSize * 1.2,
+      child: FloatingActionButton(
+        child: Icon(
+          Icons.clear,
+          size: buttonSize,
+          color: Colors.white,
+        ),
+        onPressed: () {
+          onPressed();
+        },
+      ),
+    );
+  }
 }
 
 // 例外・エラーモーダルUI

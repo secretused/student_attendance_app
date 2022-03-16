@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
-import '../main.dart';
+import '../setting.dart';
+import 'picker_list.dart';
+import 'picker_modal.dart';
 
 class SelectDateHome extends StatefulWidget {
   String? gotCommunity;
@@ -22,64 +23,79 @@ class SelectDateHome extends StatefulWidget {
 class SelectDate extends State<SelectDateHome> {
   var _labelText = '日付選択';
 
-  final main_date = MyHomePageState();
+  final setting_date = SettingClass();
   late bool showButton = false;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          _labelText,
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: Color.fromARGB(255, 67, 176, 190),
-        actions: <Widget>[
-          Visibility(
-            child: IconButton(
-              icon: Icon(Icons.edit),
-              onPressed: () async {},
+    return ChangeNotifierProvider<PickerModel>(
+      create: (_) => PickerModel(widget.gotCommunity),
+      child: Consumer<PickerModel>(builder: (context, model, child) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(
+              _labelText,
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            visible: showButton,
+            backgroundColor: Color.fromARGB(255, 67, 176, 190),
+            actions: <Widget>[
+              Visibility(
+                child: IconButton(
+                  icon: Icon(Icons.edit),
+                  onPressed: () async {
+                    // 絞り込みモーダル表示
+                    model.getChildData();
+                    showDialog<void>(
+                      context: context,
+                      builder: (_) {
+                        return SelectInfo(widget.gotCommunity);
+                      },
+                    );
+                  },
+                ),
+                visible: showButton,
+              ),
+            ],
           ),
-        ],
-      ),
-      body: Container(
-        child: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance
-              .collection('attendances')
-              .where("createdAt", isEqualTo: _labelText)
-              .where("community", isEqualTo: widget.gotCommunity)
-              .snapshots(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return const Center(
-                child: const CircularProgressIndicator(),
-              );
-            }
-            if (snapshot.hasError) {
-              return const Text('Something went wrong');
-            }
-            return ListView(
-              children: snapshot.data!.docs.map((DocumentSnapshot document) {
-                final data = document.data()! as Map<String, dynamic>;
-                return Card(
-                  child: ListTile(
-                    title: Text('${data['name']}'),
-                    trailing: Text('${data['time']}'),
-                  ),
+          body: Container(
+            child: StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection('attendances')
+                  .where("createdAt", isEqualTo: _labelText)
+                  .where("community", isEqualTo: widget.gotCommunity)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: const CircularProgressIndicator(),
+                  );
+                }
+                if (snapshot.hasError) {
+                  return const Text('Something went wrong');
+                }
+                return ListView(
+                  children:
+                      snapshot.data!.docs.map((DocumentSnapshot document) {
+                    final data = document.data()! as Map<String, dynamic>;
+                    return Card(
+                      child: ListTile(
+                        title: Text('${data['name']}'),
+                        trailing: Text('${data['time']}'),
+                      ),
+                    );
+                  }).toList(),
                 );
-              }).toList(),
-            );
-          },
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(FontAwesomeIcons.solidCalendarAlt),
-        onPressed: () {
-          _selectDate(context);
-        },
-      ),
+              },
+            ),
+          ),
+          floatingActionButton: FloatingActionButton(
+            child: Icon(FontAwesomeIcons.solidCalendarAlt),
+            onPressed: () {
+              _selectDate(context);
+            },
+          ),
+        );
+      }),
     );
   }
 
