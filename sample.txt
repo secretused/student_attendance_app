@@ -43,6 +43,9 @@ https://qiita.com/quqjp/items/4e5cb808f829161bc259
 Dialog Modal
 https://zenn.dev/pressedkonbu/articles/dialog-with-clear-button
 
+Picker
+https://zenn.dev/nobuyoshi/articles/740b9384303fe238e544
+
 変数をStringで記述する方法
 "${user?.email}"
 

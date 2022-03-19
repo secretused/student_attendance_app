@@ -8,6 +8,11 @@ class QRModel extends ChangeNotifier {
   String? name;
   String? community;
 
+  // 絞り込み用
+  String? department;
+  String? grade;
+  String? classroom;
+
   String? createdAt = DateFormat('yyyy年MM月dd日').format(DateTime.now());
   String? time = DateFormat('hh:mm').format(DateTime.now());
 
@@ -34,6 +39,22 @@ class QRModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  // 絞り込み用
+  void setDepartment(String department) {
+    this.department = department;
+    notifyListeners();
+  }
+
+  void setGrade(String grade) {
+    this.grade = grade;
+    notifyListeners();
+  }
+
+  void setClassRoom(String classroom) {
+    this.classroom = classroom;
+    notifyListeners();
+  }
+
   void setCommunity(String community) {
     this.community = community;
     notifyListeners();
@@ -52,6 +73,10 @@ class QRModel extends ChangeNotifier {
         'community': community,
         'time': time,
         'name': name,
+        // 絞り込み用
+        'department': department,
+        'grade': grade,
+        'classroom': classroom,
       });
     }
   }

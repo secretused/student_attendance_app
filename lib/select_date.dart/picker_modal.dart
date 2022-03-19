@@ -19,10 +19,9 @@ class SelectInfo extends StatefulWidget {
 
 // 絞り込みモーダル
 class SelectInfoHome extends State<SelectInfo> {
-  String? _selectedParent;
-  String? _selectedParentValue;
-  String? _selectedChild;
-  String? _selectedChildValue;
+  String? _selectedParent; //1つ目の選択肢のpicker
+  String? _selectedParentValue; //決定された一つ目の選択肢
+  String? _selectedChild; //2つ目の選択肢のpicker
   int? _selectedIndex;
 
   int count = 0;
@@ -30,6 +29,7 @@ class SelectInfoHome extends State<SelectInfo> {
 
   @override
   Widget build(BuildContext context) {
+    late int pickerOneValue = 1;
     final double deviceWidth = MediaQuery.of(context).size.width;
     final double deviceHeight = MediaQuery.of(context).size.height;
     return ChangeNotifierProvider<PickerModel>(
@@ -60,16 +60,41 @@ class SelectInfoHome extends State<SelectInfo> {
                         width: deviceWidth * 1 / 2,
                         child: ElevatedButton(
                           child: Text(
-                            _selectedParentValue ?? "ジャンル",
+                            _selectedParentValue ?? "選択してください",
                             style: TextStyle(color: Colors.black),
                           ),
                           style: ElevatedButton.styleFrom(
                             primary: Colors.white,
                             onPrimary: Colors.orange,
                           ),
-                          onPressed: () {
+                          onPressed: () async {
                             model.getChildData();
-                            selectParentPicker(context);
+                            // 自動で詳細のモーダルを表示
+                            int? result = await selectParentPicker(context);
+                            // 決定が押されたとき && 全てじゃない時
+                            if (result != null && result != 0) {
+                              setState(() {
+                                pickerOneValue = result;
+                              });
+                              // 選択肢2に選択肢1で選ばれたparentのListを渡す
+                              // 二つ目の選択肢の値をresultListで受け取る
+                              var resultList = await selectChildPicker(
+                                  context,
+                                  model.gotParentList?[result - 1],
+                                  pickerOneValue);
+                              if (resultList.runtimeType == bool) {
+                                //戻るの場合: 二個目のpickerはinvisible
+                                setState(() {
+                                  _visible = resultList;
+                                });
+                              } else {
+                                // 二個目の値が選ばれてリストとして返る
+                                // select_dateのStreamBuilderにあげる
+                                Navigator.of(context).pop(resultList);
+                              }
+                            } else if (result == 0) {
+                              Navigator.popUntil(context, (_) => count++ >= 2);
+                            }
                           },
                         ),
                       ),
@@ -78,18 +103,16 @@ class SelectInfoHome extends State<SelectInfo> {
                         child: SizedBox(
                           width: deviceWidth * 1 / 2,
                           child: ElevatedButton(
-                            child: const Text(
-                              '詳細',
+                            child: Text(
+                              model.gotParentList?[pickerOneValue - 1][0] ??
+                                  "詳細",
                               style: TextStyle(color: Colors.black),
                             ),
                             style: ElevatedButton.styleFrom(
                               primary: Colors.white,
-                              onPrimary: Colors.orange,
                             ),
                             onPressed: () {
-                              // 選択肢2に選択肢1で選ばれたparentのListを渡す
-                              selectChildPicker(context,
-                                  model.gotParentList?[_selectedIndex! - 1]);
+                              //  押せないため処理なし
                             },
                           ),
                         ),
@@ -120,7 +143,7 @@ class SelectInfoHome extends State<SelectInfo> {
                 children: [
                   CupertinoButton(
                     child: Text("戻る"),
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () => Navigator.pop(context, null),
                   ),
                   CupertinoButton(
                     child: Text("決定"),
@@ -132,7 +155,7 @@ class SelectInfoHome extends State<SelectInfo> {
                         Navigator.popUntil(context, (_) => count++ >= 2);
                       } else {
                         _visible = true;
-                        Navigator.pop(context);
+                        Navigator.pop(context, _selectedIndex);
                       }
                     },
                   ),
@@ -164,7 +187,11 @@ class SelectInfoHome extends State<SelectInfo> {
   }
 
   // 選択肢2
-  Future<dynamic> selectChildPicker(BuildContext context, List? gotParentList) {
+  Future<dynamic> selectChildPicker(
+      BuildContext context, List? gotParentList, int pickerOneValue) {
+    late String? _selectedChildValue;
+    // StreamBuilderに渡すリスト
+    late List? popList = [];
     return showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -177,12 +204,11 @@ class SelectInfoHome extends State<SelectInfo> {
                 children: [
                   CupertinoButton(
                     child: Text("戻る"),
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () => Navigator.pop(context, false),
                   ),
                   CupertinoButton(
                       child: Text("決定"),
                       onPressed: () {
-                        Navigator.popUntil(context, (_) => count++ >= 2);
                         setState(() {
                           if (_selectedChild == null) {
                             // 一つ目かどうか
@@ -191,6 +217,11 @@ class SelectInfoHome extends State<SelectInfo> {
                             _selectedChildValue = _selectedChild;
                           }
                         });
+
+                        popList
+                            .addAll([pickerOneValue - 1, _selectedChildValue]);
+                        // modalに値を返している
+                        Navigator.of(context).pop(popList);
                       }),
                 ],
               ),

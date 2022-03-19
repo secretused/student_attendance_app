@@ -55,7 +55,8 @@ class _MyHomePageState extends State {
                         ),
                       ),
                     ),
-                    onPressed: () => scanQrCode(model.community, model.isHost),
+                    onPressed: () => scanQrCode(model.community, model.isHost,
+                        model.department, model.grade, model.classroom),
                   ),
                 ),
               ],
@@ -66,7 +67,8 @@ class _MyHomePageState extends State {
     );
   }
 
-  Future scanQrCode(String? community, bool? isHost) async {
+  Future scanQrCode(String? community, bool? isHost, String? department,
+      String? grade, String? classroom) async {
     late String? sameCommunity;
     late String? QRCodeLink;
     FirebaseFirestore.instance
@@ -91,8 +93,8 @@ class _MyHomePageState extends State {
     if (qrCode == QRCodeLink) {
       await Navigator.push(
         context,
-        setting_data.NavigationFade(
-            AttendanceRegister(community, isHost, sameCommunity)),
+        setting_data.NavigationFade(AttendanceRegister(
+            community, isHost, department, grade, classroom, sameCommunity)),
       );
     } else {
       showDialog(

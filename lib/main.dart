@@ -12,6 +12,8 @@ import 'package:attendanc_management_app/mypage/my_page.dart';
 import 'package:attendanc_management_app/scan_qr_code/qr_code.dart';
 
 import 'mypage/my_model.dart';
+import 'select_date.dart/picker_modal.dart';
+import 'select_date.dart/select_date.dart';
 import 'setting.dart';
 
 void main() async {
@@ -32,6 +34,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.lightBlue,
       ),
       home: const MyHomePage(title: '入館管理'),
+      routes: {
+        '/modalPicker': (context) => SelectInfo(null),
+        '/selectDate': (context) => SelectDateHome(null),
+      },
     );
   }
 }

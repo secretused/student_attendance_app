@@ -8,6 +8,7 @@ class PickerModel extends ChangeNotifier {
   }
 
   final parentList = ["全て", "部署・学科", "期生・学年", "クラス"];
+  final dataBaseList = ["department", "grade", "classroom"];
   List? gotParentList;
 
   List? departmentList;
@@ -63,9 +64,5 @@ class PickerModel extends ChangeNotifier {
     tempParentList.addAll([departmentList, gradeList, classList]);
     this.gotParentList = tempParentList;
     notifyListeners();
-  }
-
-  void checkList() {
-    print(gotParentList);
   }
 }

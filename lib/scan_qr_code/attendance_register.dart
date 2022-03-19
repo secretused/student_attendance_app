@@ -22,11 +22,19 @@ class AttendanceRegister extends StatelessWidget {
 
   String? sameCommunity;
   bool? isHost;
+  // 絞り込み用
+  String? department;
+  String? grade;
+  String? classroom;
 
-  AttendanceRegister(String? community, bool? isHost, String? sameCommunity) {
+  AttendanceRegister(String? community, bool? isHost, String? department,
+      String? grade, String? classroom, String? sameCommunity) {
     this.community = community;
     this.isHost = isHost;
     this.sameCommunity = sameCommunity;
+    this.department = department;
+    this.grade = grade;
+    this.classroom = classroom;
   }
 
   @override
@@ -53,7 +61,6 @@ class AttendanceRegister extends StatelessWidget {
             height: deviceHeight * 0.5,
             width: double.infinity,
             child: Consumer<QRModel>(builder: (context, model, child) {
-              print("$sameCommunity遷移元");
               return Stack(children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 50.0),
@@ -129,6 +136,9 @@ class AttendanceRegister extends StatelessWidget {
                           model.startLoading();
                           model.setName(name!);
                           model.setUid(uid!);
+                          model.setDepartment(department!);
+                          model.setGrade(grade!);
+                          model.setClassRoom(classroom!);
                           model.setCommunity(community!);
                           // 追加の処理
                           if (sameCommunity != null) {
