@@ -7,13 +7,15 @@ class PickerModel extends ChangeNotifier {
     this.communityName = gotCommunity;
   }
 
-  final parentList = ["全て", "部署・学科", "期生・学年", "クラス"];
+  final parentList = ["全て", "部署・学科", "期生・学年", "クラス", "管理者"];
   final dataBaseList = ["department", "grade", "classroom"];
   List? gotParentList;
 
   List? departmentList;
   List? gradeList;
   List? classList;
+
+  List? hostList;
 
   Future getChildData() async {
     List<DocumentSnapshot> documentList = [];

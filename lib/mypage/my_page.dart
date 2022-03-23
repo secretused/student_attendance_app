@@ -26,7 +26,12 @@ class MyPage extends StatelessWidget {
                 onPressed: () async {
                   Navigator.push(
                     context,
-                    setting_data.NavigationFade(EditProfilePage(model.name!)),
+                    setting_data.NavigationFade(EditProfilePage(
+                        model.name!,
+                        model.department!,
+                        model.grade!,
+                        model.classroom!,
+                        model.phoneNumber!)),
                   );
                 },
               );

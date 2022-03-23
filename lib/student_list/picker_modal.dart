@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
-import 'picker_list.dart';
+import '../select_date.dart/picker_list.dart';
 
-class SelectInfo extends StatefulWidget {
+class SelectUser extends StatefulWidget {
   String? gotCommunity;
-  SelectInfo(String? gotCommunity) {
+  SelectUser(String? gotCommunity) {
     this.gotCommunity = gotCommunity;
   }
 
@@ -17,7 +17,7 @@ class SelectInfo extends StatefulWidget {
 }
 
 // 絞り込みモーダル
-class SelectInfoHome extends State<SelectInfo> {
+class SelectInfoHome extends State<SelectUser> {
   String? _selectedParent; //1つ目の選択肢のpicker
   String? _selectedParentValue; //決定された一つ目の選択肢
   String? _selectedChild; //2つ目の選択肢のpicker

@@ -46,6 +46,9 @@ https://zenn.dev/pressedkonbu/articles/dialog-with-clear-button
 Picker
 https://zenn.dev/nobuyoshi/articles/740b9384303fe238e544
 
+即時関数(Widget分岐) 
+https://yumanoblog.com/flutter-if-switch/
+
 変数をStringで記述する方法
 "${user?.email}"
 

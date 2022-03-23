@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 import '../add_student/add_student.dart';
+import '../select_date.dart/picker_list.dart';
+import 'picker_modal.dart';
 import '../setting.dart';
 
 class StudentListHome extends StatefulWidget {
@@ -17,91 +19,202 @@ class StudentListHome extends StatefulWidget {
 
 class StudentList extends State<StudentListHome> {
   SettingClass setting_data = SettingClass();
-  int _groupValue = 1;
-  var _controller = ScrollController();
+  final setting_date = SettingClass();
+  late bool showButton = false;
+
+  String? _selectedValue; //渡されてきた2つ目の値
+  late int _selectedIndex; //渡されてきた1つ目のindex
+  String? _selectedField; //Firebaseの表記
+  bool _isValue = false; //値が戻ってきたのか初期画面なのか判断
+  bool _isHost = false; //管理者が選ばれた場合
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "ユーザー管理",
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: Color.fromARGB(255, 67, 176, 190),
-      ),
-      body: Column(
-        children: [
-          Container(
-            // height: double.infinity,
-            width: double.infinity,
-
-            child: CupertinoSegmentedControl<int>(
-              padding: EdgeInsets.all(10),
-              groupValue: _groupValue,
-              borderColor: Color.fromARGB(255, 66, 140, 224),
-              // pressedColor: Color.fromARGB(255, 66, 140, 224),
-              // selectedColor: Colors.black,
-              unselectedColor: Colors.white,
-              children: {
-                1: buildSegment("一期生"),
-                2: buildSegment("二期生"),
-                3: buildSegment("三期生"),
-                4: buildSegment("四期生")
-              },
-              onValueChanged: (groupValue) {
-                setState(() {
-                  _groupValue = groupValue;
-                });
-              },
-            ),
-          ),
-          Container(
-            child: StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance
-                  .collection('users')
-                  .where("grade", isEqualTo: _groupValue.toString())
-                  .where("community", isEqualTo: widget.communityName)
-                  .snapshots(),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return const Center(
-                    child: const CircularProgressIndicator(),
+    return ChangeNotifierProvider<PickerModel>(
+      create: (_) => PickerModel(widget.communityName),
+      child: Consumer<PickerModel>(builder: (context, model, child) {
+        return Scaffold(
+          appBar: AppBar(
+            title: (() {
+              if (_selectedValue != null) {
+                // 絞り込み(grade以外)
+                if (_selectedField != "grade") {
+                  return Text(
+                    "$_selectedValue",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  );
+                } else {
+                  // grade
+                  return Text(
+                    "$_selectedValue期生",
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   );
                 }
-                if (snapshot.hasError) {
-                  return const Text('Something went wrong');
-                }
-                return Expanded(
-                  child: ListView(
-                    children:
-                        snapshot.data!.docs.map((DocumentSnapshot document) {
-                      final data = document.data()! as Map<String, dynamic>;
-                      return Card(
-                        child: ListTile(
-                          title: Text('${data['name']}'),
-                          subtitle: Text('${data['email']}'),
-                          trailing: Text('${data['classroom']}'),
-                        ),
-                      );
-                    }).toList(),
-                  ),
+              } else {
+                // 通常
+                return Text(
+                  "一覧",
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 );
-              },
-            ),
-          )
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.push(
-            context,
-            setting_data.NavigationButtomSlide(AddMember(widget.communityName)),
+              }
+            })(),
+            backgroundColor: Color.fromARGB(255, 67, 176, 190),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.filter_alt_outlined),
+                onPressed: () async {
+                  // 絞り込みモーダル表示
+                  model.getChildData();
+                  // 2個目のPickerで返ってきた値を格納
+                  List? pickerSelectedValue = await showDialog<List?>(
+                    context: context,
+                    builder: (_) {
+                      return SelectUser(widget.communityName);
+                    },
+                  );
+                  // 戻るボタンではなく選択されて返ってきた場合
+                  if (pickerSelectedValue != null) {
+                    if (pickerSelectedValue[0] != "host") {
+                      // 絞り込み画面
+                      _selectedIndex = pickerSelectedValue[0];
+                      setState(() {
+                        _isValue = true;
+                        _selectedField = model.dataBaseList[_selectedIndex];
+                        _selectedValue = pickerSelectedValue[1];
+                      });
+                    } else {
+                      // 管理者画面
+                      setState(() {
+                        _isValue = false;
+                        _isHost = true;
+                        _selectedValue = "管理者";
+                      });
+                    }
+                  } else {
+                    // 通常画面
+                    setState(() {
+                      _isValue = false;
+                      _isHost = false;
+                      _selectedValue = "全て";
+                    });
+                  }
+                },
+              ),
+            ],
+          ),
+          body: Container(
+            // 絞られたのか初期画面なのか判断
+            child: checkStreamBuilder(_isValue),
+          ),
+          floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.add),
+            onPressed: () {
+              Navigator.push(
+                context,
+                setting_data.NavigationButtomSlide(
+                    AddMember(widget.communityName)),
+              );
+            },
+          ),
+        );
+      }),
+    );
+  }
+
+  Widget checkStreamBuilder(bool isValue) {
+    // 絞り込み画面
+    if (isValue) {
+      return StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection('users')
+            .where("community", isEqualTo: widget.communityName)
+            .where(_selectedField!, isEqualTo: _selectedValue)
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(
+              child: const CircularProgressIndicator(),
+            );
+          }
+          if (snapshot.hasError) {
+            return const Text('Something went wrong');
+          }
+          return ListView(
+            children: snapshot.data!.docs.map((DocumentSnapshot document) {
+              final data = document.data()! as Map<String, dynamic>;
+              return Card(
+                child: ListTile(
+                  title: Text('${data['name']}'),
+                  trailing: Text('${data['department']}'),
+                  subtitle: Text('${data['email']}'),
+                ),
+              );
+            }).toList(),
           );
         },
-      ),
-    );
+      );
+    } else if (_isHost == true) {
+      // 管理者画面
+      return StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection('users')
+            .where("community", isEqualTo: widget.communityName)
+            .where("isHost", isEqualTo: true)
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(
+              child: const CircularProgressIndicator(),
+            );
+          }
+          if (snapshot.hasError) {
+            return const Text('Something went wrong');
+          }
+          return ListView(
+            children: snapshot.data!.docs.map((DocumentSnapshot document) {
+              final data = document.data()! as Map<String, dynamic>;
+              return Card(
+                child: ListTile(
+                  title: Text('${data['name']}'),
+                  trailing: Text('${data['department']}'),
+                  subtitle: Text('${data['email']}'),
+                ),
+              );
+            }).toList(),
+          );
+        },
+      );
+    } else {
+      // 通常画面
+      return StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection('users')
+            .where("community", isEqualTo: widget.communityName)
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(
+              child: const CircularProgressIndicator(),
+            );
+          }
+          if (snapshot.hasError) {
+            return const Text('Something went wrong');
+          }
+          return ListView(
+            children: snapshot.data!.docs.map((DocumentSnapshot document) {
+              final data = document.data()! as Map<String, dynamic>;
+              return Card(
+                child: ListTile(
+                  title: Text('${data['name']}'),
+                  trailing: Text('${data['department']}'),
+                  subtitle: Text('${data['email']}'),
+                ),
+              );
+            }).toList(),
+          );
+        },
+      );
+    }
   }
 
   Widget buildSegment(String text) => Container(

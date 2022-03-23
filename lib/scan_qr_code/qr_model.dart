@@ -12,9 +12,10 @@ class QRModel extends ChangeNotifier {
   String? department;
   String? grade;
   String? classroom;
+  bool? isHost;
 
   String? createdAt = DateFormat('yyyy年MM月dd日').format(DateTime.now());
-  String? time = DateFormat('hh:mm').format(DateTime.now());
+  String? time = DateFormat('HH:mm').format(DateTime.now());
 
   bool isLoading = false;
   var user = FirebaseAuth.instance.currentUser;
@@ -60,6 +61,11 @@ class QRModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setisHost(bool isHost) {
+    this.isHost = isHost;
+    notifyListeners();
+  }
+
   Future atendding() async {
     String? collectionName = createdAt! + name!;
 
@@ -77,6 +83,7 @@ class QRModel extends ChangeNotifier {
         'department': department,
         'grade': grade,
         'classroom': classroom,
+        'isHost': isHost,
       });
     }
   }

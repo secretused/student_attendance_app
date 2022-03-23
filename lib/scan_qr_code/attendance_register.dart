@@ -140,6 +140,7 @@ class AttendanceRegister extends StatelessWidget {
                           model.setGrade(grade!);
                           model.setClassRoom(classroom!);
                           model.setCommunity(community!);
+                          model.setisHost(isHost ?? false);
                           // 追加の処理
                           if (sameCommunity != null) {
                             try {

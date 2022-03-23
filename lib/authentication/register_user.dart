@@ -67,6 +67,15 @@ class RegisterPage extends State<RegisterHome> {
                           },
                         ),
                         TextField(
+                          controller: model.departmentController,
+                          decoration: InputDecoration(
+                            hintText: '部署・学科',
+                          ),
+                          onChanged: (text) {
+                            model.setDepartment(text);
+                          },
+                        ),
+                        TextField(
                           keyboardType: TextInputType.number,
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly
@@ -80,15 +89,6 @@ class RegisterPage extends State<RegisterHome> {
                           },
                         ),
                         TextField(
-                          controller: model.departmentController,
-                          decoration: InputDecoration(
-                            hintText: '部署・学科',
-                          ),
-                          onChanged: (text) {
-                            model.setDepartment(text);
-                          },
-                        ),
-                        TextField(
                           controller: model.classController,
                           decoration: InputDecoration(
                             hintText: 'クラス',
@@ -98,7 +98,7 @@ class RegisterPage extends State<RegisterHome> {
                           },
                         ),
                         SizedBox(
-                          height: 10,
+                          height: 20,
                         ),
                         TextField(
                           controller: model.emailController,
@@ -109,6 +109,20 @@ class RegisterPage extends State<RegisterHome> {
                                       color: Colors.red, fontSize: 13))),
                           onChanged: (text) {
                             model.setEmail(text);
+                          },
+                        ),
+                        TextField(
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                            LengthLimitingTextInputFormatter(11),
+                          ],
+                          controller: model.phoneNumController,
+                          decoration: InputDecoration(
+                            hintText: '電話番号',
+                          ),
+                          onChanged: (text) {
+                            model.setPhoneNumber(text);
                           },
                         ),
                         TextField(

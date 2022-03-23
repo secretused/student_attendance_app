@@ -30,6 +30,7 @@ class SelectDate extends State<SelectDateHome> {
   late int _selectedIndex; //渡されてきた1つ目のindex
   String? _selectedField; //Firebaseの表記
   bool _isValue = false; //値が戻ってきたのか初期画面なのか判断
+  bool _isHost = false; //管理者が選ばれた場合
 
   @override
   Widget build(BuildContext context) {
@@ -38,15 +39,34 @@ class SelectDate extends State<SelectDateHome> {
       child: Consumer<PickerModel>(builder: (context, model, child) {
         return Scaffold(
           appBar: AppBar(
-            title: Text(
-              _labelText,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
+            title: (() {
+              if (showButton && _selectedValue != null) {
+                // 絞り込み(grade以外)
+                if (_selectedField != "grade") {
+                  return Text(
+                    "${_labelText.substring(5, 11)}:$_selectedValue",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  );
+                } else {
+                  // grade
+                  return Text(
+                    "${_labelText.substring(5, 11)}:$_selectedValue期生",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  );
+                }
+              } else {
+                // 通常
+                return Text(
+                  _labelText,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                );
+              }
+            })(),
             backgroundColor: Color.fromARGB(255, 67, 176, 190),
             actions: <Widget>[
               Visibility(
                 child: IconButton(
-                  icon: Icon(Icons.edit),
+                  icon: Icon(Icons.filter_alt_outlined),
                   onPressed: () async {
                     // 絞り込みモーダル表示
                     model.getChildData();
@@ -59,11 +79,28 @@ class SelectDate extends State<SelectDateHome> {
                     );
                     // 戻るボタンではなく選択されて返ってきた場合
                     if (pickerSelectedValue != null) {
-                      _selectedIndex = pickerSelectedValue[0];
+                      if (pickerSelectedValue[0] != "host") {
+                        // 絞り込み画面
+                        _selectedIndex = pickerSelectedValue[0];
+                        setState(() {
+                          _isValue = true;
+                          _selectedField = model.dataBaseList[_selectedIndex];
+                          _selectedValue = pickerSelectedValue[1];
+                        });
+                      } else {
+                        // 管理者画面
+                        setState(() {
+                          _isValue = false;
+                          _isHost = true;
+                          _selectedValue = "管理者";
+                        });
+                      }
+                    } else {
+                      // 通常画面
                       setState(() {
-                        _isValue = true;
-                        _selectedField = model.dataBaseList[_selectedIndex];
-                        _selectedValue = pickerSelectedValue[1];
+                        _isValue = false;
+                        _isHost = false;
+                        _selectedValue = "全て";
                       });
                     }
                   },
@@ -119,14 +156,44 @@ class SelectDate extends State<SelectDateHome> {
           );
         },
       );
-      // 通常画面
-    } else {
+    } else if (_isHost == true) {
+      // 管理者画面
       return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('attendances')
             .where("createdAt", isEqualTo: _labelText)
             .where("community", isEqualTo: widget.gotCommunity)
-            // .where(_selectedField!, isEqualTo: _selectedValue)
+            .where("isHost", isEqualTo: true)
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(
+              child: const CircularProgressIndicator(),
+            );
+          }
+          if (snapshot.hasError) {
+            return const Text('Something went wrong');
+          }
+          return ListView(
+            children: snapshot.data!.docs.map((DocumentSnapshot document) {
+              final data = document.data()! as Map<String, dynamic>;
+              return Card(
+                child: ListTile(
+                  title: Text('${data['name']}'),
+                  trailing: Text('${data['time']}'),
+                ),
+              );
+            }).toList(),
+          );
+        },
+      );
+    } else {
+      // 通常画面
+      return StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection('attendances')
+            .where("createdAt", isEqualTo: _labelText)
+            .where("community", isEqualTo: widget.gotCommunity)
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {

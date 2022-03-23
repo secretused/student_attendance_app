@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 class RegisterModel extends ChangeNotifier {
   final emailController = TextEditingController();
   final authorController = TextEditingController();
+  final phoneNumController = TextEditingController();
   final nameController = TextEditingController();
   final communityController = TextEditingController();
   final gradeController = TextEditingController();
@@ -15,6 +16,7 @@ class RegisterModel extends ChangeNotifier {
 
   String? email;
   String? password;
+  String? phoneNumber;
 
   String? name;
   String? communityName;
@@ -43,6 +45,11 @@ class RegisterModel extends ChangeNotifier {
 
   void setPassword(String password) {
     this.password = password;
+    notifyListeners();
+  }
+
+  void setPhoneNumber(String phoneNum) {
+    this.phoneNumber = phoneNum;
     notifyListeners();
   }
 
@@ -79,6 +86,7 @@ class RegisterModel extends ChangeNotifier {
   Future signUp() async {
     this.email = emailController.text;
     this.password = authorController.text;
+    this.phoneNumber = phoneNumController.text;
     this.name = nameController.text;
     this.grade = gradeController.text;
     this.classroom = classController.text;
@@ -107,6 +115,7 @@ class RegisterModel extends ChangeNotifier {
           'uid': uid,
           'name': name,
           'email': email,
+          'phoneNumber': phoneNumber,
           'community': communityName,
           'grade': grade,
           'classroom': classroom,
