@@ -152,6 +152,7 @@ class ValidaterModal extends StatelessWidget {
     required this.validate_message,
     required this.validate_button,
     required this.validate_cancel,
+    required this.colors,
     Key? key,
   }) : super(key: key);
 
@@ -159,6 +160,7 @@ class ValidaterModal extends StatelessWidget {
   final String validate_message;
   final String validate_button;
   final String validate_cancel;
+  final Color colors;
 
   @override
   Widget build(BuildContext context) {
@@ -189,7 +191,10 @@ class ValidaterModal extends StatelessWidget {
                   onPressed: () {
                     Navigator.pop(context, is_cancel);
                   },
-                  child: Text(validate_button),
+                  child: Text(
+                    validate_button,
+                    style: TextStyle(color: colors),
+                  ),
                 ),
               ],
             ),

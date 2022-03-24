@@ -127,6 +127,7 @@ class AddInstitute extends State<AddInstituteHome> {
                                         title: "確認画面",
                                         validate_message: "この内容で登録しますか？",
                                         validate_button: "登録",
+                                        colors: Colors.lightBlue,
                                         validate_cancel: "キャンセル",
                                       );
                                     },

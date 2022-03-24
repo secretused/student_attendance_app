@@ -130,6 +130,7 @@ class RegisterModel extends ChangeNotifier {
 class AddUserModel extends ChangeNotifier {
   final emailController = TextEditingController();
   final authorController = TextEditingController();
+  final phoneNumController = TextEditingController();
   final nameController = TextEditingController();
   final communityController = TextEditingController();
   final gradeController = TextEditingController();
@@ -138,6 +139,7 @@ class AddUserModel extends ChangeNotifier {
 
   String? email;
   String? password;
+  String? phoneNumber;
 
   String? name;
   String? communityName;
@@ -170,6 +172,11 @@ class AddUserModel extends ChangeNotifier {
 
   void setPassword(String password) {
     this.password = password;
+    notifyListeners();
+  }
+
+  void setPhoneNumber(String phoneNum) {
+    this.phoneNumber = phoneNum;
     notifyListeners();
   }
 
@@ -206,6 +213,7 @@ class AddUserModel extends ChangeNotifier {
   Future signUp() async {
     this.email = emailController.text;
     this.password = authorController.text;
+    this.phoneNumber = phoneNumController.text;
     this.name = nameController.text;
     this.grade = gradeController.text;
     this.classroom = classController.text;
@@ -234,6 +242,7 @@ class AddUserModel extends ChangeNotifier {
           'uid': uid,
           'name': name,
           'email': email,
+          'phoneNumber': phoneNumber,
           'community': communityName,
           'grade': grade,
           'classroom': classroom,

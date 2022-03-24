@@ -52,6 +52,11 @@ https://yumanoblog.com/flutter-if-switch/
 変数をStringで記述する方法
 "${user?.email}"
 
+出来ない処理
+・route popに引数をもたせる
+・Firestore whereでの削除
+・FireBase CurrentUser以外のAuthの削除
+
 
 # Uncomment this line to define a global platform for your project
 platform :ios, '12.0'

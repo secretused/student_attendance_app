@@ -97,7 +97,7 @@ class RegisterPage extends State<AddMember> {
                           },
                         ),
                         SizedBox(
-                          height: 10,
+                          height: 20,
                         ),
                         TextField(
                           controller: model.emailController,
@@ -108,6 +108,20 @@ class RegisterPage extends State<AddMember> {
                                       color: Colors.red, fontSize: 13))),
                           onChanged: (text) {
                             model.setEmail(text);
+                          },
+                        ),
+                        TextField(
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                            LengthLimitingTextInputFormatter(11),
+                          ],
+                          controller: model.phoneNumController,
+                          decoration: InputDecoration(
+                            hintText: '電話番号',
+                          ),
+                          onChanged: (text) {
+                            model.setPhoneNumber(text);
                           },
                         ),
                         TextField(

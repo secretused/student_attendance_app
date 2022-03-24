@@ -184,6 +184,7 @@ class EditInstitutePage extends State<EditInstitutePageHome> {
                                         validate_message:
                                             "全てのユーザー情報が変更されます\n本当に団体情報を変更しますか？",
                                         validate_button: "変更",
+                                        colors: Colors.lightBlue,
                                         validate_cancel: "キャンセル",
                                       );
                                     },
@@ -206,6 +207,7 @@ class EditInstitutePage extends State<EditInstitutePageHome> {
                                         title: "確認画面",
                                         validate_message: "団体情報を変更しますか？",
                                         validate_button: "変更",
+                                        colors: Colors.lightBlue,
                                         validate_cancel: "キャンセル",
                                       );
                                     },

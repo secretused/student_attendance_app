@@ -4,12 +4,15 @@ import 'package:flutter/material.dart';
 
 class EditProfileModel extends ChangeNotifier {
   EditProfileModel(
+    String? uid,
     this.name,
     this.department,
     this.grade,
     this.classroom,
     this.phoneNumber,
   ) {
+    // uidは不変
+    this.uid = uid;
     nameController.text = name!;
     departmentController.text = department!;
     gradeController.text = grade!;
@@ -17,17 +20,19 @@ class EditProfileModel extends ChangeNotifier {
     phoneNumController.text = phoneNumber!;
   }
 
-  final nameController = TextEditingController();
-  final departmentController = TextEditingController();
-  final gradeController = TextEditingController();
-  final classController = TextEditingController();
-  final phoneNumController = TextEditingController();
-
+  String? uid;
   String? name;
   String? department;
   String? grade;
   String? classroom;
   String? phoneNumber;
+  bool nameNull = false;
+
+  final nameController = TextEditingController();
+  final departmentController = TextEditingController();
+  final gradeController = TextEditingController();
+  final classController = TextEditingController();
+  final phoneNumController = TextEditingController();
 
   void setName(String name) {
     this.name = name;
@@ -54,23 +59,46 @@ class EditProfileModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future isUpdate() async {
+  bool isUpdated() {
+    return (name != null &&
+        department != null &&
+        grade != null &&
+        phoneNumber != null &&
+        classroom != null);
+  }
+
+  Future update() async {
     this.name = nameController.text;
     this.department = departmentController.text;
     this.grade = gradeController.text;
     this.classroom = classController.text;
     this.phoneNumber = phoneNumController.text;
 
-    // 空欄が存在する場合はpageの方にvool値を返しエラーモーダル
+    if (name != "") {
+      // firestoreに追加
+      print(uid);
+      // final uid = FirebaseAuth.instance.currentUser!.uid;
+      await FirebaseFirestore.instance.collection('users').doc(uid).update({
+        'name': name,
+        'department': department,
+        'grade': grade,
+        'classroom': classroom,
+        'phoneNumber': phoneNumber,
+      });
+    } else {
+      // 名前が空欄
+      nameNull = true;
+    }
+  }
 
-    // firestoreに追加
-    final uid = FirebaseAuth.instance.currentUser!.uid;
-    await FirebaseFirestore.instance.collection('users').doc(uid).update({
-      'name': name,
-      'department': department,
-      'grade': grade,
-      'classroom': classroom,
-      'phoneNumber': phoneNumber,
-    });
+  void deleteUser(String? uid, String? community) async {
+    // userのドキュメントを削除
+    print(uid);
+    print(community);
+    // FirebaseFirestore.instance
+    //     .collection('attendances')
+    //     .where("community", isEqualTo: community)
+    //     .where("uid", isEqualTo: uid);
+    // 最後にFireBaseのAuthを削除
   }
 }

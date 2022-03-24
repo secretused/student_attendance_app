@@ -4,7 +4,8 @@ import 'package:provider/provider.dart';
 
 import '../add_student/add_student.dart';
 import '../select_date.dart/picker_list.dart';
-import 'picker_modal.dart';
+import '../select_date.dart/picker_modal.dart';
+import 'edit_user_modal.dart';
 import '../setting.dart';
 
 class StudentListHome extends StatefulWidget {
@@ -69,7 +70,7 @@ class StudentList extends State<StudentListHome> {
                   List? pickerSelectedValue = await showDialog<List?>(
                     context: context,
                     builder: (_) {
-                      return SelectUser(widget.communityName);
+                      return SelectInfo(widget.communityName);
                     },
                   );
                   // 戻るボタンではなく選択されて返ってきた場合
@@ -147,6 +148,14 @@ class StudentList extends State<StudentListHome> {
                   title: Text('${data['name']}'),
                   trailing: Text('${data['department']}'),
                   subtitle: Text('${data['email']}'),
+                  onTap: () async {
+                    showDialog<List?>(
+                      context: context,
+                      builder: (_) {
+                        return UserEditModal(data['uid']);
+                      },
+                    );
+                  },
                 ),
               );
             }).toList(),
@@ -178,6 +187,14 @@ class StudentList extends State<StudentListHome> {
                   title: Text('${data['name']}'),
                   trailing: Text('${data['department']}'),
                   subtitle: Text('${data['email']}'),
+                  onTap: () async {
+                    showDialog<List?>(
+                      context: context,
+                      builder: (_) {
+                        return UserEditModal(data['uid']);
+                      },
+                    );
+                  },
                 ),
               );
             }).toList(),
@@ -208,6 +225,14 @@ class StudentList extends State<StudentListHome> {
                   title: Text('${data['name']}'),
                   trailing: Text('${data['department']}'),
                   subtitle: Text('${data['email']}'),
+                  onTap: () async {
+                    showDialog<List?>(
+                      context: context,
+                      builder: (_) {
+                        return UserEditModal(data['uid']);
+                      },
+                    );
+                  },
                 ),
               );
             }).toList(),
