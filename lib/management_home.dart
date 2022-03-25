@@ -58,8 +58,8 @@ class ManagementHome extends StatelessWidget {
                             if (model.isHost == true) {
                               await Navigator.push(
                                 context,
-                                setting_data.NavigationFade(
-                                    StudentListHome(model.community)),
+                                setting_data.NavigationFade(StudentListHome(
+                                    model.community, model.isHost)),
                               );
                             }
                           },

@@ -19,7 +19,6 @@ class EditInstituteModel extends ChangeNotifier {
 
   late bool? sameName = false;
   late bool? change_institute_name = false;
-  // late bool? changeDialog = false;
 
   final communityController = TextEditingController();
   final departmentController = TextEditingController();
@@ -175,5 +174,31 @@ class EditInstituteModel extends ChangeNotifier {
       'link': link,
       'QRLink': QRLink,
     });
+  }
+
+  // 団体削除
+  void deleteInstitute(String? communityName) async {
+    await FirebaseAuth.instance.signOut();
+    // communityのドキュメントを削除
+    FirebaseFirestore.instance
+        .collection('community')
+        .doc(communityName)
+        .delete();
+    // attendancesのドキュメントを削除
+    return FirebaseFirestore.instance
+        .collection('attendances')
+        .where("community", isEqualTo: communityName)
+        .get()
+        .then(
+          // 取得したdocIDを使ってドキュメント削除
+          (QuerySnapshot snapshot) => {
+            snapshot.docs.forEach((f) {
+              FirebaseFirestore.instance
+                  .collection('attendances')
+                  .doc(f.reference.id)
+                  .delete();
+            }),
+          },
+        );
   }
 }

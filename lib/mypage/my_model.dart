@@ -57,21 +57,6 @@ class MyModel extends ChangeNotifier {
     }
   }
 
-  // 再度描写
-  // Future checkCommunity() async {
-  //   //団体の有無確認
-  //   final getInstitue = await FirebaseFirestore.instance
-  //       .collection('community')
-  //       .doc(community)
-  //       .get();
-  //   final community_data = getInstitue.data();
-  //   if (community_data?["community"].runtimeType != null) {
-  //     this.isCommunity = true;
-  //   } else {
-  //     this.isCommunity = false;
-  //   }
-  // }
-
   Future logOut() async {
     await FirebaseAuth.instance.signOut();
   }

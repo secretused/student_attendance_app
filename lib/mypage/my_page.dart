@@ -7,6 +7,7 @@ import 'package:attendanc_management_app/edit_profile/edit_proflie_page.dart';
 
 class MyPage extends StatelessWidget {
   SettingClass setting_data = SettingClass();
+  late bool isCurrentUser = true;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,10 @@ class MyPage extends StatelessWidget {
                         model.grade!,
                         model.classroom!,
                         model.phoneNumber!,
-                        model.community!)),
+                        model.community!,
+                        model.isHost ?? false,
+                        isCurrentUser,
+                        false)),
                   );
                 },
               );

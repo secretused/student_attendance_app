@@ -26,6 +26,7 @@ class EditProfileModel extends ChangeNotifier {
   String? grade;
   String? classroom;
   String? phoneNumber;
+  bool? isHost;
   bool nameNull = false;
 
   final nameController = TextEditingController();
@@ -59,6 +60,11 @@ class EditProfileModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setHost(bool isHost) {
+    this.isHost = isHost;
+    notifyListeners();
+  }
+
   bool isUpdated() {
     return (name != null &&
         department != null &&
@@ -76,7 +82,6 @@ class EditProfileModel extends ChangeNotifier {
 
     if (name != "") {
       // firestoreに追加
-      print(uid);
       // final uid = FirebaseAuth.instance.currentUser!.uid;
       await FirebaseFirestore.instance.collection('users').doc(uid).update({
         'name': name,
@@ -84,6 +89,7 @@ class EditProfileModel extends ChangeNotifier {
         'grade': grade,
         'classroom': classroom,
         'phoneNumber': phoneNumber,
+        'isHost': isHost,
       });
     } else {
       // 名前が空欄
@@ -91,14 +97,28 @@ class EditProfileModel extends ChangeNotifier {
     }
   }
 
+  // user削除処理
   void deleteUser(String? uid, String? community) async {
-    // userのドキュメントを削除
-    print(uid);
-    print(community);
-    // FirebaseFirestore.instance
-    //     .collection('attendances')
-    //     .where("community", isEqualTo: community)
-    //     .where("uid", isEqualTo: uid);
-    // 最後にFireBaseのAuthを削除
+    // usersのドキュメントを削除
+    FirebaseFirestore.instance.collection('users').doc(uid).delete();
+    // FireBaseのAuthを削除
+    FirebaseAuth.instance.currentUser?.delete();
+    // attendancesのドキュメントを削除
+    return FirebaseFirestore.instance
+        .collection('attendances')
+        .where("uid", isEqualTo: uid)
+        .where("community", isEqualTo: community)
+        .get()
+        .then(
+          // 取得したdocIDを使ってドキュメント削除
+          (QuerySnapshot snapshot) => {
+            snapshot.docs.forEach((f) {
+              FirebaseFirestore.instance
+                  .collection('attendances')
+                  .doc(f.reference.id)
+                  .delete();
+            }),
+          },
+        );
   }
 }

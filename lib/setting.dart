@@ -173,7 +173,10 @@ class ValidaterModal extends StatelessWidget {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(validate_message),
+          Text(
+            validate_message,
+            textAlign: TextAlign.center,
+          ),
           Padding(
             padding: const EdgeInsets.only(top: 10.0),
             child: Row(

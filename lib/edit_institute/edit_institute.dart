@@ -246,6 +246,56 @@ class EditInstitutePage extends State<EditInstitutePageHome> {
                         : null,
                     child: Text('更新する'),
                   ),
+                  // 団体削除
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.transparent,
+                      elevation: 0,
+                      onPrimary: Colors.red,
+                    ),
+                    onPressed: () async {
+                      var isCancel = await showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (BuildContext context) {
+                          return ValidaterModal(
+                            title: "確認画面",
+                            validate_message: "この団体を削除します\n削除しますか？",
+                            validate_button: "削除",
+                            colors: Colors.red,
+                            validate_cancel: "キャンセル",
+                          );
+                        },
+                      );
+                      if (isCancel != true) {
+                        var isCancel = await showDialog(
+                          barrierDismissible: false,
+                          context: context,
+                          builder: (BuildContext context) {
+                            return ValidaterModal(
+                              title: "削除画面",
+                              validate_message:
+                                  "団体と全てのデータが削除されます\n復元は不可能です\n本当に削除しますか？",
+                              validate_button: "削除",
+                              colors: Colors.red,
+                              validate_cancel: "キャンセル",
+                            );
+                          },
+                        );
+                        if (isCancel != true) {
+                          model.deleteInstitute(widget.communityName);
+                          Navigator.popUntil(context, (route) => route.isFirst);
+                        }
+                      }
+                    },
+                    child: Text(
+                      '団体データ削除',
+                      style: TextStyle(
+                        fontSize: 15,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ),
                   CirculeLoadingAction(visible: isLoading)
                 ],
               ),

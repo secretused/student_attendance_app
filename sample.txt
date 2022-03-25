@@ -49,12 +49,14 @@ https://zenn.dev/nobuyoshi/articles/740b9384303fe238e544
 即時関数(Widget分岐) 
 https://yumanoblog.com/flutter-if-switch/
 
+FireStore docIDの取得と処理の書き方
+https://off.tokyo/blog/flutter%E3%81%AEfirebase%E3%81%A7firestore%E3%81%8B%E3%82%89where%E3%81%A7document-id%E3%82%92%E5%8F%96%E5%BE%97%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95/
+
 変数をStringで記述する方法
 "${user?.email}"
 
 出来ない処理
 ・route popに引数をもたせる
-・Firestore whereでの削除
 ・FireBase CurrentUser以外のAuthの削除
 
 

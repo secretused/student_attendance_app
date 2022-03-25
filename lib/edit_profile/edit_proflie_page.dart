@@ -7,8 +7,17 @@ import '../setting.dart';
 
 class EditProfilePage extends StatefulWidget {
   @override
-  EditProfilePage(this.uid, this.name, this.department, this.grade,
-      this.classroom, this.phoneNumber, this.community);
+  EditProfilePage(
+      this.uid,
+      this.name,
+      this.department,
+      this.grade,
+      this.classroom,
+      this.phoneNumber,
+      this.community,
+      this.isHost,
+      this.isCurrentUser,
+      this.nowHost);
   final String uid;
   final String name;
   final String department;
@@ -16,6 +25,9 @@ class EditProfilePage extends StatefulWidget {
   final String classroom;
   final String phoneNumber;
   final String community;
+  late bool isHost;
+  final bool isCurrentUser;
+  final bool? nowHost;
 
   State<StatefulWidget> createState() {
     return EditProfilePageHome();
@@ -24,6 +36,7 @@ class EditProfilePage extends StatefulWidget {
 
 class EditProfilePageHome extends State<EditProfilePage> {
   bool isLoading = false;
+  void _changeSwitch(bool e) => setState(() => widget.isHost = e);
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<EditProfileModel>(
@@ -103,8 +116,24 @@ class EditProfilePageHome extends State<EditProfilePage> {
                     },
                   ),
                   SizedBox(
-                    height: 16,
+                    height: 20,
                   ),
+                  (widget.nowHost == true)
+                      ? Text("団体責任者・管理者")
+                      : const SizedBox.shrink(),
+                  (widget.nowHost == true)
+                      ? Switch(
+                          value: widget.isHost,
+                          onChanged: (value) {
+                            setState(
+                              () {
+                                widget.isHost = value;
+                              },
+                            );
+                            model.setHost(widget.isHost);
+                          },
+                        )
+                      : const SizedBox.shrink(),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       primary: Color.fromARGB(255, 66, 140, 224),
@@ -148,39 +177,58 @@ class EditProfilePageHome extends State<EditProfilePage> {
                         : null,
                     child: Text('更新する'),
                   ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.transparent,
-                      elevation: 0,
-                      onPrimary: Colors.red,
-                    ),
-                    onPressed: () async {
-                      var isCancel = await showDialog(
-                        barrierDismissible: false,
-                        context: context,
-                        builder: (BuildContext context) {
-                          return ValidaterModal(
-                            title: "確認画面",
-                            validate_message: "このユーザーの全てのデータが削除されます、本当に削除しますか？",
-                            validate_button: "削除",
-                            colors: Colors.red,
-                            validate_cancel: "キャンセル",
-                          );
-                        },
-                      );
-                      if (isCancel != true) {
-                        model.deleteUser(widget.uid, widget.community);
-                        Navigator.popUntil(context, (route) => route.isFirst);
-                      }
-                    },
-                    child: Text(
-                      'アカウント削除',
-                      style: TextStyle(
-                        fontSize: 15,
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
-                  ),
+                  (widget.isCurrentUser == true)
+                      ? ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.transparent,
+                            elevation: 0,
+                            onPrimary: Colors.red,
+                          ),
+                          onPressed: () async {
+                            var isCancel = await showDialog(
+                              barrierDismissible: false,
+                              context: context,
+                              builder: (BuildContext context) {
+                                return ValidaterModal(
+                                  title: "確認画面",
+                                  validate_message: "アカウントを削除します\n削除しますか？",
+                                  validate_button: "削除",
+                                  colors: Colors.red,
+                                  validate_cancel: "キャンセル",
+                                );
+                              },
+                            );
+                            if (isCancel != true) {
+                              var isCancel = await showDialog(
+                                barrierDismissible: false,
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return ValidaterModal(
+                                    title: "削除画面",
+                                    validate_message:
+                                        "全ての記録データが削除されます\n復元は不可能です\n本当に削除しますか？",
+                                    validate_button: "削除",
+                                    colors: Colors.red,
+                                    validate_cancel: "キャンセル",
+                                  );
+                                },
+                              );
+                              if (isCancel != true) {
+                                model.deleteUser(widget.uid, widget.community);
+                                Navigator.popUntil(
+                                    context, (route) => route.isFirst);
+                              }
+                            }
+                          },
+                          child: Text(
+                            'アカウント削除',
+                            style: TextStyle(
+                              fontSize: 15,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        )
+                      : const SizedBox.shrink(),
                   CirculeLoadingAction(visible: isLoading)
                 ],
               ),

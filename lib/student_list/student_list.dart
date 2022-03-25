@@ -10,8 +10,10 @@ import '../setting.dart';
 
 class StudentListHome extends StatefulWidget {
   String? communityName;
-  StudentListHome(String? community) {
+  bool? nowHost;
+  StudentListHome(String? community, bool? isHost) {
     this.communityName = community;
+    this.nowHost = isHost;
   }
 
   @override
@@ -152,7 +154,7 @@ class StudentList extends State<StudentListHome> {
                     showDialog<List?>(
                       context: context,
                       builder: (_) {
-                        return UserEditModal(data['uid']);
+                        return UserEditModal(data['uid'], widget.nowHost);
                       },
                     );
                   },
@@ -191,7 +193,7 @@ class StudentList extends State<StudentListHome> {
                     showDialog<List?>(
                       context: context,
                       builder: (_) {
-                        return UserEditModal(data['uid']);
+                        return UserEditModal(data['uid'], widget.nowHost);
                       },
                     );
                   },
@@ -229,7 +231,7 @@ class StudentList extends State<StudentListHome> {
                     showDialog<List?>(
                       context: context,
                       builder: (_) {
-                        return UserEditModal(data['uid']);
+                        return UserEditModal(data['uid'], widget.nowHost);
                       },
                     );
                   },

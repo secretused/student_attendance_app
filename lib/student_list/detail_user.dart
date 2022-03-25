@@ -15,6 +15,7 @@ class DetailUser extends ChangeNotifier {
   String? department;
   String? classroom;
   bool? isHost;
+  bool? nowIsHost;
 
   void startLoading() {
     isLoading = true;

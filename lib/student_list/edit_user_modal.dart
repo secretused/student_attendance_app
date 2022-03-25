@@ -7,8 +7,10 @@ import 'detail_user.dart';
 
 class UserEditModal extends StatefulWidget {
   String? uid;
-  UserEditModal(String? uid) {
+  bool? nowHost;
+  UserEditModal(String? uid, bool? nowHost) {
     this.uid = uid;
+    this.nowHost = nowHost;
   }
 
   @override
@@ -20,6 +22,7 @@ class UserEditModal extends StatefulWidget {
 // 絞り込みモーダル
 class UserEditModalHome extends State<UserEditModal> {
   SettingClass setting_data = SettingClass();
+  late bool isCurrentUser = false;
   @override
   Widget build(BuildContext context) {
     final double deviceWidth = MediaQuery.of(context).size.width;
@@ -101,7 +104,10 @@ class UserEditModalHome extends State<UserEditModal> {
                                     model.grade!,
                                     model.classroom!,
                                     model.phoneNumber!,
-                                    model.community!)),
+                                    model.community!,
+                                    model.isHost ?? false,
+                                    isCurrentUser,
+                                    widget.nowHost)),
                               );
                             },
                             child: Text(
