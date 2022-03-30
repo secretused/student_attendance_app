@@ -38,6 +38,7 @@ class StudentList extends State<StudentListHome> {
       child: Consumer<PickerModel>(builder: (context, model, child) {
         return Scaffold(
           appBar: AppBar(
+            centerTitle: true,
             title: (() {
               if (_selectedValue != null) {
                 // 絞り込み(grade以外)
@@ -49,14 +50,14 @@ class StudentList extends State<StudentListHome> {
                 } else {
                   // grade
                   return Text(
-                    "$_selectedValue期生",
+                    "$_selectedValue",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   );
                 }
               } else {
                 // 通常
                 return Text(
-                  "一覧",
+                  "全て",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 );
               }
@@ -148,13 +149,15 @@ class StudentList extends State<StudentListHome> {
               return Card(
                 child: ListTile(
                   title: Text('${data['name']}'),
-                  trailing: Text('${data['department']}'),
+                  trailing: (data['isHost'] != true)
+                      ? Text('${data['department']}')
+                      : Text('管理者'),
                   subtitle: Text('${data['email']}'),
                   onTap: () async {
                     showDialog<List?>(
                       context: context,
                       builder: (_) {
-                        return UserEditModal(data['uid'], widget.nowHost);
+                        return UserEditModal(data['uid'], widget.nowHost, true);
                       },
                     );
                   },
@@ -187,13 +190,15 @@ class StudentList extends State<StudentListHome> {
               return Card(
                 child: ListTile(
                   title: Text('${data['name']}'),
-                  trailing: Text('${data['department']}'),
+                  trailing: (data['isHost'] != true)
+                      ? Text('${data['department']}')
+                      : Text('管理者'),
                   subtitle: Text('${data['email']}'),
                   onTap: () async {
                     showDialog<List?>(
                       context: context,
                       builder: (_) {
-                        return UserEditModal(data['uid'], widget.nowHost);
+                        return UserEditModal(data['uid'], widget.nowHost, true);
                       },
                     );
                   },
@@ -225,13 +230,15 @@ class StudentList extends State<StudentListHome> {
               return Card(
                 child: ListTile(
                   title: Text('${data['name']}'),
-                  trailing: Text('${data['department']}'),
+                  trailing: (data['isHost'] != true)
+                      ? Text('${data['department']}')
+                      : Text('管理者'),
                   subtitle: Text('${data['email']}'),
                   onTap: () async {
                     showDialog<List?>(
                       context: context,
                       builder: (_) {
-                        return UserEditModal(data['uid'], widget.nowHost);
+                        return UserEditModal(data['uid'], widget.nowHost, true);
                       },
                     );
                   },
@@ -243,12 +250,4 @@ class StudentList extends State<StudentListHome> {
       );
     }
   }
-
-  Widget buildSegment(String text) => Container(
-        padding: EdgeInsets.all(6),
-        child: Text(
-          text,
-          style: TextStyle(fontSize: 15),
-        ),
-      );
 }

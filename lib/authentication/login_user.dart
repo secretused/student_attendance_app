@@ -13,6 +13,7 @@ class LoginPage extends StatelessWidget {
       create: (_) => LoginModel(),
       child: Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: Text(
             'ログイン',
             style: TextStyle(fontWeight: FontWeight.bold),

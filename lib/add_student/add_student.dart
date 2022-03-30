@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
 import '../authentication/register_model.dart';
-import '../authentication/register_user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,6 +26,7 @@ class RegisterPage extends State<AddMember> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
+          centerTitle: true,
           title: Text(
             'ユーザー追加',
             style: TextStyle(fontWeight: FontWeight.bold),

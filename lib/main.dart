@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'package:attendanc_management_app/authentication/login_user.dart';
-import 'package:attendanc_management_app/authentication/register_user.dart';
 import 'package:provider/provider.dart';
 
 import 'management_home.dart';
@@ -12,8 +11,6 @@ import 'package:attendanc_management_app/mypage/my_page.dart';
 import 'package:attendanc_management_app/scan_qr_code/qr_code.dart';
 
 import 'mypage/my_model.dart';
-import 'select_date.dart/picker_modal.dart';
-import 'select_date.dart/select_date.dart';
 import 'setting.dart';
 
 void main() async {
@@ -29,15 +26,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Attendance-Management',
       theme: ThemeData(
         primarySwatch: Colors.lightBlue,
       ),
       home: const MyHomePage(title: '入館管理'),
-      routes: {
-        '/modalPicker': (context) => SelectInfo(null),
-        '/selectDate': (context) => SelectDateHome(null),
-      },
     );
   }
 }
@@ -65,6 +59,7 @@ class MyHomePageState extends State<MyHomePage> {
       child: Consumer<MyModel>(builder: (context, model, child) {
         return Scaffold(
           appBar: AppBar(
+            centerTitle: true,
             title: Text(
               widget.title,
               style: TextStyle(fontWeight: FontWeight.bold),
@@ -94,7 +89,6 @@ class MyHomePageState extends State<MyHomePage> {
             ],
           ),
           body: Container(
-            // color: Color.fromARGB(255, 223, 198, 135),
             child: Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -120,14 +114,14 @@ class MyHomePageState extends State<MyHomePage> {
                           ),
                           onPressed: () async {
                             if (FirebaseAuth.instance.currentUser != null) {
-                              // 団体有無
+                              // 団体の有無
                               if (model.isCommunity == true) {
                                 Navigator.push(
                                   context,
                                   setting_data.NavigationFade(MyQRCode()),
                                 );
                               } else {
-                                // 管理者か
+                                // 管理者であるか
                                 if (model.isHost == true) {
                                   // 団体追加
                                   Navigator.push(

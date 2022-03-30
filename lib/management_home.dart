@@ -17,6 +17,7 @@ class ManagementHome extends StatelessWidget {
       create: (_) => MyModel()..fechUser(),
       child: Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: Text(
             "管理画面",
             style: TextStyle(fontWeight: FontWeight.bold),
@@ -89,7 +90,7 @@ class ManagementHome extends StatelessWidget {
                           }
                         },
                         backgroundColor: Color.fromARGB(255, 61, 214, 125),
-                        text: "機関登録",
+                        text: "団体登録",
                         icon: Icon(
                           Icons.add_business,
                           size: 70,
@@ -106,7 +107,7 @@ class ManagementHome extends StatelessWidget {
                           }
                         },
                         backgroundColor: Color.fromARGB(255, 241, 121, 195),
-                        text: "登録情報変更",
+                        text: "団体情報変更",
                         icon: Icon(
                           Icons.security,
                           size: 70,

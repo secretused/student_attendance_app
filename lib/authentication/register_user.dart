@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
 import 'register_model.dart';
@@ -26,6 +25,7 @@ class RegisterPage extends State<RegisterHome> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
+          centerTitle: true,
           title: Text(
             '新規登録',
             style: TextStyle(fontWeight: FontWeight.bold),

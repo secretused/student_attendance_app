@@ -1,4 +1,3 @@
-import 'package:attendanc_management_app/edit_profile/edit_profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -46,6 +45,7 @@ class EditInstitutePage extends State<EditInstitutePageHome> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
+          centerTitle: true,
           title: Text(
             '団体情報変更',
             style: TextStyle(fontWeight: FontWeight.bold),
@@ -119,10 +119,7 @@ class EditInstitutePage extends State<EditInstitutePageHome> {
                     },
                   ),
                   SizedBox(
-                    height: 8,
-                  ),
-                  SizedBox(
-                    height: 16,
+                    height: 24,
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -171,7 +168,6 @@ class EditInstitutePage extends State<EditInstitutePageHome> {
                                 } else if (model.change_institute_name ==
                                     true) {
                                   //  1-2
-
                                   setState(() {
                                     isLoading = false;
                                   });

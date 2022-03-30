@@ -28,6 +28,7 @@ class AddInstitute extends State<AddInstituteHome> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
+          centerTitle: true,
           title: Text(
             '団体登録',
             style: TextStyle(fontWeight: FontWeight.bold),

@@ -1,9 +1,9 @@
-import 'package:attendanc_management_app/edit_profile/edit_profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../setting.dart';
+import 'edit_profile_model.dart';
 
 class EditProfilePage extends StatefulWidget {
   @override
@@ -49,6 +49,7 @@ class EditProfilePageHome extends State<EditProfilePage> {
           widget.phoneNumber),
       child: Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: Text(
             'プロフィール編集',
             style: TextStyle(fontWeight: FontWeight.bold),
@@ -119,19 +120,21 @@ class EditProfilePageHome extends State<EditProfilePage> {
                     height: 20,
                   ),
                   (widget.nowHost == true)
-                      ? Text("団体責任者・管理者")
-                      : const SizedBox.shrink(),
-                  (widget.nowHost == true)
-                      ? Switch(
-                          value: widget.isHost,
-                          onChanged: (value) {
-                            setState(
-                              () {
-                                widget.isHost = value;
+                      ? Column(
+                          children: [
+                            Text("団体責任者・管理者"),
+                            Switch(
+                              value: widget.isHost,
+                              onChanged: (value) {
+                                setState(
+                                  () {
+                                    widget.isHost = value;
+                                  },
+                                );
+                                model.setHost(widget.isHost);
                               },
-                            );
-                            model.setHost(widget.isHost);
-                          },
+                            )
+                          ],
                         )
                       : const SizedBox.shrink(),
                   ElevatedButton(

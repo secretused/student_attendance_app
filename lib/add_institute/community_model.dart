@@ -99,7 +99,6 @@ class CommunityModel extends ChangeNotifier {
   // firestoreに団体追加
   @override
   void addInstitute() async {
-    print(phoneNumber);
     var user = FirebaseAuth.instance.currentUser!;
     final uid = user.uid;
     final doc =

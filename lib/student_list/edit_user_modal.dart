@@ -8,9 +8,13 @@ import 'detail_user.dart';
 class UserEditModal extends StatefulWidget {
   String? uid;
   bool? nowHost;
-  UserEditModal(String? uid, bool? nowHost) {
+  bool? fromUserList;
+  UserEditModal(String? uid, bool? nowHost, bool fromUserList) {
     this.uid = uid;
+    // UserListからかMyPageからか見極め
     this.nowHost = nowHost;
+    // UserListからかSelectDateからか見極め
+    this.fromUserList = fromUserList;
   }
 
   @override
@@ -46,9 +50,18 @@ class UserEditModalHome extends State<UserEditModal> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      SizedBox(
-                        height: 10,
-                      ),
+                      (model.isHost == true)
+                          ? Text(
+                              "管理者",
+                              style: TextStyle(
+                                fontSize: 11,
+                                backgroundColor:
+                                    Color.fromARGB(255, 255, 255, 0),
+                              ),
+                            )
+                          : SizedBox(
+                              height: 10,
+                            ),
                       Text(
                         model.name ?? "名前",
                         style: TextStyle(
@@ -64,17 +77,28 @@ class UserEditModalHome extends State<UserEditModal> {
                       Text(
                         model.email ?? "メールアドレス",
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           (model.department != "")
-                              ? Text("${model.department}")
+                              ? Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text("${model.department}"),
+                                  ],
+                                )
                               : const SizedBox.shrink(),
                           (model.grade != "")
-                              ? Text("${model.grade}期生")
+                              ? Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(" ${model.grade}期生"),
+                                  ],
+                                )
                               : const SizedBox.shrink(),
                         ],
                       ),
@@ -87,34 +111,42 @@ class UserEditModalHome extends State<UserEditModal> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.transparent,
-                              elevation: 0,
-                              onPrimary: Color.fromARGB(255, 51, 166, 243),
-                            ),
-                            onPressed: () {
-                              // edit_profileに遷移
-                              Navigator.push(
-                                context,
-                                setting_data.NavigationFade(EditProfilePage(
-                                    model.uid!,
-                                    model.name!,
-                                    model.department!,
-                                    model.grade!,
-                                    model.classroom!,
-                                    model.phoneNumber!,
-                                    model.community!,
-                                    model.isHost ?? false,
-                                    isCurrentUser,
-                                    widget.nowHost)),
-                              );
-                            },
-                            child: Text(
-                              '編集',
-                              style: TextStyle(fontSize: 17),
-                            ),
-                          ),
+                          (widget.fromUserList == true)
+                              ? SizedBox(
+                                  width: 70, //横幅
+                                  height: 40, //高さ
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.transparent,
+                                      elevation: 0,
+                                      onPrimary:
+                                          Color.fromARGB(255, 51, 166, 243),
+                                    ),
+                                    onPressed: () {
+                                      // edit_profileに遷移
+                                      Navigator.push(
+                                        context,
+                                        setting_data.NavigationFade(
+                                            EditProfilePage(
+                                                model.uid!,
+                                                model.name!,
+                                                model.department!,
+                                                model.grade!,
+                                                model.classroom!,
+                                                model.phoneNumber!,
+                                                model.community!,
+                                                model.isHost ?? false,
+                                                isCurrentUser,
+                                                widget.nowHost)),
+                                      );
+                                    },
+                                    child: Text(
+                                      '編集',
+                                      style: TextStyle(fontSize: 17),
+                                    ),
+                                  ),
+                                )
+                              : SizedBox.shrink()
                         ],
                       )
                     ],

@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import '../edit_institute/edit_institute.dart';
 import '../setting.dart';
 import 'change_QR_model.dart';
-import 'package:attendanc_management_app/edit_profile/edit_proflie_page.dart';
 
 class ChangeQRCode extends StatelessWidget {
   SettingClass setting_data = SettingClass();
@@ -20,6 +19,7 @@ class ChangeQRCode extends StatelessWidget {
       create: (_) => QRChangeModel(gotCommunity)..fechInstitute(),
       child: Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: Text(
             '団体情報',
             style: TextStyle(fontWeight: FontWeight.bold),

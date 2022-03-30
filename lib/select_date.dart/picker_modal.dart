@@ -22,16 +22,18 @@ class SelectInfoHome extends State<SelectInfo> {
   String? _selectedParentValue; //決定された一つ目の選択肢
   String? _selectedChild; //2つ目の選択肢のpicker
   int? _selectedIndex;
+  late int pickerOneValue = 1;
 
   int count = 0;
   bool _visible = false;
 
   @override
   Widget build(BuildContext context) {
-    late int pickerOneValue = 1;
     late List hostList = ["host"];
+
     final double deviceWidth = MediaQuery.of(context).size.width;
     final double deviceHeight = MediaQuery.of(context).size.height;
+
     return ChangeNotifierProvider<PickerModel>(
       create: (_) => PickerModel(widget.gotCommunity),
       child: Dialog(

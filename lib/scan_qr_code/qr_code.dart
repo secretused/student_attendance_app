@@ -25,8 +25,9 @@ class _MyHomePageState extends State {
       create: (_) => MyModel()..fechUser(),
       child: Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: Text(
-            'QR Code Scanner',
+            'QRコード読み取り',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           backgroundColor: Color.fromARGB(255, 67, 176, 190),
@@ -101,7 +102,7 @@ class _MyHomePageState extends State {
         barrierDismissible: false,
         context: context,
         builder: (BuildContext context) {
-          return ErrorModal(error_message: "QRコードが違います\n正しいQRコードを試してください");
+          return ErrorModal(error_message: "QRコードが違います\n違うQRコードを試してください");
         },
       );
     }

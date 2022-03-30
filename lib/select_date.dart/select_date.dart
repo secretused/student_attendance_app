@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../setting.dart';
+import '../student_list/edit_user_modal.dart';
 import 'picker_list.dart';
 import 'picker_modal.dart';
 
@@ -28,7 +29,7 @@ class SelectDate extends State<SelectDateHome> {
 
   String? _selectedValue; //渡されてきた2つ目の値
   late int _selectedIndex; //渡されてきた1つ目のindex
-  String? _selectedField; //Firebaseの表記
+  String? _selectedField; //FireStoreのフィールド名
   bool _isValue = false; //値が戻ってきたのか初期画面なのか判断
   bool _isHost = false; //管理者が選ばれた場合
 
@@ -39,6 +40,7 @@ class SelectDate extends State<SelectDateHome> {
       child: Consumer<PickerModel>(builder: (context, model, child) {
         return Scaffold(
           appBar: AppBar(
+            centerTitle: true,
             title: (() {
               if (showButton && _selectedValue != null) {
                 // 絞り込み(grade以外)
@@ -50,7 +52,7 @@ class SelectDate extends State<SelectDateHome> {
                 } else {
                   // grade
                   return Text(
-                    "${_labelText.substring(5, 11)}:$_selectedValue期生",
+                    "${_labelText.substring(5, 11)}:$_selectedValue",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   );
                 }
@@ -150,6 +152,14 @@ class SelectDate extends State<SelectDateHome> {
                 child: ListTile(
                   title: Text('${data['name']}'),
                   trailing: Text('${data['time']}'),
+                  onTap: () async {
+                    showDialog<List?>(
+                      context: context,
+                      builder: (_) {
+                        return UserEditModal(data['uid'], false, false);
+                      },
+                    );
+                  },
                 ),
               );
             }).toList(),
@@ -181,6 +191,14 @@ class SelectDate extends State<SelectDateHome> {
                 child: ListTile(
                   title: Text('${data['name']}'),
                   trailing: Text('${data['time']}'),
+                  onTap: () async {
+                    showDialog<List?>(
+                      context: context,
+                      builder: (_) {
+                        return UserEditModal(data['uid'], false, false);
+                      },
+                    );
+                  },
                 ),
               );
             }).toList(),
@@ -211,6 +229,14 @@ class SelectDate extends State<SelectDateHome> {
                 child: ListTile(
                   title: Text('${data['name']}'),
                   trailing: Text('${data['time']}'),
+                  onTap: () async {
+                    showDialog<List?>(
+                      context: context,
+                      builder: (_) {
+                        return UserEditModal(data['uid'], false, false);
+                      },
+                    );
+                  },
                 ),
               );
             }).toList(),
@@ -222,11 +248,13 @@ class SelectDate extends State<SelectDateHome> {
 
   Future<void> _selectDate(BuildContext context) async {
     late String isList;
+    String? createdAt = DateFormat('yyyy').format(DateTime.now());
+    int datetime = int.parse(createdAt);
     final DateTime? selected = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(2019),
-      lastDate: DateTime(2023),
+      firstDate: DateTime(datetime - 4),
+      lastDate: DateTime(datetime + 1),
     );
     if (selected != null) {
       // 出席データあるか

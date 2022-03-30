@@ -1,12 +1,10 @@
 import 'package:attendanc_management_app/scan_qr_code/qr_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../add_institute/add_community.dart';
-import '../mypage/my_model.dart';
 import '../setting.dart';
 
 class AttendanceRegister extends StatelessWidget {
@@ -50,6 +48,7 @@ class AttendanceRegister extends StatelessWidget {
       create: (_) => QRModel(),
       child: Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: Text(
             "出席登録",
             style: TextStyle(fontWeight: FontWeight.bold),
