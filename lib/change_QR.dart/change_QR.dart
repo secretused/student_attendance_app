@@ -64,56 +64,88 @@ class ChangeQRCode extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Text(
-                          model.department ?? "支店・部署名なし",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w900,
-                            fontSize: 17.5,
-                          ),
-                        ),
+                        (model.department != null)
+                            ? Text("${model.department}",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 17.5,
+                                ))
+                            : const SizedBox.shrink(),
                         SizedBox(
                           height: 10,
                         ),
-                        Text(
-                          "メールアドレス",
-                          style: TextStyle(
-                            decoration: TextDecoration.underline,
-                          ),
-                        ),
-                        Text(model.email ?? "メールアドレスなし"),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "電話番号",
-                          style: TextStyle(
-                            decoration: TextDecoration.underline,
-                          ),
-                        ),
-                        Text(model.phoneNumber ?? "電話番号なし"),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "関連リンク",
-                          style: TextStyle(
-                            decoration: TextDecoration.underline,
-                          ),
-                        ),
-                        Text(model.link ?? "リンクなし"),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "QRコードリンク",
-                          style: TextStyle(
-                            decoration: TextDecoration.underline,
-                          ),
-                        ),
-                        Text(model.QRLink ?? "QRコードなし"),
-                        SizedBox(
-                          height: 20,
-                        ),
+                        (model.email != "")
+                            ? Column(
+                                children: [
+                                  Text(
+                                    "メールアドレス",
+                                    style: TextStyle(
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                  ),
+                                  Text(
+                                    "${model.email}",
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                ],
+                              )
+                            : const SizedBox.shrink(),
+                        (model.phoneNumber != "0")
+                            ? Column(
+                                children: [
+                                  Text(
+                                    "電話番号",
+                                    style: TextStyle(
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                  ),
+                                  Text(
+                                    "${model.phoneNumber}",
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                ],
+                              )
+                            : const SizedBox.shrink(),
+                        (model.link != "")
+                            ? Column(
+                                children: [
+                                  Text(
+                                    "関連リンク",
+                                    style: TextStyle(
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                  ),
+                                  Text(
+                                    "${model.link}",
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                ],
+                              )
+                            : const SizedBox.shrink(),
+                        (model.QRLink != "")
+                            ? Column(
+                                children: [
+                                  Text(
+                                    "QRリンク",
+                                    style: TextStyle(
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                  ),
+                                  Text(
+                                    "${model.QRLink}",
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                ],
+                              )
+                            : const SizedBox.shrink(),
                       ],
                     ),
                   ),

@@ -44,3 +44,17 @@ class LoginModel extends ChangeNotifier {
     }
   }
 }
+
+// パスワードリセット
+class AuthService {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future sendPasswordResetEmail(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+      return 'success';
+    } catch (error) {
+      return error.toString();
+    }
+  }
+}

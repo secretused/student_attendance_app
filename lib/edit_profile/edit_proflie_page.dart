@@ -36,7 +36,7 @@ class EditProfilePage extends StatefulWidget {
 
 class EditProfilePageHome extends State<EditProfilePage> {
   bool isLoading = false;
-  void _changeSwitch(bool e) => setState(() => widget.isHost = e);
+  bool setIsHost = false;
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<EditProfileModel>(
@@ -48,6 +48,7 @@ class EditProfilePageHome extends State<EditProfilePage> {
           widget.classroom,
           widget.phoneNumber),
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           centerTitle: true,
           title: Text(
@@ -116,24 +117,82 @@ class EditProfilePageHome extends State<EditProfilePage> {
                       model.setPhoneNumber(text);
                     },
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
+                  (widget.nowHost == true)
+                      ? SizedBox(
+                          height: 10,
+                        )
+                      : SizedBox(
+                          height: 30,
+                        ),
                   (widget.nowHost == true)
                       ? Column(
                           children: [
-                            Text("団体責任者・管理者"),
-                            Switch(
-                              value: widget.isHost,
-                              onChanged: (value) {
-                                setState(
-                                  () {
-                                    widget.isHost = value;
-                                  },
-                                );
-                                model.setHost(widget.isHost);
-                              },
-                            )
+                            (widget.isHost)
+                                ? TextButton(
+                                    onPressed: () async {
+                                      var isCancel = await showDialog(
+                                        barrierDismissible: false,
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return ValidaterModal(
+                                            title: "確認画面",
+                                            validate_message:
+                                                "本当に管理者権限を\n無効にしますか？",
+                                            validate_button: "OK",
+                                            colors: Colors.lightBlue,
+                                            validate_cancel: "キャンセル",
+                                          );
+                                        },
+                                      );
+                                      if (isCancel != true) {
+                                        model.setHost(false);
+                                        model.changeHost();
+                                        Navigator.popUntil(
+                                            context, (route) => route.isFirst);
+                                      }
+                                    },
+                                    child: Text(
+                                      '管理者権限を無効にする',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ),
+                                  )
+                                : TextButton(
+                                    onPressed: () async {
+                                      var isCancel = await showDialog(
+                                        barrierDismissible: false,
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return ValidaterModal(
+                                            title: "確認画面",
+                                            validate_message:
+                                                "本当に管理者権限を\n有効にしますか？",
+                                            validate_button: "OK",
+                                            colors: Colors.lightBlue,
+                                            validate_cancel: "キャンセル",
+                                          );
+                                        },
+                                      );
+                                      if (isCancel != true) {
+                                        model.setHost(true);
+                                        model.changeHost();
+                                        Navigator.popUntil(
+                                            context, (route) => route.isFirst);
+                                      }
+                                    },
+                                    child: Text(
+                                      '管理者権限を有効にする',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ),
+                                  ),
+                            SizedBox(
+                              height: 10,
+                            ),
                           ],
                         )
                       : const SizedBox.shrink(),
@@ -145,6 +204,7 @@ class EditProfilePageHome extends State<EditProfilePage> {
                     onPressed: model.isUpdated()
                         ? () async {
                             // 追加の処理
+                            model.setHost(widget.isHost);
                             try {
                               setState(() {
                                 isLoading = true;
@@ -159,7 +219,7 @@ class EditProfilePageHome extends State<EditProfilePage> {
                                   context: context,
                                   builder: (BuildContext context) {
                                     return ErrorModal(
-                                        error_message: "名前をを入力してください");
+                                        error_message: "名前を入力してください");
                                   },
                                 );
                               } else {

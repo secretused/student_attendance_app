@@ -45,9 +45,12 @@ class SelectDate extends State<SelectDateHome> {
               if (showButton && _selectedValue != null) {
                 // 絞り込み(grade以外)
                 if (_selectedField != "grade") {
-                  return Text(
-                    "${_labelText.substring(5, 11)}:$_selectedValue",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  return FittedBox(
+                    fit: BoxFit.fitWidth,
+                    child: Text(
+                      "${_labelText.substring(5, 11)}:$_selectedValue",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
                   );
                 } else {
                   // grade

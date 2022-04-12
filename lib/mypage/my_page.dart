@@ -84,28 +84,6 @@ class MyPage extends StatelessWidget {
                         SizedBox(
                           height: 12,
                         ),
-                        (model.email != "")
-                            ? Column(
-                                children: [
-                                  Text(
-                                    "メールアドレス",
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      decoration: TextDecoration.underline,
-                                    ),
-                                  ),
-                                  Text(
-                                    "${model.email}",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                    ),
-                                  )
-                                ],
-                              )
-                            : const SizedBox.shrink(),
-                        SizedBox(
-                          height: 12,
-                        ),
                         (model.community != "")
                             ? Column(
                                 children: [
@@ -121,53 +99,60 @@ class MyPage extends StatelessWidget {
                                     style: TextStyle(
                                       fontSize: 16,
                                     ),
-                                  )
+                                  ),
+                                  SizedBox(
+                                    height: 12,
+                                  ),
                                 ],
                               )
                             : const SizedBox.shrink(),
                         (model.department != "")
                             ? Column(
                                 children: [
-                                  SizedBox(
-                                    height: 12,
-                                  ),
                                   Text(
                                     "部署・学部",
                                     style: TextStyle(
                                       fontSize: 15,
                                       decoration: TextDecoration.underline,
                                     ),
-                                  )
-                                ],
-                              )
-                            : const SizedBox.shrink(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            (model.department != "")
-                                ? Text(
+                                  ),
+                                  Text(
                                     "${model.department}",
                                     style: TextStyle(
-                                      fontSize: 18,
+                                      fontSize: 16,
                                     ),
-                                  )
-                                : const SizedBox.shrink(),
-                            (model.grade != "")
-                                ? Text(
-                                    " ${model.grade}期生",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                    ),
-                                  )
-                                : const SizedBox.shrink(),
-                          ],
-                        ),
-                        (model.classroom != "")
-                            ? Column(
-                                children: [
+                                  ),
                                   SizedBox(
                                     height: 12,
                                   ),
+                                ],
+                              )
+                            : const SizedBox.shrink(),
+                        (model.grade != "")
+                            ? Column(
+                                children: [
+                                  Text(
+                                    "期生・学年",
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                  ),
+                                  Text(
+                                    " ${model.grade}期生",
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 12,
+                                  ),
+                                ],
+                              )
+                            : const SizedBox.shrink(),
+                        (model.classroom != "")
+                            ? Column(
+                                children: [
                                   Text(
                                     "クラス",
                                     style: TextStyle(
@@ -178,7 +163,51 @@ class MyPage extends StatelessWidget {
                                   Text(
                                     "${model.classroom}",
                                     style: TextStyle(
-                                      fontSize: 18,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 12,
+                                  ),
+                                ],
+                              )
+                            : const SizedBox.shrink(),
+                        (model.email != "")
+                            ? Column(
+                                children: [
+                                  Text(
+                                    "メールアドレス",
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                  ),
+                                  Text(
+                                    "${model.email}",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 14,
+                                  ),
+                                ],
+                              )
+                            : const SizedBox.shrink(),
+                        (model.phoneNumber != "")
+                            ? Column(
+                                children: [
+                                  Text(
+                                    "電話番号",
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                  ),
+                                  Text(
+                                    "${model.phoneNumber}",
+                                    style: TextStyle(
+                                      fontSize: 16,
                                     ),
                                   )
                                 ],

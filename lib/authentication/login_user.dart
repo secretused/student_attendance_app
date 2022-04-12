@@ -4,6 +4,8 @@ import 'register_user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'reset_password.dart';
+
 class LoginPage extends StatelessWidget {
   SettingClass setting_data = SettingClass();
 
@@ -21,7 +23,6 @@ class LoginPage extends StatelessWidget {
           backgroundColor: Color.fromARGB(255, 67, 176, 190),
         ),
         body: Container(
-          // color: Color.fromARGB(255, 223, 198, 135),
           child: Center(
             child: Consumer<LoginModel>(builder: (context, model, child) {
               return Stack(
@@ -81,6 +82,26 @@ class LoginPage extends StatelessWidget {
                           child: Text('ログイン'),
                         ),
                         TextButton(
+                          onPressed: () async {
+                            // 画面遷移
+                            await Navigator.push(
+                                context,
+                                setting_data.NavigationFade(
+                                    ResetPasswordForm()));
+                          },
+                          child: Text(
+                            'パスワードを忘れた場合',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.red,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            minimumSize: Size(150, 30), //最小のサイズ
+                          ),
                           onPressed: () async {
                             // 画面遷移
                             await Navigator.push(

@@ -43,9 +43,12 @@ class StudentList extends State<StudentListHome> {
               if (_selectedValue != null) {
                 // 絞り込み(grade以外)
                 if (_selectedField != "grade") {
-                  return Text(
-                    "$_selectedValue",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  return FittedBox(
+                    fit: BoxFit.fitWidth,
+                    child: Text(
+                      "$_selectedValue",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
                   );
                 } else {
                   // grade
@@ -57,7 +60,7 @@ class StudentList extends State<StudentListHome> {
               } else {
                 // 通常
                 return Text(
-                  "全て",
+                  "全てのユーザー",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 );
               }
@@ -99,7 +102,7 @@ class StudentList extends State<StudentListHome> {
                     setState(() {
                       _isValue = false;
                       _isHost = false;
-                      _selectedValue = "全て";
+                      _selectedValue = "全てのユーザー";
                     });
                   }
                 },

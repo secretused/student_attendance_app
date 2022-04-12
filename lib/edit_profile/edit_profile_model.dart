@@ -80,9 +80,13 @@ class EditProfileModel extends ChangeNotifier {
     this.classroom = classController.text;
     this.phoneNumber = phoneNumController.text;
 
+    // Authの名前変更
+    final instance = FirebaseAuth.instance;
+    final User? user = instance.currentUser;
+    await user!.updateDisplayName(name);
+
     if (name != "") {
       // firestoreに追加
-      // final uid = FirebaseAuth.instance.currentUser!.uid;
       await FirebaseFirestore.instance.collection('users').doc(uid).update({
         'name': name,
         'department': department,
@@ -120,5 +124,11 @@ class EditProfileModel extends ChangeNotifier {
             }),
           },
         );
+  }
+
+  Future changeHost() async {
+    await FirebaseFirestore.instance.collection('users').doc(uid).update({
+      'isHost': isHost,
+    });
   }
 }

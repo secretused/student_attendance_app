@@ -50,7 +50,7 @@ class AttendanceRegister extends StatelessWidget {
         appBar: AppBar(
           centerTitle: true,
           title: Text(
-            "出席登録",
+            "入館登録",
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           backgroundColor: Color.fromARGB(255, 67, 176, 190),
@@ -166,7 +166,7 @@ class AttendanceRegister extends StatelessWidget {
                             }
                           }
                         },
-                        child: Text('出席する'),
+                        child: Text('入館する'),
                       ),
                     ],
                   ),

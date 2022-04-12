@@ -48,7 +48,11 @@ class ManagementHome extends StatelessWidget {
                             }
                           },
                           backgroundColor: Color.fromARGB(255, 51, 166, 243),
-                          text: "出席管理",
+                          text: "入館管理",
+                          // icon: new Icon(
+                          //   IconData(0xe800, fontFamily: 'Binder'),
+                          //   size: 70,
+                          // ),
                           icon: Icon(
                             Icons.home,
                             size: 70,
