@@ -1,3 +1,6 @@
+エラー調べ参考
+https://zenn.dev/masayakitani/scraps/c0498f03b2f007
+
 displayName登録
 https://getstream.io/blog/serverless-auth-flutter-firebase/
 
@@ -54,6 +57,9 @@ https://off.tokyo/blog/flutter%E3%81%AEfirebase%E3%81%A7firestore%E3%81%8B%E3%82
 
 スクショ作成
 https://yaba-blog.com/app-store-screenshot/
+
+Archiveエラー
+https://teratail.com/questions/277634?sort=3
 
 
 変数をStringで記述する方法

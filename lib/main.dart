@@ -2,15 +2,18 @@ import 'package:attendanc_management_app/add_institute/add_community.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:attendanc_management_app/authentication/login_user.dart';
-import 'package:provider/provider.dart';
 
 import 'management_home.dart';
 import 'package:attendanc_management_app/mypage/my_page.dart';
 import 'package:attendanc_management_app/scan_qr_code/qr_code.dart';
 
 import 'mypage/my_model.dart';
+import 'option/privacy_policy.dart';
+import 'option/usage.dart';
 import 'setting.dart';
 
 void main() async {
@@ -49,6 +52,9 @@ class MyHomePageState extends State<MyHomePage> {
   final myController = TextEditingController();
   late String name;
 
+  final url = 'https://twitter.com/uta_app_vta';
+  final secondUrl = 'https://qiita.com/utasan_com';
+
   SettingClass setting_data = SettingClass();
 
   @override
@@ -57,6 +63,38 @@ class MyHomePageState extends State<MyHomePage> {
       create: (_) => MyModel()..fechUser(),
       child: Consumer<MyModel>(builder: (context, model, child) {
         return Scaffold(
+          // メニュードロワー
+          drawer: Drawer(
+            child: ListView(
+              children: [
+                DrawerHeader(
+                  child: Text(
+                    'アプリケーション情報',
+                    style: TextStyle(
+                        fontSize: 24,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 67, 176, 190),
+                  ),
+                ),
+                menuListTile(context, "シュッ席の使い方", AppUsage()),
+                menuListTile(context, "プライバシーポリシー", PrivacyPolicy()),
+                ListTile(
+                    title: Text("お問い合わせ・ご意見"),
+                    onTap: () => _launchURL(url, secondUrl)),
+                ListTile(
+                  title: Text("ライセンス情報"),
+                  onTap: () => showLicensePage(
+                    context: context,
+                    applicationName: 'シュッ席',
+                    applicationVersion: '1.0.0',
+                  ),
+                ),
+              ],
+            ),
+          ),
           appBar: AppBar(
             centerTitle: true,
             title: Text(
@@ -237,5 +275,34 @@ class MyHomePageState extends State<MyHomePage> {
         );
       }),
     );
+  }
+
+  // menuのListView
+  ListTile menuListTile(BuildContext context, String text, dynamic page_name) {
+    return ListTile(
+      title: Text(text),
+      onTap: () {
+        Navigator.push(
+          context,
+          setting_data.NavigationFade(page_name),
+        );
+      },
+    );
+  }
+
+  /// 問い合わせフォーム
+  Future _launchURL(String url, String secondUrl) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else if (secondUrl != null && await canLaunch(secondUrl)) {
+      await launch(secondUrl);
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return ErrorModal(error_message: "AppStoreからお問合わせください");
+        },
+      );
+    }
   }
 }
