@@ -1,18 +1,15 @@
-import 'package:attendanc_management_app/add_institute/add_community.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:attendanc_management_app/authentication/login_user.dart';
-
 import 'management_home.dart';
-import 'package:attendanc_management_app/mypage/my_page.dart';
-import 'package:attendanc_management_app/scan_qr_code/qr_code.dart';
-
+import 'authentication/login_user.dart';
 import 'mypage/my_model.dart';
-import 'option/privacy_policy.dart';
+import 'mypage/my_page.dart';
+import 'add_institute/add_community.dart';
+import 'scan_qr_code/qr_code.dart';
 import 'option/usage.dart';
 import 'setting.dart';
 
@@ -52,6 +49,8 @@ class MyHomePageState extends State<MyHomePage> {
   final myController = TextEditingController();
   late String name;
 
+  final privacy_policy_url =
+      'https://qiita.com/utasan_com/private/ffebc0e73b8bae704306';
   final url = 'https://twitter.com/uta_app_vta';
   final secondUrl = 'https://qiita.com/utasan_com';
 
@@ -80,7 +79,9 @@ class MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 menuListTile(context, "シュッ席の使い方", AppUsage()),
-                menuListTile(context, "プライバシーポリシー", PrivacyPolicy()),
+                ListTile(
+                    title: Text("プライバシーポリシー"),
+                    onTap: () => _privacyURL(privacy_policy_url)),
                 ListTile(
                     title: Text("お問い合わせ・ご意見"),
                     onTap: () => _launchURL(url, secondUrl)),
@@ -290,6 +291,20 @@ class MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  /// PrivacyPolicy
+  Future _privacyURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return ErrorModal(error_message: "問い合わせ先で詳細を\nご確認ください");
+        },
+      );
+    }
+  }
+
   /// 問い合わせフォーム
   Future _launchURL(String url, String secondUrl) async {
     if (await canLaunch(url)) {
@@ -300,7 +315,7 @@ class MyHomePageState extends State<MyHomePage> {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return ErrorModal(error_message: "AppStoreからお問合わせください");
+          return ErrorModal(error_message: "AppStoreから\nお問合わせください");
         },
       );
     }
