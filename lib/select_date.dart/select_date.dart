@@ -154,6 +154,7 @@ class SelectDate extends State<SelectDateHome> {
               return Card(
                 child: ListTile(
                   title: Text('${data['name']}'),
+                  subtitle: Text('${data['email']}'),
                   trailing: Text('${data['time']}'),
                   onTap: () async {
                     showDialog<List?>(
@@ -193,6 +194,7 @@ class SelectDate extends State<SelectDateHome> {
               return Card(
                 child: ListTile(
                   title: Text('${data['name']}'),
+                  subtitle: Text('${data['email']}'),
                   trailing: Text('${data['time']}'),
                   onTap: () async {
                     showDialog<List?>(
@@ -231,6 +233,7 @@ class SelectDate extends State<SelectDateHome> {
               return Card(
                 child: ListTile(
                   title: Text('${data['name']}'),
+                  subtitle: Text('${data['email']}'),
                   trailing: Text('${data['time']}'),
                   onTap: () async {
                     showDialog<List?>(

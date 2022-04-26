@@ -69,7 +69,7 @@ class MyPage extends StatelessWidget {
                                 "${model.name}",
                                 style: TextStyle(
                                   fontWeight: FontWeight.w900,
-                                  fontSize: 35,
+                                  fontSize: 30,
                                 ),
                               )
                             : const SizedBox.shrink(),

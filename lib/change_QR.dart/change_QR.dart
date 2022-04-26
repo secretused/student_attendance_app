@@ -60,7 +60,7 @@ class ChangeQRCode extends StatelessWidget {
                             model.communityName ?? "名前なし",
                             style: TextStyle(
                               fontWeight: FontWeight.w900,
-                              fontSize: 20,
+                              fontSize: 25,
                             ),
                           ),
                         ),
@@ -68,7 +68,7 @@ class ChangeQRCode extends StatelessWidget {
                             ? Text("${model.department}",
                                 style: TextStyle(
                                   fontWeight: FontWeight.w900,
-                                  fontSize: 17.5,
+                                  fontSize: 18.5,
                                 ))
                             : const SizedBox.shrink(),
                         SizedBox(
@@ -80,11 +80,15 @@ class ChangeQRCode extends StatelessWidget {
                                   Text(
                                     "メールアドレス",
                                     style: TextStyle(
+                                      fontSize: 18,
                                       decoration: TextDecoration.underline,
                                     ),
                                   ),
                                   Text(
                                     "${model.email}",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                    ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -98,11 +102,15 @@ class ChangeQRCode extends StatelessWidget {
                                   Text(
                                     "電話番号",
                                     style: TextStyle(
+                                      fontSize: 18,
                                       decoration: TextDecoration.underline,
                                     ),
                                   ),
                                   Text(
                                     "${model.phoneNumber}",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                    ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -116,11 +124,15 @@ class ChangeQRCode extends StatelessWidget {
                                   Text(
                                     "関連リンク",
                                     style: TextStyle(
+                                      fontSize: 18,
                                       decoration: TextDecoration.underline,
                                     ),
                                   ),
                                   Text(
                                     "${model.link}",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                    ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -134,14 +146,18 @@ class ChangeQRCode extends StatelessWidget {
                                   Text(
                                     "QRリンク",
                                     style: TextStyle(
+                                      fontSize: 18,
                                       decoration: TextDecoration.underline,
                                     ),
                                   ),
                                   Text(
                                     "${model.QRLink}",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                    ),
                                   ),
                                   SizedBox(
-                                    height: 20,
+                                    height: 18,
                                   ),
                                 ],
                               )

@@ -79,6 +79,7 @@ class QRModel extends ChangeNotifier {
         'community': community,
         'time': time,
         'name': name,
+        'email': user?.email,
         // 絞り込み用
         'department': department,
         'grade': grade,
