@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -25,7 +26,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      // localeに英語と日本語を登録する
+      supportedLocales: [
+        const Locale("en"),
+        const Locale("ja"),
+      ],
+      // アプリのlocaleを日本語に変更する
+      locale: Locale('ja', 'JP'),
       debugShowCheckedModeBanner: false,
+
       title: 'Attendance-Management',
       theme: ThemeData(
         primarySwatch: Colors.lightBlue,

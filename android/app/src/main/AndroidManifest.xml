@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.attendanc_management_app">
+    <!-- <uses-permission android:name="android.permission.SEND_SMS"/> -->
    <application
-        android:label="attendanc_management_app"
+        android:label="シュッ席"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

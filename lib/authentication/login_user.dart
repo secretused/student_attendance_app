@@ -8,6 +8,7 @@ import 'reset_password.dart';
 
 class LoginPage extends StatelessWidget {
   SettingClass setting_data = SettingClass();
+  String? error_text;
 
   @override
   Widget build(BuildContext context) {
