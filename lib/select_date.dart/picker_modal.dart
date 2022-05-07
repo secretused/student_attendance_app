@@ -35,7 +35,7 @@ class SelectInfoHome extends State<SelectInfo> {
     final double deviceHeight = MediaQuery.of(context).size.height;
 
     return ChangeNotifierProvider<PickerModel>(
-      create: (_) => PickerModel(widget.gotCommunity),
+      create: (_) => PickerModel(widget.gotCommunity)..getChildData(),
       child: Dialog(
         insetPadding: const EdgeInsets.all(0),
         elevation: 0,
@@ -70,11 +70,15 @@ class SelectInfoHome extends State<SelectInfo> {
                             onPrimary: Colors.orange,
                           ),
                           onPressed: () async {
-                            model.getChildData();
                             // 自動で詳細のモーダルを表示
-                            int? result = await selectParentPicker(context);
+                            int? result = await selectParentPicker(
+                                context, model.parentList);
+                            late int? hostNumber = model.parentList?.indexWhere(
+                                (parentList) => parentList == "管理者");
                             // 決定が押されたとき && 全てじゃない時
-                            if (result != null && result != 0 && result != 4) {
+                            if (result != null &&
+                                result != 0 &&
+                                result != hostNumber) {
                               setState(() {
                                 pickerOneValue = result;
                               });
@@ -96,7 +100,7 @@ class SelectInfoHome extends State<SelectInfo> {
                               }
                             } else if (result == 0) {
                               Navigator.popUntil(context, (_) => count++ >= 2);
-                            } else if (result == 4) {
+                            } else if (result == hostNumber) {
                               Navigator.of(context).pop(hostList);
                             }
                           },
@@ -133,8 +137,7 @@ class SelectInfoHome extends State<SelectInfo> {
   }
 
   // 選択肢1
-  Future<dynamic> selectParentPicker(BuildContext context) {
-    PickerModel pickerData = PickerModel(widget.gotCommunity);
+  Future<dynamic> selectParentPicker(BuildContext context, List? parentList) {
     return showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -159,7 +162,7 @@ class SelectInfoHome extends State<SelectInfo> {
                         Navigator.popUntil(context, (_) => count++ >= 2);
                       }
                       // 管理者の場合
-                      else if (_selectedIndex == 4) {
+                      else if (_selectedIndex == parentList?.last) {
                         Navigator.of(context).pop(_selectedIndex);
                       } else {
                         _visible = true;
@@ -173,10 +176,14 @@ class SelectInfoHome extends State<SelectInfo> {
                 height: MediaQuery.of(context).size.height / 4,
                 child: CupertinoPicker(
                   itemExtent: 40,
-                  children: pickerData.parentList
-                      .map((title) => Tab(text: title))
-                      .toList(),
-                  onSelectedItemChanged: _onSelectedParentChanged,
+                  children:
+                      parentList!.map((title) => Tab(text: title)).toList(),
+                  onSelectedItemChanged: (index) {
+                    setState(() {
+                      _selectedParent = parentList[index];
+                      _selectedIndex = index;
+                    });
+                  },
                 ),
               )
             ],
@@ -184,14 +191,6 @@ class SelectInfoHome extends State<SelectInfo> {
         );
       },
     );
-  }
-
-  void _onSelectedParentChanged(int index) {
-    PickerModel pickerData = PickerModel(widget.gotCommunity);
-    setState(() {
-      _selectedParent = pickerData.parentList[index];
-      _selectedIndex = index;
-    });
   }
 
   // 選択肢2

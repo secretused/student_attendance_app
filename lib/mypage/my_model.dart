@@ -45,7 +45,6 @@ class MyModel extends ChangeNotifier {
     this.phoneNumber = data?["phoneNumber"];
 
     notifyListeners();
-    print("$isHostフェッチ中");
     final getInstitue = await FirebaseFirestore.instance
         .collection('community')
         .doc(community)
@@ -56,7 +55,6 @@ class MyModel extends ChangeNotifier {
     } else {
       this.isCommunity = false;
     }
-    print("$isCommunityフェッチ中");
   }
 
   Future logOut() async {

@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/services.dart';
 
 import 'management_home.dart';
 import 'authentication/login_user.dart';
@@ -17,7 +18,10 @@ import 'setting.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(new MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {
@@ -168,8 +172,6 @@ class MyHomePageState extends State<MyHomePage> {
                           ),
                           onPressed: () async {
                             model.fechUser();
-                            print("$isCommunity呼び出し");
-                            print("$isHost呼び出し");
                             if (FirebaseAuth.instance.currentUser != null) {
                               // 団体の有無
                               if (isCommunity == true) {
@@ -193,7 +195,8 @@ class MyHomePageState extends State<MyHomePage> {
                                     context: context,
                                     builder: (BuildContext context) {
                                       return ErrorModal(
-                                          error_message: "団体が存在していません");
+                                          error_message:
+                                              "団体が存在していません\n管理者は団体を登録してください");
                                     },
                                   );
                                 }

@@ -7,7 +7,7 @@ class PickerModel extends ChangeNotifier {
     this.communityName = gotCommunity;
   }
 
-  final parentList = ["全て", "部署・学科", "期生・学年", "クラス", "管理者"];
+  List? parentList = ["全て"];
   final dataBaseList = ["department", "grade", "classroom"];
   List? gotParentList;
 
@@ -38,14 +38,17 @@ class PickerModel extends ChangeNotifier {
       late String gradeData = data["grade"];
       if (!tempDepartmentList.contains(departmentData) &&
           !departmentData.isEmpty) {
+        parentList?.add("部署・学科");
         tempDepartmentList.add(data["department"]);
       }
       if (!tempClassList.contains(classData) && !classData.isEmpty) {
+        parentList?.add("クラス");
         tempClassList.add(data["classroom"]);
       }
       if (!gradeData.isEmpty) {
         // int型に変換
         if (!tempGradeListInt.contains(int.parse(gradeData))) {
+          parentList?.add("期生・学年");
           // int型として追加
           tempGradeListInt.add(int.parse(data["grade"]));
           // 並び替え
@@ -53,6 +56,8 @@ class PickerModel extends ChangeNotifier {
         }
       }
     }).toList();
+    parentList?.add("管理者");
+    parentList = this.parentList;
 
     // 初期化のための代入 => 選択肢1で使用
     this.departmentList = tempDepartmentList;
@@ -63,7 +68,16 @@ class PickerModel extends ChangeNotifier {
     }).toList();
     this.gradeList = tempGradeListString;
     // 初期化のための代入 => 選択肢2で使用
-    tempParentList.addAll([departmentList, gradeList, classList]);
+    if (!departmentList!.isEmpty) {
+      tempParentList.add(departmentList);
+    }
+    if (!gradeList!.isEmpty) {
+      tempParentList.add(gradeList);
+    }
+    if (!classList!.isEmpty) {
+      tempParentList.add(classList);
+    }
+    // tempParentList.addAll([departmentList, gradeList, classList]);
     this.gotParentList = tempParentList;
     notifyListeners();
   }
