@@ -3,6 +3,7 @@ import 'login_model.dart';
 import 'register_user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'reset_password.dart';
 
@@ -69,10 +70,12 @@ class LoginPage extends StatelessWidget {
                             try {
                               await model.login();
                               Navigator.of(context).pop();
-                            } catch (e) {
+                            } on FirebaseAuthException catch (e) {
+                              // Authntication例外処理
+                              String? authException = auth_error(e.code);
                               final snackBar = SnackBar(
                                 backgroundColor: Colors.red,
-                                content: Text(e.toString()),
+                                content: Text(authException!),
                               );
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(snackBar);
@@ -135,5 +138,18 @@ class LoginPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String? auth_error(e_code) {
+    late String error_message;
+    if (e_code == 'user-disabled') {
+      return 'そのメールアドレスは利用できません';
+    } else if (e_code == 'invalid-email') {
+      return 'メールアドレスのフォーマットが正しくありません';
+    } else if (e_code == 'user-not-found') {
+      return 'ユーザーが見つかりません';
+    } else if (e_code == 'wrong-password') {
+      return 'パスワードが違います';
+    }
   }
 }

@@ -75,6 +75,8 @@ class MyHomePageState extends State<MyHomePage> {
     return ChangeNotifierProvider<MyModel>(
       create: (_) => MyModel()..fechUser(),
       child: Consumer<MyModel>(builder: (context, model, child) {
+        late bool? isHost = model.isHost;
+        late bool? isCommunity = model.isCommunity;
         return Scaffold(
           // メニュードロワー
           drawer: Drawer(
@@ -167,14 +169,14 @@ class MyHomePageState extends State<MyHomePage> {
                           onPressed: () async {
                             if (FirebaseAuth.instance.currentUser != null) {
                               // 団体の有無
-                              if (model.isCommunity == true) {
+                              if (isCommunity == true) {
                                 Navigator.push(
                                   context,
                                   setting_data.NavigationFade(MyQRCode()),
                                 );
                               } else {
                                 // 管理者であるか
-                                if (model.isHost == true) {
+                                if (isHost == true) {
                                   // 団体追加
                                   Navigator.push(
                                     context,
@@ -236,8 +238,8 @@ class MyHomePageState extends State<MyHomePage> {
                           ),
                           onPressed: () {
                             if (FirebaseAuth.instance.currentUser != null) {
-                              if (model.isHost == true) {
-                                if (model.isCommunity == true) {
+                              if (isHost == true) {
+                                if (isCommunity == true) {
                                   Navigator.push(
                                     context,
                                     setting_data.NavigationFade(

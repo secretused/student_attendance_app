@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:950149484109:android:53604cb5ddf7071cd89604",
         "android_client_info": {
-          "package_name": "com.example.attendanc_management_app"
+          "package_name": "com.app.attendanc_management_app"
         }
       },
       "oauth_client": [

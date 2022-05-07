@@ -144,7 +144,7 @@ class ChangeQRCode extends StatelessWidget {
                             ? Column(
                                 children: [
                                   Text(
-                                    "QRリンク",
+                                    "QRLink",
                                     style: TextStyle(
                                       fontSize: 18,
                                       decoration: TextDecoration.underline,

@@ -61,6 +61,9 @@ https://yaba-blog.com/app-store-screenshot/
 Archiveエラー
 https://teratail.com/questions/277634?sort=3
 
+Google Play エラー
+https://www.create-forever.games/unity-android-google-play4/
+
 
 変数をStringで記述する方法
 "${user?.email}"
