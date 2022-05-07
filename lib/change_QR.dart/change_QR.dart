@@ -56,24 +56,35 @@ class ChangeQRCode extends StatelessWidget {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(right: 8.0, left: 8.0),
-                          child: Text(
-                            model.communityName ?? "名前なし",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w900,
-                              fontSize: 25,
-                            ),
-                          ),
-                        ),
-                        (model.department != null)
-                            ? Text("${model.department}",
+                          child: Column(
+                            children: [
+                              Text(
+                                model.communityName ?? "名前なし",
                                 style: TextStyle(
                                   fontWeight: FontWeight.w900,
-                                  fontSize: 18.5,
-                                ))
-                            : const SizedBox.shrink(),
-                        SizedBox(
-                          height: 10,
+                                  fontSize: 25,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                            ],
+                          ),
                         ),
+                        (model.department != "")
+                            ? Column(
+                                children: [
+                                  Text("${model.department}",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: 18.5,
+                                      )),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                ],
+                              )
+                            : const SizedBox.shrink(),
                         (model.email != "")
                             ? Column(
                                 children: [

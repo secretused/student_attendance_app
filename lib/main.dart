@@ -167,6 +167,9 @@ class MyHomePageState extends State<MyHomePage> {
                             ),
                           ),
                           onPressed: () async {
+                            model.fechUser();
+                            print("$isCommunity呼び出し");
+                            print("$isHost呼び出し");
                             if (FirebaseAuth.instance.currentUser != null) {
                               // 団体の有無
                               if (isCommunity == true) {

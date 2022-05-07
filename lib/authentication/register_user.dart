@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import '../setting.dart';
 import 'register_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -158,15 +159,32 @@ class RegisterPage extends State<RegisterHome> {
                           ),
                           onPressed: () async {
                             model.startLoading();
-
                             // 追加の処理
                             try {
+                              if (model.name == null) {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return ErrorModal(
+                                        error_message: "名前を入力してください");
+                                  },
+                                );
+                              } else if (model.communityName == null) {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return ErrorModal(
+                                        error_message: "団体名を入力してください");
+                                  },
+                                );
+                              }
                               await model.signUp();
                               Navigator.of(context).pop();
-                            } catch (e) {
+                            } on FirebaseAuthException catch (e) {
+                              String? authException = auth_error(e.code);
                               final snackBar = SnackBar(
                                 backgroundColor: Colors.red,
-                                content: Text(e.toString()),
+                                content: Text(authException!),
                               );
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(snackBar);
@@ -193,5 +211,20 @@ class RegisterPage extends State<RegisterHome> {
         ),
       ),
     );
+  }
+
+  String? auth_error(e_code) {
+    print(e_code);
+    if (e_code == 'user-disabled') {
+      return 'そのメールアドレスは利用できません';
+    } else if (e_code == 'invalid-email') {
+      return 'メールアドレスのフォーマットが正しくありません';
+    } else if (e_code == 'user-not-found') {
+      return 'ユーザーが見つかりません';
+    } else if (e_code == 'wrong-password') {
+      return 'パスワードが違います';
+    } else if (e_code == 'weak-password') {
+      return 'パスワードが短い又は記述してください';
+    }
   }
 }

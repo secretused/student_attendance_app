@@ -141,7 +141,6 @@ class LoginPage extends StatelessWidget {
   }
 
   String? auth_error(e_code) {
-    late String error_message;
     if (e_code == 'user-disabled') {
       return 'そのメールアドレスは利用できません';
     } else if (e_code == 'invalid-email') {
