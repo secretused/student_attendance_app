@@ -18,9 +18,10 @@ class RegisterHome extends StatefulWidget {
 
 class RegisterPage extends State<RegisterHome> {
   bool isHost = false;
-  void _changeSwitch(bool e) => setState(() => isHost = e);
   @override
   Widget build(BuildContext context) {
+    // キーボードの高さ
+    final bottomSpace = MediaQuery.of(context).viewInsets.bottom;
     return ChangeNotifierProvider<RegisterModel>(
       create: (_) => RegisterModel(),
       child: Scaffold(
@@ -33,7 +34,9 @@ class RegisterPage extends State<RegisterHome> {
           ),
           backgroundColor: Color.fromARGB(255, 67, 176, 190),
         ),
-        body: Container(
+        body: GestureDetector(
+          behavior: HitTestBehavior.opaque, //画面外タップを検知するために必要
+          onTap: () => FocusScope.of(context).unfocus(),
           child: Center(
             child: Consumer<RegisterModel>(builder: (context, model, child) {
               return Stack(
@@ -214,7 +217,6 @@ class RegisterPage extends State<RegisterHome> {
   }
 
   String? auth_error(e_code) {
-    print(e_code);
     if (e_code == 'user-disabled') {
       return 'そのメールアドレスは利用できません';
     } else if (e_code == 'invalid-email') {
