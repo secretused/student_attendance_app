@@ -45,14 +45,19 @@ class RegisterPage extends State<RegisterHome> {
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
-                        TextField(
+                        TextFormField(
                           controller: model.nameController,
                           decoration: InputDecoration(
                             hintText: '名前',
-                            suffix: Text(
-                              '必須',
-                              style: TextStyle(color: Colors.red, fontSize: 13),
-                            ),
+                            // suffixIconConstraints:
+                            //     BoxConstraints(minHeight: 20, minWidth: 20),
+                            // suffixIcon:
+                            //     Icon(Icons.circle_outlined, color: Colors.red),
+
+                            // // suffix: Text(
+                            // //   '必須',
+                            // //   style: TextStyle(color: Colors.red, fontSize: 13),
+                            // // ),
                           ),
                           onChanged: (text) {
                             model.setName(text);
