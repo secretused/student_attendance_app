@@ -125,7 +125,7 @@ class AttendanceRegister extends StatelessWidget {
                       SizedBox(
                         height: 35,
                       ),
-                      Text("上記内容で出席しますか？"),
+                      Text("上記内容で入館しますか？"),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           primary: Color.fromARGB(255, 66, 140, 224),

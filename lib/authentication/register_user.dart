@@ -48,16 +48,7 @@ class RegisterPage extends State<RegisterHome> {
                         TextFormField(
                           controller: model.nameController,
                           decoration: InputDecoration(
-                            hintText: '名前',
-                            // suffixIconConstraints:
-                            //     BoxConstraints(minHeight: 20, minWidth: 20),
-                            // suffixIcon:
-                            //     Icon(Icons.circle_outlined, color: Colors.red),
-
-                            // // suffix: Text(
-                            // //   '必須',
-                            // //   style: TextStyle(color: Colors.red, fontSize: 13),
-                            // // ),
+                            hintText: '名前 *',
                           ),
                           onChanged: (text) {
                             model.setName(text);
@@ -66,10 +57,7 @@ class RegisterPage extends State<RegisterHome> {
                         TextField(
                           controller: model.communityController,
                           decoration: InputDecoration(
-                            hintText: '所属団体名',
-                            suffix: Text('必須',
-                                style:
-                                    TextStyle(color: Colors.red, fontSize: 13)),
+                            hintText: '所属団体名 *',
                           ),
                           onChanged: (text) {
                             model.setCommunity(text);
@@ -100,7 +88,7 @@ class RegisterPage extends State<RegisterHome> {
                         TextField(
                           controller: model.classController,
                           decoration: InputDecoration(
-                            hintText: 'クラス',
+                            hintText: 'チーム・クラス',
                           ),
                           onChanged: (text) {
                             model.setClass(text);
@@ -112,10 +100,8 @@ class RegisterPage extends State<RegisterHome> {
                         TextField(
                           controller: model.emailController,
                           decoration: InputDecoration(
-                              hintText: 'Email',
-                              suffix: Text('必須',
-                                  style: TextStyle(
-                                      color: Colors.red, fontSize: 13))),
+                            hintText: 'Email *',
+                          ),
                           onChanged: (text) {
                             model.setEmail(text);
                           },
@@ -137,10 +123,8 @@ class RegisterPage extends State<RegisterHome> {
                         TextField(
                           controller: model.authorController,
                           decoration: InputDecoration(
-                              hintText: 'パスワード',
-                              suffix: Text('必須',
-                                  style: TextStyle(
-                                      color: Colors.red, fontSize: 13))),
+                            hintText: 'パスワード *',
+                          ),
                           onChanged: (text) {
                             model.setPassword(text);
                           },
@@ -187,7 +171,8 @@ class RegisterPage extends State<RegisterHome> {
                                 );
                               }
                               await model.signUp();
-                              Navigator.of(context).pop();
+                              Navigator.of(context)
+                                  .popUntil((route) => route.isFirst);
                             } on FirebaseAuthException catch (e) {
                               String? authException = auth_error(e.code);
                               final snackBar = SnackBar(

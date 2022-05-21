@@ -70,41 +70,53 @@ class StudentList extends State<StudentListHome> {
               IconButton(
                 icon: Icon(Icons.filter_alt_outlined),
                 onPressed: () async {
-                  // 絞り込みモーダル表示
-                  model.getChildData();
-                  // 2個目のPickerで返ってきた値を格納
-                  List? pickerSelectedValue = await showDialog<List?>(
-                    context: context,
-                    builder: (_) {
-                      return SelectInfo(widget.communityName);
-                    },
-                  );
-                  // 戻るボタンではなく選択されて返ってきた場合
-                  if (pickerSelectedValue != null) {
-                    if (pickerSelectedValue[0] != "host") {
-                      // 絞り込み画面
-                      _selectedIndex = pickerSelectedValue[0];
-                      setState(() {
-                        _isValue = true;
-                        _selectedField = model.dataBaseList[_selectedIndex];
-                        _selectedValue = pickerSelectedValue[1];
-                      });
+                  // 絞り込みモーダル表示(情報がない場合はアラート)
+                  bool listEmpty = await model.getChildData();
+                  if (listEmpty == true) {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      builder: (BuildContext context) {
+                        return ErrorModal(error_message: "絞り込めるデータがありません");
+                      },
+                    );
+                  } else {
+                    // 2個目のPickerで返ってきた値を格納
+                    List? pickerSelectedValue = await showDialog<List?>(
+                      context: context,
+                      builder: (_) {
+                        return SelectInfo(widget.communityName);
+                      },
+                    );
+
+                    if (pickerSelectedValue != null) {
+                      if (pickerSelectedValue[0] != "host") {
+                        // 絞り込み画面
+                        _selectedIndex = pickerSelectedValue[0];
+                        setState(() {
+                          _isValue = true;
+                          _selectedField = model.dataBaseList?[_selectedIndex];
+                          _selectedValue = pickerSelectedValue[1];
+                        });
+                      } else {
+                        // 管理者画面
+                        setState(() {
+                          _isValue = false;
+                          _isHost = true;
+                          _selectedValue = "管理者";
+                        });
+                      }
                     } else {
-                      // 管理者画面
+                      // 通常画面
                       setState(() {
                         _isValue = false;
-                        _isHost = true;
-                        _selectedValue = "管理者";
+                        _isHost = false;
+                        _selectedValue = "全てのユーザー";
                       });
                     }
-                  } else {
-                    // 通常画面
-                    setState(() {
-                      _isValue = false;
-                      _isHost = false;
-                      _selectedValue = "全てのユーザー";
-                    });
                   }
+
+                  // 戻るボタンではなく選択されて返ってきた場合
                 },
               ),
             ],

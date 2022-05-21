@@ -93,10 +93,7 @@ class AddInstitute extends State<AddInstituteHome> {
                         TextField(
                           controller: model.QRLinkController,
                           decoration: InputDecoration(
-                            hintText: 'QRコード読み取り先リンク',
-                            suffix: Text('必須',
-                                style:
-                                    TextStyle(color: Colors.red, fontSize: 13)),
+                            hintText: 'QRコード読み取り先リンク *',
                           ),
                           onChanged: (text) {
                             model.setQRLink(text);

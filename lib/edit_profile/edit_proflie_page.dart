@@ -97,7 +97,7 @@ class EditProfilePageHome extends State<EditProfilePage> {
                   TextField(
                     controller: model.classController,
                     decoration: InputDecoration(
-                      hintText: 'クラス',
+                      hintText: 'チーム・クラス',
                     ),
                     onChanged: (text) {
                       model.setClass(text);

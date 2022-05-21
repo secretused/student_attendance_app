@@ -154,7 +154,7 @@ class MyPage extends StatelessWidget {
                             ? Column(
                                 children: [
                                   Text(
-                                    "クラス",
+                                    "チーム・クラス",
                                     style: TextStyle(
                                       fontSize: 15,
                                       decoration: TextDecoration.underline,

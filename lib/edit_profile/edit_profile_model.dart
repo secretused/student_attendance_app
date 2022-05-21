@@ -103,10 +103,12 @@ class EditProfileModel extends ChangeNotifier {
 
   // user削除処理
   void deleteUser(String? uid, String? community) async {
-    // usersのドキュメントを削除
-    FirebaseFirestore.instance.collection('users').doc(uid).delete();
     // FireBaseのAuthを削除
     FirebaseAuth.instance.currentUser?.delete();
+    // ログアウト
+    await FirebaseAuth.instance.signOut();
+    // usersのドキュメントを削除
+    FirebaseFirestore.instance.collection('users').doc(uid).delete();
     // attendancesのドキュメントを削除
     return FirebaseFirestore.instance
         .collection('attendances')

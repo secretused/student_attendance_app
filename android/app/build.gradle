@@ -33,7 +33,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion 31
 //    デバッグシンボル用
     ndkVersion "24.0.8215888"
 

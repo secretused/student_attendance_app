@@ -57,5 +57,7 @@
 	<false/>
 	<key>io.flutter.embedded_views_preview</key>
 	<string>true</string>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
 </dict>
 </plist>

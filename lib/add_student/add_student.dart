@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 
 import '../authentication/register_model.dart';
@@ -45,11 +46,7 @@ class RegisterPage extends State<AddMember> {
                         TextField(
                           controller: model.nameController,
                           decoration: InputDecoration(
-                            hintText: '名前',
-                            suffix: Text(
-                              '必須',
-                              style: TextStyle(color: Colors.red, fontSize: 13),
-                            ),
+                            hintText: '名前　*',
                           ),
                           onChanged: (text) {
                             model.setName(text);
@@ -89,7 +86,7 @@ class RegisterPage extends State<AddMember> {
                         TextField(
                           controller: model.classController,
                           decoration: InputDecoration(
-                            hintText: 'クラス',
+                            hintText: 'チーム・クラス',
                           ),
                           onChanged: (text) {
                             model.setClass(text);
@@ -101,10 +98,8 @@ class RegisterPage extends State<AddMember> {
                         TextField(
                           controller: model.emailController,
                           decoration: InputDecoration(
-                              hintText: 'Email',
-                              suffix: Text('必須',
-                                  style: TextStyle(
-                                      color: Colors.red, fontSize: 13))),
+                            hintText: 'Email *',
+                          ),
                           onChanged: (text) {
                             model.setEmail(text);
                           },
@@ -126,10 +121,8 @@ class RegisterPage extends State<AddMember> {
                         TextField(
                           controller: model.authorController,
                           decoration: InputDecoration(
-                              hintText: 'パスワード',
-                              suffix: Text('必須',
-                                  style: TextStyle(
-                                      color: Colors.red, fontSize: 13))),
+                            hintText: 'パスワード *',
+                          ),
                           onChanged: (text) {
                             model.setPassword(text);
                           },
@@ -159,12 +152,13 @@ class RegisterPage extends State<AddMember> {
 
                             // 追加の処理
                             try {
-                              await model.signUp();
+                              await model.addUser();
                               Navigator.of(context).pop();
-                            } catch (e) {
+                            } on FirebaseAuthException catch (e) {
+                              String? authException = auth_error(e.code);
                               final snackBar = SnackBar(
                                 backgroundColor: Colors.red,
-                                content: Text(e.toString()),
+                                content: Text(authException!),
                               );
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(snackBar);
@@ -191,5 +185,19 @@ class RegisterPage extends State<AddMember> {
         ),
       ),
     );
+  }
+
+  String? auth_error(e_code) {
+    if (e_code == 'user-disabled') {
+      return 'そのメールアドレスは利用できません';
+    } else if (e_code == 'invalid-email') {
+      return 'メールアドレスのフォーマットが正しくありません';
+    } else if (e_code == 'user-not-found') {
+      return 'ユーザーが見つかりません';
+    } else if (e_code == 'wrong-password') {
+      return 'パスワードが違います';
+    } else if (e_code == 'weak-password') {
+      return 'パスワードが短い又は記述してください';
+    }
   }
 }

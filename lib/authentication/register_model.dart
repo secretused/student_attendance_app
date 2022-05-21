@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class RegisterModel extends ChangeNotifier {
@@ -91,7 +92,7 @@ class RegisterModel extends ChangeNotifier {
     this.department = departmentController.text;
 
     if (email != null && password != null) {
-      // firebase authでユーザー作成
+      // firebaseauthでユーザー作成
       final userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email!,
@@ -120,6 +121,13 @@ class RegisterModel extends ChangeNotifier {
           'department': department,
           'isHost': isHost,
         });
+      }
+
+      late String? current_uid = user?.uid;
+      if (email != null && current_uid != null) {
+        // ログイン
+        await FirebaseAuth.instance
+            .signInWithEmailAndPassword(email: email!, password: password!);
       }
     }
   }
@@ -209,7 +217,8 @@ class AddUserModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future signUp() async {
+  // add_Student
+  Future addUser() async {
     this.email = emailController.text;
     this.password = authorController.text;
     this.phoneNumber = phoneNumController.text;
@@ -219,26 +228,20 @@ class AddUserModel extends ChangeNotifier {
     this.department = departmentController.text;
 
     if (email != null && password != null) {
-      // firebase authでユーザー作成
-      final userCredential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email!,
-        password: password!,
-      );
+      FirebaseApp app = await Firebase.initializeApp(
+          name: 'secondary', options: Firebase.app().options);
+      UserCredential userCredential = await FirebaseAuth.instanceFor(app: app)
+          .createUserWithEmailAndPassword(email: email!, password: password!);
+
+      app.delete();
 
       // IDとかがuserに入る
-      var user = userCredential.user;
-
-      if (user != null && name != null && communityName != null) {
-        final uid = user.uid;
-        await user.updateDisplayName(name);
-        await user.reload();
-        user = FirebaseAuth.instance.currentUser!;
-
+      if (userCredential != null && name != null && communityName != null) {
         // firestoreに追加
-        final doc = FirebaseFirestore.instance.collection("users").doc(uid);
+        final id = userCredential.user?.uid;
+        final doc = FirebaseFirestore.instance.collection("users").doc(id);
         await doc.set({
-          'uid': uid,
+          'uid': id,
           'name': name,
           'email': email,
           'phoneNumber': phoneNumber,

@@ -79,6 +79,7 @@ class MyHomePageState extends State<MyHomePage> {
     return ChangeNotifierProvider<MyModel>(
       create: (_) => MyModel()..fechUser(),
       child: Consumer<MyModel>(builder: (context, model, child) {
+        model.fechUser();
         late bool? isHost = model.isHost;
         late bool? isCommunity = model.isCommunity;
         return Scaffold(
@@ -243,6 +244,7 @@ class MyHomePageState extends State<MyHomePage> {
                             ),
                           ),
                           onPressed: () {
+                            model.fechUser();
                             if (FirebaseAuth.instance.currentUser != null) {
                               if (isHost == true) {
                                 if (isCommunity == true) {

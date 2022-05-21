@@ -89,7 +89,7 @@ class SelectDate extends State<SelectDateHome> {
                         _selectedIndex = pickerSelectedValue[0];
                         setState(() {
                           _isValue = true;
-                          _selectedField = model.dataBaseList[_selectedIndex];
+                          _selectedField = model.dataBaseList?[_selectedIndex];
                           _selectedValue = pickerSelectedValue[1];
                         });
                       } else {

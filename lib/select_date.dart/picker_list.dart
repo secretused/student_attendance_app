@@ -7,8 +7,11 @@ class PickerModel extends ChangeNotifier {
     this.communityName = gotCommunity;
   }
 
-  List? parentList = ["全て"];
-  final dataBaseList = ["department", "grade", "classroom"];
+  // 一個目のPicker用
+  List? parentList = [];
+  // StreamBuilderのクエリ用
+  List? dataBaseList;
+  // データが入る値
   List? gotParentList;
 
   List? departmentList;
@@ -24,7 +27,10 @@ class PickerModel extends ChangeNotifier {
     final List tempClassList = [];
     final List<int> tempGradeListInt = [];
     final List<String> tempGradeListString = [];
+
+    final List tempPickerList = ["全て"];
     final List tempParentList = [];
+    final List tempBaseList = [];
 
     final department = await FirebaseFirestore.instance
         .collection('users')
@@ -38,26 +44,21 @@ class PickerModel extends ChangeNotifier {
       late String gradeData = data["grade"];
       if (!tempDepartmentList.contains(departmentData) &&
           !departmentData.isEmpty) {
-        parentList?.add("部署・学科");
         tempDepartmentList.add(data["department"]);
-      }
-      if (!tempClassList.contains(classData) && !classData.isEmpty) {
-        parentList?.add("クラス");
-        tempClassList.add(data["classroom"]);
       }
       if (!gradeData.isEmpty) {
         // int型に変換
         if (!tempGradeListInt.contains(int.parse(gradeData))) {
-          parentList?.add("期生・学年");
           // int型として追加
           tempGradeListInt.add(int.parse(data["grade"]));
           // 並び替え
           tempGradeListInt.sort((a, b) => a - b);
         }
       }
+      if (!tempClassList.contains(classData) && !classData.isEmpty) {
+        tempClassList.add(data["classroom"]);
+      }
     }).toList();
-    parentList?.add("管理者");
-    parentList = this.parentList;
 
     // 初期化のための代入 => 選択肢1で使用
     this.departmentList = tempDepartmentList;
@@ -67,18 +68,34 @@ class PickerModel extends ChangeNotifier {
       tempGradeListString.add(data.toString());
     }).toList();
     this.gradeList = tempGradeListString;
+
     // 初期化のための代入 => 選択肢2で使用
     if (!departmentList!.isEmpty) {
       tempParentList.add(departmentList);
+      tempBaseList.add("department");
+      tempPickerList.add("部署・学科");
     }
     if (!gradeList!.isEmpty) {
       tempParentList.add(gradeList);
+      tempBaseList.add("grade");
+      tempPickerList.add("期生・学年");
     }
     if (!classList!.isEmpty) {
       tempParentList.add(classList);
+      tempBaseList.add("classroom");
+      tempPickerList.add("チーム・クラス");
     }
-    // tempParentList.addAll([departmentList, gradeList, classList]);
     this.gotParentList = tempParentList;
+    this.dataBaseList = tempBaseList;
+    tempPickerList.add("管理者");
+    this.parentList = tempPickerList;
+    // 情報がない場合Pickerを表示させない
     notifyListeners();
+
+    if (gotParentList!.isEmpty) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
