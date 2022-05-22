@@ -111,7 +111,7 @@ class MyHomePageState extends State<MyHomePage> {
                   onTap: () => showLicensePage(
                     context: context,
                     applicationName: 'シュッ席',
-                    applicationVersion: '1.1.0',
+                    applicationVersion: '1.2.0',
                   ),
                 ),
               ],

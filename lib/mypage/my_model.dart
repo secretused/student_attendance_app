@@ -31,29 +31,31 @@ class MyModel extends ChangeNotifier {
     this.uid = user?.uid;
     this.email = user?.email;
 
-    // ユーザ情報取得
-    final snapshot =
-        await FirebaseFirestore.instance.collection('users').doc(uid).get();
-    final data = snapshot.data();
+    if (user != null) {
+      // ユーザ情報取得
+      final snapshot =
+          await FirebaseFirestore.instance.collection('users').doc(uid).get();
+      final data = snapshot.data();
 
-    this.name = data?["name"];
-    this.community = data?["community"];
-    this.grade = data?["grade"];
-    this.department = data?["department"];
-    this.classroom = data?["classroom"];
-    this.isHost = data?["isHost"];
-    this.phoneNumber = data?["phoneNumber"];
+      this.name = data?["name"];
+      this.community = data?["community"];
+      this.grade = data?["grade"];
+      this.department = data?["department"];
+      this.classroom = data?["classroom"];
+      this.isHost = data?["isHost"];
+      this.phoneNumber = data?["phoneNumber"];
 
-    notifyListeners();
-    final getInstitue = await FirebaseFirestore.instance
-        .collection('community')
-        .doc(community)
-        .get();
-    final community_data = getInstitue.data();
-    if (community_data?["community"].runtimeType != null) {
-      this.isCommunity = true;
-    } else {
-      this.isCommunity = false;
+      notifyListeners();
+      final getInstitue = await FirebaseFirestore.instance
+          .collection('community')
+          .doc(community)
+          .get();
+      final community_data = getInstitue.data();
+      if (community_data?["community"].runtimeType != null) {
+        this.isCommunity = true;
+      } else {
+        this.isCommunity = false;
+      }
     }
   }
 
