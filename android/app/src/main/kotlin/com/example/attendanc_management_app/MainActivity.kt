@@ -1,4 +1,4 @@
-package com.example.attendanc_management_app
+package com.app.attendanc_management_app
 
 import io.flutter.embedding.android.FlutterActivity
 
