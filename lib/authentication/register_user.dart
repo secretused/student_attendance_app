@@ -105,6 +105,11 @@ class RegisterPage extends State<RegisterHome> {
                           onChanged: (text) {
                             model.setEmail(text);
                           },
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                              RegExp(r'[a-zA-Z0-9.@_-]'),
+                            ),
+                          ],
                         ),
                         TextField(
                           keyboardType: TextInputType.number,
@@ -128,6 +133,10 @@ class RegisterPage extends State<RegisterHome> {
                           onChanged: (text) {
                             model.setPassword(text);
                           },
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'[a-zA-Z0-9]')),
+                          ],
                         ),
                         SizedBox(
                           height: 20,

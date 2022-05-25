@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+
 import '../setting.dart';
 import 'login_model.dart';
 import 'register_user.dart';
@@ -41,6 +43,10 @@ class LoginPage extends StatelessWidget {
                           onChanged: (text) {
                             model.setEmail(text);
                           },
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'[a-zA-Z0-9.@_-]')),
+                          ],
                         ),
                         SizedBox(
                           height: 8,
@@ -53,6 +59,10 @@ class LoginPage extends StatelessWidget {
                           onChanged: (text) {
                             model.setPassword(text);
                           },
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'[a-zA-Z0-9]')),
+                          ],
                           obscureText: true,
                         ),
                         SizedBox(

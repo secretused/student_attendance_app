@@ -18,10 +18,11 @@ import 'setting.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-      .then((_) {
-    runApp(new MyApp());
-  });
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
+    (_) {
+      runApp(new MyApp());
+    },
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -111,7 +112,7 @@ class MyHomePageState extends State<MyHomePage> {
                   onTap: () => showLicensePage(
                     context: context,
                     applicationName: 'シュッ席',
-                    applicationVersion: '1.2.0',
+                    applicationVersion: '1.2.1',
                   ),
                 ),
               ],

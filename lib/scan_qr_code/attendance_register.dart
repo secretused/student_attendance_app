@@ -40,7 +40,7 @@ class AttendanceRegister extends StatelessWidget {
     this.uid = currentUser!.uid;
     this.email = currentUser!.email;
     this.name = currentUser!.displayName;
-    this.attendance = "出席";
+    this.attendance = "入館";
 
     final double deviceWidth = MediaQuery.of(context).size.width;
     final double deviceHeight = MediaQuery.of(context).size.height;

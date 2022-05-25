@@ -67,6 +67,10 @@ class AddInstitute extends State<AddInstituteHome> {
                           onChanged: (text) {
                             model.setEmail(text);
                           },
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'[a-zA-Z0-9.@_-]')),
+                          ],
                         ),
                         TextField(
                           keyboardType: TextInputType.number,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:another_flushbar/flushbar.dart';
+import 'package:flutter/services.dart';
 import 'login_model.dart';
 
 class ResetPasswordForm extends StatefulWidget {
@@ -67,6 +68,10 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                     _email = value;
                     return null;
                   },
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(
+                        RegExp(r'[a-zA-Z0-9.@_-]')),
+                  ],
                 ),
                 SizedBox(
                   height: 20,
