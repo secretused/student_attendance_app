@@ -16,10 +16,18 @@
 .idea/
 
 # Visual Studio Code related
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+!default.code-workspace
 .classpath
 .project
 .settings/
 .vscode/
+
 
 # Flutter repo-specific
 /bin/cache/
@@ -69,6 +77,18 @@ unlinked_spec.ds
 **/android/key.properties
 **/android/keystore.properties
 *.jks
+**/android/.gradle
+**/android/.settings
+**/android/.project
+**/android/service-account.json
+**/android/app/google-services.json
+**/android/app/src/main/res/mipmap*/
+*.keystore
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
 
 # iOS/XCode related
 **/ios/**/*.mode1v3
@@ -120,3 +140,4 @@ app.*.symbols
 
 # myCustom
 !*.gitignore
+lib/firebase_options.dart
