@@ -1,10 +1,11 @@
+import 'package:attendanc_management_app/create_QR/create_QR_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:attendanc_management_app/mypage/my_model.dart';
 import 'add_institute/add_community.dart';
-import 'change_QR.dart/change_QR.dart';
-import 'select_date.dart/select_date.dart';
+import 'change_QR/change_QR.dart';
+import 'select_date/select_date.dart';
 import 'setting.dart';
 import 'student_list/student_list.dart';
 
@@ -18,11 +19,11 @@ class ManagementHome extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text(
+          title: const Text(
             "管理画面",
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          backgroundColor: Color.fromARGB(255, 67, 176, 190),
+          backgroundColor: const Color.fromARGB(255, 67, 176, 190),
         ),
         body: Container(
           height: double.infinity,
@@ -33,53 +34,6 @@ class ManagementHome extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(bottom: 40.0),
-                  child: Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ButtonDesign(
-                          onPressed: () async {
-                            if (model.isHost == true) {
-                              await Navigator.push(
-                                context,
-                                setting_data.NavigationFade(
-                                    SelectDateHome(model.community)),
-                              );
-                            }
-                          },
-                          backgroundColor: Color.fromARGB(255, 51, 166, 243),
-                          text: "入館管理",
-                          // icon: new Icon(
-                          //   IconData(0xe800, fontFamily: 'Binder'),
-                          //   size: 70,
-                          // ),
-                          icon: Icon(
-                            Icons.home,
-                            size: 70,
-                          ),
-                        ),
-                        ButtonDesign(
-                          onPressed: () async {
-                            if (model.isHost == true) {
-                              await Navigator.push(
-                                context,
-                                setting_data.NavigationFade(StudentListHome(
-                                    model.community, model.isHost)),
-                              );
-                            }
-                          },
-                          backgroundColor: Color.fromARGB(255, 240, 130, 41),
-                          text: "ユーザー管理",
-                          icon: Icon(
-                            Icons.account_circle,
-                            size: 70,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Container(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -89,14 +43,15 @@ class ManagementHome extends StatelessWidget {
                             await Navigator.push(
                               context,
                               setting_data.NavigationFade(
-                                  AddInstituteHome(model.community)),
+                                  SelectDateHome(model.community)),
                             );
                           }
                         },
-                        backgroundColor: Color.fromARGB(255, 61, 214, 125),
-                        text: "団体登録",
-                        icon: Icon(
-                          Icons.add_business,
+                        backgroundColor:
+                            const Color.fromARGB(255, 51, 166, 243),
+                        text: "入館管理",
+                        icon: const Icon(
+                          Icons.home,
                           size: 70,
                         ),
                       ),
@@ -105,20 +60,60 @@ class ManagementHome extends StatelessWidget {
                           if (model.isHost == true) {
                             await Navigator.push(
                               context,
-                              setting_data.NavigationFade(
-                                  ChangeQRCode(model.community)),
+                              setting_data.NavigationFade(StudentListHome(
+                                  model.community, model.isHost)),
                             );
                           }
                         },
-                        backgroundColor: Color.fromARGB(255, 241, 121, 195),
-                        text: "団体情報変更",
-                        icon: Icon(
-                          Icons.security,
+                        backgroundColor:
+                            const Color.fromARGB(255, 240, 130, 41),
+                        text: "ユーザー管理",
+                        icon: const Icon(
+                          Icons.account_circle,
                           size: 70,
                         ),
                       ),
                     ],
                   ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ButtonDesign(
+                      onPressed: () async {
+                        if (model.isHost == true) {
+                          await Navigator.push(
+                            context,
+                            setting_data.NavigationFade(
+                                CreateQRCode(model.community)),
+                          );
+                        }
+                      },
+                      backgroundColor: const Color.fromARGB(255, 61, 214, 125),
+                      text: "QRコード生成",
+                      icon: const Icon(
+                        Icons.qr_code_2_outlined,
+                        size: 70,
+                      ),
+                    ),
+                    ButtonDesign(
+                      onPressed: () async {
+                        if (model.isHost == true) {
+                          await Navigator.push(
+                            context,
+                            setting_data.NavigationFade(
+                                ChangeQRCode(model.community)),
+                          );
+                        }
+                      },
+                      backgroundColor: const Color.fromARGB(255, 241, 121, 195),
+                      text: "団体情報変更",
+                      icon: const Icon(
+                        Icons.security,
+                        size: 70,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             );
@@ -168,7 +163,7 @@ class ButtonDesign extends StatelessWidget {
           padding: const EdgeInsets.only(top: 10),
           child: Text(
             text,
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.w900,
               fontSize: 15,
             ),

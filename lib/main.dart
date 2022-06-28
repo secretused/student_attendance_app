@@ -20,7 +20,7 @@ void main() async {
   await Firebase.initializeApp();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
     (_) {
-      runApp(new MyApp());
+      runApp(const MyApp());
     },
   );
 }
@@ -88,7 +88,7 @@ class MyHomePageState extends State<MyHomePage> {
           drawer: Drawer(
             child: ListView(
               children: [
-                DrawerHeader(
+                const DrawerHeader(
                   child: Text(
                     'アプリケーション情報',
                     style: TextStyle(
@@ -102,13 +102,13 @@ class MyHomePageState extends State<MyHomePage> {
                 ),
                 menuListTile(context, "シュッ席の使い方", AppUsage()),
                 ListTile(
-                    title: Text("プライバシーポリシー"),
+                    title: const Text("プライバシーポリシー"),
                     onTap: () => _privacyURL(privacy_policy_url)),
                 ListTile(
-                    title: Text("お問い合わせ・ご意見"),
+                    title: const Text("お問い合わせ・ご意見"),
                     onTap: () => _launchURL(url, secondUrl)),
                 ListTile(
-                  title: Text("ライセンス情報"),
+                  title: const Text("ライセンス情報"),
                   onTap: () => showLicensePage(
                     context: context,
                     applicationName: 'シュッ席',
@@ -122,12 +122,12 @@ class MyHomePageState extends State<MyHomePage> {
             centerTitle: true,
             title: Text(
               widget.title,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            backgroundColor: Color.fromARGB(255, 67, 176, 190),
+            backgroundColor: const Color.fromARGB(255, 67, 176, 190),
             actions: <Widget>[
               IconButton(
-                icon: Icon(Icons.person),
+                icon: const Icon(Icons.person),
                 onPressed: () async {
                   // ログイン判断
                   if (FirebaseAuth.instance.currentUser != null) {
@@ -148,9 +148,10 @@ class MyHomePageState extends State<MyHomePage> {
               ),
             ],
           ),
-          body: Container(
-            child: Center(
-              child: Row(
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Column(
@@ -160,13 +161,13 @@ class MyHomePageState extends State<MyHomePage> {
                         width: 100,
                         height: 100,
                         child: ElevatedButton(
-                          child: Icon(
+                          child: const Icon(
                             Icons.credit_card,
                             size: 60,
                           ),
                           style: ElevatedButton.styleFrom(
                             alignment: Alignment.center,
-                            primary: Color.fromARGB(255, 51, 166, 243),
+                            primary: const Color.fromARGB(255, 51, 166, 243),
                             onPrimary: Colors.black,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
@@ -196,7 +197,7 @@ class MyHomePageState extends State<MyHomePage> {
                                   showDialog(
                                     context: context,
                                     builder: (BuildContext context) {
-                                      return ErrorModal(
+                                      return const ErrorModal(
                                           error_message:
                                               "団体が存在していません\n管理者は団体を登録してください");
                                     },
@@ -213,8 +214,8 @@ class MyHomePageState extends State<MyHomePage> {
                           },
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 10),
                         child: Text(
                           "入館する",
                           style: TextStyle(
@@ -232,13 +233,13 @@ class MyHomePageState extends State<MyHomePage> {
                         width: 100,
                         height: 100,
                         child: ElevatedButton(
-                          child: Icon(
+                          child: const Icon(
                             Icons.dashboard,
                             size: 60,
                           ),
                           style: ElevatedButton.styleFrom(
                             alignment: Alignment.center,
-                            primary: Color.fromARGB(255, 240, 130, 41),
+                            primary: const Color.fromARGB(255, 240, 130, 41),
                             onPrimary: Colors.black,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
@@ -267,7 +268,7 @@ class MyHomePageState extends State<MyHomePage> {
                                 showDialog(
                                   context: context,
                                   builder: (BuildContext context) {
-                                    return ErrorModal(
+                                    return const ErrorModal(
                                         error_message: "管理者権限がありません");
                                   },
                                 );
@@ -282,8 +283,8 @@ class MyHomePageState extends State<MyHomePage> {
                           },
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 10),
                         child: Text(
                           "管理する",
                           style: TextStyle(
@@ -296,7 +297,74 @@ class MyHomePageState extends State<MyHomePage> {
                   ),
                 ],
               ),
-            ),
+              Padding(
+                padding: const EdgeInsets.only(top: 25.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(
+                      width: 100,
+                      height: 100,
+                      child: ElevatedButton(
+                        child: const Icon(
+                          Icons.add_business,
+                          size: 60,
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          alignment: Alignment.center,
+                          primary: const Color.fromARGB(255, 61, 214, 125),
+                          onPrimary: Colors.black,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        onPressed: () async {
+                          model.fechUser();
+                          if (FirebaseAuth.instance.currentUser != null) {
+                            // 管理者であるか
+                            if (isHost == true) {
+                              // 団体追加
+                              Navigator.push(
+                                context,
+                                setting_data.NavigationFade(
+                                    AddInstituteHome(model.community)),
+                              ).then((value) {
+                                model.fechUser();
+                              });
+                            } else {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return const ErrorModal(
+                                      error_message:
+                                          "団体が存在していません\n管理者は団体を登録してください");
+                                },
+                              );
+                            }
+                          } else {
+                            // ユーザ登録・ログイン
+                            Navigator.push(
+                              context,
+                              setting_data.NavigationFade(LoginPage()),
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 10),
+                      child: Text(
+                        "団体登録",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w900,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         );
       }),
@@ -324,7 +392,7 @@ class MyHomePageState extends State<MyHomePage> {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return ErrorModal(error_message: "問い合わせ先で詳細を\nご確認ください");
+          return const ErrorModal(error_message: "問い合わせ先で詳細を\nご確認ください");
         },
       );
     }
@@ -340,7 +408,7 @@ class MyHomePageState extends State<MyHomePage> {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return ErrorModal(error_message: "AppStoreから\nお問合わせください");
+          return const ErrorModal(error_message: "AppStoreから\nお問合わせください");
         },
       );
     }
