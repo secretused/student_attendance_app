@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../add_student/add_student.dart';
-import '../select_date.dart/picker_list.dart';
-import '../select_date.dart/picker_modal.dart';
+import '../select_date/picker_list.dart';
+import '../select_date/picker_modal.dart';
 import 'edit_user_modal.dart';
 import '../setting.dart';
 

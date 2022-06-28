@@ -48,6 +48,8 @@ dependencies:
   flutter_native_splash: ^2.1.3+1
   another_flushbar: ^1.10.28
   url_launcher: ^6.0.20
+  qr_flutter: ^4.0.0
+  share_plus: ^4.0.10
 
 # Splash Images
 flutter_native_splash:
