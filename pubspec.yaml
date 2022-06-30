@@ -50,6 +50,8 @@ dependencies:
   url_launcher: ^6.0.20
   qr_flutter: ^4.0.0
   share_plus: ^4.0.10
+  share_extend: ^2.0.0
+  path_provider: ^2.0.11
 
 # Splash Images
 flutter_native_splash:
