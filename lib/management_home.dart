@@ -1,4 +1,4 @@
-import 'package:attendanc_management_app/create_QR/create_QR_model.dart';
+import 'package:attendanc_management_app/create_QR/create_QR.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -90,7 +90,7 @@ class ManagementHome extends StatelessWidget {
                         }
                       },
                       backgroundColor: const Color.fromARGB(255, 61, 214, 125),
-                      text: "QRコード生成",
+                      text: "QRコード表示",
                       icon: const Icon(
                         Icons.qr_code_2_outlined,
                         size: 70,
