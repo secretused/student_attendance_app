@@ -5,6 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/services.dart';
+import 'package:vibration/vibration.dart';
 
 import 'management_home.dart';
 import 'authentication/login_user.dart';
@@ -178,10 +179,28 @@ class MyHomePageState extends State<MyHomePage> {
                             if (FirebaseAuth.instance.currentUser != null) {
                               // 団体の有無
                               if (isCommunity == true) {
-                                Navigator.push(
+                                var result = await Navigator.push(
                                   context,
                                   setting_data.NavigationFade(MyQRCode()),
                                 );
+                                if (result != false) {
+                                  Vibration.vibrate();
+                                  const attendanceMessage = "入館しました";
+                                  const snackBar = SnackBar(
+                                    backgroundColor:
+                                        Color.fromARGB(255, 67, 176, 190),
+                                    content: Text(
+                                      attendanceMessage,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  );
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
+                                } else {}
                               } else {
                                 // 管理者であるか
                                 if (isHost == true) {

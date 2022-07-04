@@ -7,6 +7,12 @@ import 'package:provider/provider.dart';
 import '../add_institute/add_community.dart';
 import '../setting.dart';
 
+class ScreenArguments {
+  final bool isFirst;
+  final bool value;
+  ScreenArguments(this.isFirst, this.value);
+}
+
 class AttendanceRegister extends StatelessWidget {
   SettingClass setting_data = SettingClass();
 
@@ -44,6 +50,7 @@ class AttendanceRegister extends StatelessWidget {
 
     final double deviceWidth = MediaQuery.of(context).size.width;
     final double deviceHeight = MediaQuery.of(context).size.height;
+
     return ChangeNotifierProvider<QRModel>(
       create: (_) => QRModel(),
       child: Scaffold(

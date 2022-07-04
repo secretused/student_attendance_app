@@ -52,6 +52,7 @@ dependencies:
   share_plus: ^4.0.10
   share_extend: ^2.0.0
   path_provider: ^2.0.11
+  vibration: ^1.7.4-nullsafety.0
 
 # Splash Images
 flutter_native_splash:

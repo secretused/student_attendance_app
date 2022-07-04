@@ -18,48 +18,51 @@ class _MyHomePageState extends State {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<MyModel>(
-      create: (_) => MyModel()..fechUser(),
-      child: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text(
-            'QRコード読み取り',
-            style: TextStyle(fontWeight: FontWeight.bold),
+    return WillPopScope(
+      onWillPop: () => _backButtonPress(context),
+      child: ChangeNotifierProvider<MyModel>(
+        create: (_) => MyModel()..fechUser(),
+        child: Scaffold(
+          appBar: AppBar(
+            centerTitle: true,
+            title: Text(
+              'QRコード読み取り',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            backgroundColor: Color.fromARGB(255, 67, 176, 190),
           ),
-          backgroundColor: Color.fromARGB(255, 67, 176, 190),
-        ),
-        body: Center(
-          child: Consumer<MyModel>(builder: (context, model, child) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 130, //横幅
-                  height: 130, //高さ
-                  child: ElevatedButton(
-                    child: const Icon(
-                      Icons.qr_code_2,
-                      size: 100,
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.white,
-                      onPrimary: Colors.black,
-                      shape: const CircleBorder(
-                        side: BorderSide(
-                          color: Colors.black,
-                          width: 1,
-                          style: BorderStyle.solid,
+          body: Center(
+            child: Consumer<MyModel>(builder: (context, model, child) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 130, //横幅
+                    height: 130, //高さ
+                    child: ElevatedButton(
+                      child: const Icon(
+                        Icons.qr_code_2,
+                        size: 100,
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                        onPrimary: Colors.black,
+                        shape: const CircleBorder(
+                          side: BorderSide(
+                            color: Colors.black,
+                            width: 1,
+                            style: BorderStyle.solid,
+                          ),
                         ),
                       ),
+                      onPressed: () => scanQrCode(model.community, model.isHost,
+                          model.department, model.grade, model.classroom),
                     ),
-                    onPressed: () => scanQrCode(model.community, model.isHost,
-                        model.department, model.grade, model.classroom),
                   ),
-                ),
-              ],
-            );
-          }),
+                ],
+              );
+            }),
+          ),
         ),
       ),
     );
@@ -103,5 +106,10 @@ class _MyHomePageState extends State {
         },
       );
     }
+  }
+
+  Future<bool> _backButtonPress(context) async {
+    Navigator.of(context).pop(false);
+    return false;
   }
 }
