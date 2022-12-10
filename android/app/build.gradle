@@ -33,7 +33,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion 33
 //    デバッグシンボル用
     ndkVersion "24.0.8215888"
 
@@ -52,7 +52,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.app.attendanc_management_app"
+        applicationId "com.app.attendance_management_app"
         minSdkVersion 28
         targetSdkVersion 31
         versionCode flutterVersionCode.toInteger()

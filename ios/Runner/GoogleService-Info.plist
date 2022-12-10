@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>950149484109-gkdhtjdv73gmok2ogtv8l24p74mlg359.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.950149484109-gkdhtjdv73gmok2ogtv8l24p74mlg359</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCsiGllmhU-pwB9xrLBLtthYj_3ul9pnbk</string>
+	<key>GCM_SENDER_ID</key>
+	<string>950149484109</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.attendancManagementApp</string>
+	<key>PROJECT_ID</key>
+	<string>student-attendance-manag-22782</string>
+	<key>STORAGE_BUCKET</key>
+	<string>student-attendance-manag-22782.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:950149484109:ios:178b1e74f9d34cfad89604</string>
+	<key>DATABASE_URL</key>
+	<string>https://student-attendance-manag-22782-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>
