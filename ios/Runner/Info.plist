@@ -6,6 +6,8 @@
     <true/>
     <key>NSCameraUsageDescription</key>
     <string>QRコードを読み込むためにカメラの使用を許可しますか？</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>このAppで使用中のネットワーク上のデバイスの検索および接続ができるようになります。</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
