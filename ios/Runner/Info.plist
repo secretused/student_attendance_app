@@ -5,7 +5,7 @@
     <key>io.flutter.embedded_views_preview</key>
     <true/>
     <key>NSCameraUsageDescription</key>
-    <string>This app needs camera access to scan QR codes</string>
+    <string>QRコードを読み込むためにカメラの使用を許可しますか？</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>

@@ -3,7 +3,7 @@
 Flutter & Firebase 製の入館管理アプリ
 
 - [iOS 版 App Store リンク](https://apps.apple.com/jp/app/id1620188388)
-- [Android 版 Google Play Store リンク](https://play.google.com/store/apps/details?id=com.app.attendance_management_app)
+- [Android 版 Google Play Store リンク](https://play.google.com/store/apps/details?id=com.app.attendanc_management_app)
 
 ## Screenshots
 

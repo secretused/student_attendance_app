@@ -32,18 +32,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      localizationsDelegates: [
+      localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
       // localeに英語と日本語を登録する
-      supportedLocales: [
-        const Locale("en"),
-        const Locale("ja"),
+      supportedLocales: const [
+        Locale("en"),
+        Locale("ja"),
       ],
       // アプリのlocaleを日本語に変更する
-      locale: Locale('ja', 'JP'),
+      locale: const Locale('ja', 'JP'),
       debugShowCheckedModeBanner: false,
 
       title: 'Attendance-Management',
