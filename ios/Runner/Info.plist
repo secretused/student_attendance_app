@@ -9,9 +9,9 @@
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>このAppで使用中のネットワーク上のデバイスの検索および接続ができるようになります。</string>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<string>ja_JP</string>
 	<key>CFBundleDisplayName</key>
-	<string>Student Attendance App</string>
+	<string>シュッ席</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -19,7 +19,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>student_attendance_app</string>
+	<string>シュッ席</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
