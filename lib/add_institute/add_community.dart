@@ -5,10 +5,10 @@ import 'package:provider/provider.dart';
 import 'community_model.dart';
 import '../setting.dart';
 
-class AddInstituteHome extends StatefulWidget {
+class AddCommunity extends StatefulWidget {
   @override
   String? community;
-  AddInstituteHome(String? community) {
+  AddCommunity(String? community) {
     this.community = community;
   }
 
@@ -17,7 +17,7 @@ class AddInstituteHome extends StatefulWidget {
   }
 }
 
-class AddInstitute extends State<AddInstituteHome> {
+class AddInstitute extends State<AddCommunity> {
   bool isLoading = false;
 
   @override

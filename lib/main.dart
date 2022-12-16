@@ -208,7 +208,7 @@ class MyHomePageState extends State<MyHomePage> {
                                   Navigator.push(
                                     context,
                                     setting_data.NavigationFade(
-                                        AddInstituteHome(model.community)),
+                                        AddCommunity(model.community)),
                                   ).then((value) {
                                     model.fechUser();
                                   });
@@ -278,7 +278,7 @@ class MyHomePageState extends State<MyHomePage> {
                                   Navigator.push(
                                     context,
                                     setting_data.NavigationFade(
-                                        AddInstituteHome(model.community)),
+                                        AddCommunity(model.community)),
                                   ).then((value) {
                                     model.fechUser();
                                   });
@@ -346,7 +346,7 @@ class MyHomePageState extends State<MyHomePage> {
                               Navigator.push(
                                 context,
                                 setting_data.NavigationFade(
-                                    AddInstituteHome(model.community)),
+                                    AddCommunity(model.community)),
                               ).then((value) {
                                 model.fechUser();
                               });

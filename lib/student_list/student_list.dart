@@ -131,7 +131,7 @@ class StudentList extends State<StudentListHome> {
               Navigator.push(
                 context,
                 setting_data.NavigationButtomSlide(
-                    AddMember(widget.communityName)),
+                    AddStudent(widget.communityName)),
               );
             },
           ),

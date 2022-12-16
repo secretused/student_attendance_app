@@ -4,8 +4,16 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CommunityModel extends ChangeNotifier {
+final communityModelProvider =
+    StateNotifierProvider(
+  (ref) => CommunityModel());
+
+class CommunityModel extends StateNotifier {
+
+CommunityModel(): super([]);
+
   final communityController = TextEditingController();
   final departmentController = TextEditingController();
   final emailController = TextEditingController();
@@ -25,43 +33,36 @@ class CommunityModel extends ChangeNotifier {
   bool isLoading = false;
   bool error = false;
 
-  CommunityModel(String? community) {
-    this.communityName = community;
-  }
+  // CommunityModel(String? community) : super(([])) {
+  //   this.communityName = community;
+  // }
 
   void startLoading() {
     isLoading = true;
-    notifyListeners();
   }
 
   void endLoading() {
     isLoading = false;
-    notifyListeners();
   }
 
   void setDepartment(String department) {
     this.department = department;
-    notifyListeners();
   }
 
   void setEmail(String email) {
     this.email = email;
-    notifyListeners();
   }
 
   void setPhoneNumber(String phoneNumber) {
     this.phoneNumber = phoneNumber;
-    notifyListeners();
   }
 
   void setLink(String link) {
     this.link = link;
-    notifyListeners();
   }
 
   void setQRLink(String QRlink) {
     this.QRLink = QRlink;
-    notifyListeners();
   }
 
   Future addCommunity() async {

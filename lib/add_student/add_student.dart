@@ -5,9 +5,9 @@ import '../authentication/register_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AddMember extends StatefulWidget {
+class AddStudent extends StatefulWidget {
   String? gotCommunityName;
-  AddMember(String? communityName) {
+  AddStudent(String? communityName) {
     this.gotCommunityName = communityName;
   }
 
@@ -17,7 +17,7 @@ class AddMember extends StatefulWidget {
   }
 }
 
-class RegisterPage extends State<AddMember> {
+class RegisterPage extends State<AddStudent> {
   bool isHost = false;
   void _changeSwitch(bool e) => setState(() => isHost = e);
   @override
