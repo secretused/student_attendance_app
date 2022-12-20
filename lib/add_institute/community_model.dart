@@ -8,34 +8,34 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final communityModelProvider =
     StateNotifierProvider(
-  (ref) => CommunityModel());
+  (ref) => CommunityModel(null));
 
 class CommunityModel extends StateNotifier {
 
-CommunityModel(): super([]);
+CommunityModel(String? community) : super(null) {
+    communityName = community;
+  }
 
   final communityController = TextEditingController();
   final departmentController = TextEditingController();
   final emailController = TextEditingController();
   final phoneNumberController = TextEditingController();
   final linkController = TextEditingController();
-  final QRLinkController = TextEditingController();
+  final qrLinkController = TextEditingController();
 
   String? communityName;
   String? department;
   String? email;
   String? phoneNumber = "0000000000";
   String? link;
-  String? QRLink;
+  String? qrLink;
 
   String? gotData;
   bool sameName = true;
   bool isLoading = false;
   bool error = false;
 
-  // CommunityModel(String? community) : super(([])) {
-  //   this.communityName = community;
-  // }
+  
 
   void startLoading() {
     isLoading = true;
@@ -46,31 +46,31 @@ CommunityModel(): super([]);
   }
 
   void setDepartment(String department) {
-    this.department = department;
+    department = department;
   }
 
   void setEmail(String email) {
-    this.email = email;
+    email = email;
   }
 
   void setPhoneNumber(String phoneNumber) {
-    this.phoneNumber = phoneNumber;
+    phoneNumber = phoneNumber;
   }
 
   void setLink(String link) {
-    this.link = link;
+    link = link;
   }
 
-  void setQRLink(String QRlink) {
-    this.QRLink = QRlink;
+  void setQRLink(String qrLink) {
+    qrLink = qrLink;
   }
 
   Future addCommunity() async {
-    this.department = departmentController.text;
-    this.email = emailController.text;
-    this.phoneNumber = phoneNumberController.text;
-    this.link = linkController.text;
-    this.QRLink = QRLinkController.text;
+    department = departmentController.text;
+    email = emailController.text;
+    phoneNumber = phoneNumberController.text;
+    link = linkController.text;
+    qrLink = qrLinkController.text;
 
     // IDとかがuserに入る
     var user = FirebaseAuth.instance.currentUser!;
@@ -90,10 +90,10 @@ CommunityModel(): super([]);
     if (user != null && sameName == true) {
       // 確認モーダル
       if (phoneNumber!.isEmpty) {
-        this.phoneNumber = "0000000000";
+        phoneNumber = "0000000000";
       }
     } else {
-      this.error = true;
+      error = true;
     }
   }
 
@@ -111,7 +111,7 @@ CommunityModel(): super([]);
       'email': email,
       'phoneNumber': int.parse(phoneNumber!),
       'link': link,
-      'QRLink': QRLink,
+      'QRLink': qrLink,
     });
   }
 }
