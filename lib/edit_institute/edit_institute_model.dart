@@ -27,22 +27,22 @@ class EditInstituteModel {
   final linkController = TextEditingController();
   final qrLinkController = TextEditingController();
 
-  // EditInstituteModel(
-  //   this.communityName,
-  //   this.department,
-  //   this.email,
-  //   this.phoneNumber,
-  //   this.link,
-  //   this.qrLink,
-  // ) {
-  //   this.nowCommunityName = communityName;
-  //   communityController.text = communityName!;
-  //   departmentController.text = department!;
-  //   emailController.text = email!;
-  //   phoneNumberController.text = phoneNumber!;
-  //   linkController.text = link!;
-  //   qrLinkController.text = qrLink!;
-  // }
+  editInstituteModel(
+    communityName,
+    department,
+    email,
+    phoneNumber,
+    link,
+    qrLink,
+  ) {
+    this.nowCommunityName = communityName;
+    communityController.text = communityName!;
+    departmentController.text = department!;
+    emailController.text = email!;
+    phoneNumberController.text = phoneNumber!;
+    linkController.text = link!;
+    qrLinkController.text = qrLink!;
+  }
 
   void setCommunity(String community) {
     communityName = community;

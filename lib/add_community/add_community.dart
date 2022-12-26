@@ -23,6 +23,7 @@ class _AddCommunityState extends ConsumerState<AddCommunity> {
   Widget build(BuildContext context) {
     //モデルを参照できるようにする
     final communityModel = ref.watch(communityModelProvider);
+    communityModel.communityModel(widget.community);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,

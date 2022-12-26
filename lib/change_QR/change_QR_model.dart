@@ -15,9 +15,9 @@ class QRChangeModel {
   String? link;
   String? qrLink;
 
-  // qrChangeModel(String? gotCommunity) {
-  //   this.communityName = gotCommunity;
-  // }
+  qrChangeModel(String? gotCommunity) {
+    this.communityName = gotCommunity;
+  }
 
   void startLoading() {
     isLoading = true;

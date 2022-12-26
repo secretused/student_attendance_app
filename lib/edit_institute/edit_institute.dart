@@ -39,6 +39,13 @@ class _EditInstitutePageState extends ConsumerState<EditInstitutePage> {
   @override
   Widget build(BuildContext context) {
     final editInstituteModel = ref.watch(editInstituteModelProvider);
+    editInstituteModel.editInstituteModel(
+        widget.communityName,
+        widget.department,
+        widget.email,
+        widget.phoneNumber,
+        widget.link,
+        widget.qrLink);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(

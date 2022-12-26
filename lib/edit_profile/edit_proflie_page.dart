@@ -36,9 +36,18 @@ class EditProfilePage extends ConsumerStatefulWidget {
 class _EditProfilePageState extends ConsumerState<EditProfilePage> {
   bool isLoading = false;
   bool setIsHost = false;
+
+
   @override
   Widget build(BuildContext context) {
     final editProfileModel = ref.watch(editProfileModelProvider);
+    editProfileModel.editProfileModel(
+        widget.uid,
+        widget.name,
+        widget.department,
+        widget.grade,
+        widget.classroom,
+        widget.phoneNumber);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(

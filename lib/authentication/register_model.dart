@@ -154,9 +154,9 @@ class AddUserModel {
 
   bool isLoading = false;
 
-  // AddUserModel(String? gotCommunityName) {
-  //   communityName = gotCommunityName;
-  // }
+  addUserModel(String? gotCommunityName) {
+    communityName = gotCommunityName;
+  }
 
   void startLoading() {
     isLoading = true;

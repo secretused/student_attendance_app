@@ -7,22 +7,23 @@ final editProfileModelProvider =
 Provider((ref) => EditProfileModel());
 
 class EditProfileModel {
-  // EditProfileModel(
-  //   String? uid,
-  //   this.name,
-  //   this.department,
-  //   this.grade,
-  //   this.classroom,
-  //   this.phoneNumber,
-  // ) {
-  //   // uidは不変
-  //   this.uid = uid;
-  //   nameController.text = name!;
-  //   departmentController.text = department!;
-  //   gradeController.text = grade!;
-  //   classController.text = classroom!;
-  //   phoneNumController.text = phoneNumber!;
-  // }
+
+  editProfileModel(
+    String? uid,
+    name,
+    department,
+    grade,
+    classroom,
+    phoneNumber,
+  ) {
+    // uidは不変
+    this.uid = uid;
+    nameController.text = name!;
+    departmentController.text = department!;
+    gradeController.text = grade!;
+    classController.text = classroom!;
+    phoneNumController.text = phoneNumber!;
+  }
 
   String? uid;
   String? name;

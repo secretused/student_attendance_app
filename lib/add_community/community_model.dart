@@ -8,9 +8,9 @@ final communityModelProvider =
 
 class CommunityModel {
 
-// CommunityModel(String? community){
-//     communityName = community;
-//   }
+communityModel(String? community){
+    communityName = community;
+  }
 
   final communityController = TextEditingController();
   final departmentController = TextEditingController();
