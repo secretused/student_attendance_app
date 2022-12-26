@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-class QRModel extends ChangeNotifier {
+final qrModelProvider =
+Provider((ref) => QRModel());
+
+class QRModel {
   String? uid;
   String? name;
   String? community;
@@ -22,51 +25,42 @@ class QRModel extends ChangeNotifier {
 
   void startLoading() {
     isLoading = true;
-    notifyListeners();
   }
 
   void endLoading() {
     isLoading = false;
-    notifyListeners();
   }
 
   void setUid(String uid) {
     this.uid = uid;
-    notifyListeners();
   }
 
   void setName(String name) {
     this.name = name;
-    notifyListeners();
   }
 
   // 絞り込み用
   void setDepartment(String department) {
     this.department = department;
-    notifyListeners();
   }
 
   void setGrade(String grade) {
     this.grade = grade;
-    notifyListeners();
   }
 
   void setClassRoom(String classroom) {
     this.classroom = classroom;
-    notifyListeners();
   }
 
   void setCommunity(String community) {
     this.community = community;
-    notifyListeners();
   }
 
   void setisHost(bool isHost) {
     this.isHost = isHost;
-    notifyListeners();
   }
 
-  Future atendding() async {
+  Future attend() async {
     String? collectionName = createdAt! + name!;
 
     if (user != null) {
