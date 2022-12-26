@@ -5,7 +5,6 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:provider/provider.dart';
 
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share_extend/share_extend.dart';

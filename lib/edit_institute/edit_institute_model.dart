@@ -1,73 +1,71 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class EditInstituteModel extends ChangeNotifier {
+final editInstituteModelProvider =
+Provider((ref) => EditInstituteModel());
+
+class EditInstituteModel {
   String? communityName;
   String? nowCommunityName;
   String? department;
   String? email;
   String? phoneNumber;
   String? link;
-  String? QRLink;
+  String? qrLink;
 
   bool isLoading = false;
 
   late bool? sameName = false;
-  late bool? change_institute_name = false;
+  late bool? changeInstituteName = false;
 
   final communityController = TextEditingController();
   final departmentController = TextEditingController();
   final emailController = TextEditingController();
   final phoneNumberController = TextEditingController();
   final linkController = TextEditingController();
-  final QRLinkController = TextEditingController();
+  final qrLinkController = TextEditingController();
 
-  EditInstituteModel(
-    this.communityName,
-    this.department,
-    this.email,
-    this.phoneNumber,
-    this.link,
-    this.QRLink,
-  ) {
-    this.nowCommunityName = communityName;
-    communityController.text = communityName!;
-    departmentController.text = department!;
-    emailController.text = email!;
-    phoneNumberController.text = phoneNumber!;
-    linkController.text = link!;
-    QRLinkController.text = QRLink!;
-  }
+  // EditInstituteModel(
+  //   this.communityName,
+  //   this.department,
+  //   this.email,
+  //   this.phoneNumber,
+  //   this.link,
+  //   this.qrLink,
+  // ) {
+  //   this.nowCommunityName = communityName;
+  //   communityController.text = communityName!;
+  //   departmentController.text = department!;
+  //   emailController.text = email!;
+  //   phoneNumberController.text = phoneNumber!;
+  //   linkController.text = link!;
+  //   qrLinkController.text = qrLink!;
+  // }
 
   void setCommunity(String community) {
-    this.communityName = community;
-    notifyListeners();
+    communityName = community;
   }
 
   void setDepartment(String department) {
     this.department = department;
-    notifyListeners();
   }
 
   void setEmail(String email) {
     this.email = email;
-    notifyListeners();
   }
 
   void setPhoneNumber(String phoneNumber) {
     this.phoneNumber = phoneNumber;
-    notifyListeners();
   }
 
   void setLink(String link) {
     this.link = link;
-    notifyListeners();
   }
 
-  void setQRLink(String QRlink) {
-    this.QRLink = QRlink;
-    notifyListeners();
+  void setqrLink(String qrLink) {
+    this.qrLink = qrLink;
   }
 
   bool isUpdated() {
@@ -76,16 +74,16 @@ class EditInstituteModel extends ChangeNotifier {
         email != null &&
         phoneNumber != null &&
         link != null &&
-        QRLink != null);
+        qrLink != null);
   }
 
   Future update() async {
-    this.communityName = communityController.text;
-    this.department = departmentController.text;
-    this.email = emailController.text;
-    this.phoneNumber = phoneNumberController.text;
-    this.link = linkController.text;
-    this.QRLink = QRLinkController.text;
+    communityName = communityController.text;
+    department = departmentController.text;
+    email = emailController.text;
+    phoneNumber = phoneNumberController.text;
+    link = linkController.text;
+    qrLink = qrLinkController.text;
 
     late String? sameCommunity = null;
     // 団体名を変更しようとしているとき
@@ -105,7 +103,7 @@ class EditInstituteModel extends ChangeNotifier {
       } else {
         // 同じ団体なし 1-2
         // sameName = false;
-        change_institute_name = true;
+        changeInstituteName = true;
       }
     } else {
       // 団体名以外変更
@@ -116,8 +114,8 @@ class EditInstituteModel extends ChangeNotifier {
 
   // usersコレクション変更
   Future changeInstitute() async {
-    final current_user = FirebaseAuth.instance.currentUser;
-    final uid = current_user?.uid;
+    final currentUser = FirebaseAuth.instance.currentUser;
+    final uid = currentUser?.uid;
     //  1-2-E(あるかも)
     await FirebaseFirestore.instance
         .collection('users')
@@ -153,7 +151,7 @@ class EditInstituteModel extends ChangeNotifier {
       'email': email,
       'phoneNumber': int.parse(phoneNumber!),
       'link': link,
-      'QRLink': QRLink,
+      'qrLink': qrLink,
     });
   }
 
@@ -168,7 +166,7 @@ class EditInstituteModel extends ChangeNotifier {
       'email': email,
       'phoneNumber': int.parse(phoneNumber!),
       'link': link,
-      'QRLink': QRLink,
+      'qrLink': qrLink,
     });
   }
 
