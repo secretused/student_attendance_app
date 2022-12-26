@@ -1,30 +1,27 @@
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../setting.dart';
 import 'register_model.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 void main() => runApp(
-      MaterialApp(home: RegisterHome()),
+      MaterialApp(home: RegisterPage()),
     );
 
-class RegisterHome extends StatefulWidget {
+class RegisterPage extends ConsumerStatefulWidget {
   @override
-  State<StatefulWidget> createState() {
-    return RegisterPage();
-  }
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
-class RegisterPage extends State<RegisterHome> {
+class _RegisterPageState extends ConsumerState<RegisterPage> {
   bool isHost = false;
   @override
   Widget build(BuildContext context) {
     // キーボードの高さ
-    final bottomSpace = MediaQuery.of(context).viewInsets.bottom;
-    return ChangeNotifierProvider<RegisterModel>(
-      create: (_) => RegisterModel(),
-      child: Scaffold(
+    // final bottomSpace = MediaQuery.of(context).viewInsets.bottom;
+    final registerModel = ref.watch(registerModelProvider);
+      return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           centerTitle: true,
@@ -38,38 +35,37 @@ class RegisterPage extends State<RegisterHome> {
           behavior: HitTestBehavior.opaque, //画面外タップを検知するために必要
           onTap: () => FocusScope.of(context).unfocus(),
           child: Center(
-            child: Consumer<RegisterModel>(builder: (context, model, child) {
-              return Stack(
+              child: Stack(
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
                         TextFormField(
-                          controller: model.nameController,
+                          controller: registerModel.nameController,
                           decoration: InputDecoration(
                             hintText: '名前 *',
                           ),
                           onChanged: (text) {
-                            model.setName(text);
+                            registerModel.setName(text);
                           },
                         ),
                         TextField(
-                          controller: model.communityController,
+                          controller: registerModel.communityController,
                           decoration: InputDecoration(
                             hintText: '所属団体名 *',
                           ),
                           onChanged: (text) {
-                            model.setCommunity(text);
+                            registerModel.setCommunity(text);
                           },
                         ),
                         TextField(
-                          controller: model.departmentController,
+                          controller: registerModel.departmentController,
                           decoration: InputDecoration(
                             hintText: '部署・学科',
                           ),
                           onChanged: (text) {
-                            model.setDepartment(text);
+                            registerModel.setDepartment(text);
                           },
                         ),
                         TextField(
@@ -77,33 +73,33 @@ class RegisterPage extends State<RegisterHome> {
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly
                           ],
-                          controller: model.gradeController,
+                          controller: registerModel.gradeController,
                           decoration: InputDecoration(
                             hintText: '期生・学年',
                           ),
                           onChanged: (text) {
-                            model.setGrade(text);
+                            registerModel.setGrade(text);
                           },
                         ),
                         TextField(
-                          controller: model.classController,
+                          controller: registerModel.classController,
                           decoration: InputDecoration(
                             hintText: 'チーム・クラス',
                           ),
                           onChanged: (text) {
-                            model.setClass(text);
+                            registerModel.setClass(text);
                           },
                         ),
                         SizedBox(
                           height: 20,
                         ),
                         TextField(
-                          controller: model.emailController,
+                          controller: registerModel.emailController,
                           decoration: InputDecoration(
                             hintText: 'Email *',
                           ),
                           onChanged: (text) {
-                            model.setEmail(text);
+                            registerModel.setEmail(text);
                           },
                           inputFormatters: [
                             FilteringTextInputFormatter.allow(
@@ -117,21 +113,21 @@ class RegisterPage extends State<RegisterHome> {
                             FilteringTextInputFormatter.digitsOnly,
                             LengthLimitingTextInputFormatter(11),
                           ],
-                          controller: model.phoneNumController,
+                          controller: registerModel.phoneNumController,
                           decoration: InputDecoration(
                             hintText: '電話番号',
                           ),
                           onChanged: (text) {
-                            model.setPhoneNumber(text);
+                            registerModel.setPhoneNumber(text);
                           },
                         ),
                         TextField(
-                          controller: model.authorController,
+                          controller: registerModel.authorController,
                           decoration: InputDecoration(
                             hintText: 'パスワード *',
                           ),
                           onChanged: (text) {
-                            model.setPassword(text);
+                            registerModel.setPassword(text);
                           },
                           inputFormatters: [
                             FilteringTextInputFormatter.allow(
@@ -150,19 +146,19 @@ class RegisterPage extends State<RegisterHome> {
                                 isHost = value;
                               },
                             );
-                            model.setHost(isHost);
+                            registerModel.setHost(isHost);
                           },
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: Color.fromARGB(255, 66, 140, 224),
-                            onPrimary: Colors.black,
+                            backgroundColor: Color.fromARGB(255, 66, 140, 224),
+                            foregroundColor: Colors.black,
                           ),
                           onPressed: () async {
-                            model.startLoading();
+                            registerModel.startLoading();
                             // 追加の処理
                             try {
-                              if (model.name == null) {
+                              if (registerModel.name == null) {
                                 showDialog(
                                   context: context,
                                   builder: (BuildContext context) {
@@ -170,7 +166,7 @@ class RegisterPage extends State<RegisterHome> {
                                         error_message: "名前を入力してください");
                                   },
                                 );
-                              } else if (model.communityName == null) {
+                              } else if (registerModel.communityName == null) {
                                 showDialog(
                                   context: context,
                                   builder: (BuildContext context) {
@@ -179,11 +175,11 @@ class RegisterPage extends State<RegisterHome> {
                                   },
                                 );
                               }
-                              await model.signUp();
+                              await registerModel.signUp();
                               Navigator.of(context)
                                   .popUntil((route) => route.isFirst);
                             } on FirebaseAuthException catch (e) {
-                              String? authException = auth_error(e.code);
+                              String? authException = authError(e.code);
                               final snackBar = SnackBar(
                                 backgroundColor: Colors.red,
                                 content: Text(authException!),
@@ -191,7 +187,7 @@ class RegisterPage extends State<RegisterHome> {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(snackBar);
                             } finally {
-                              model.endLoading();
+                              registerModel.endLoading();
                             }
                           },
                           child: Text('登録する'),
@@ -199,7 +195,7 @@ class RegisterPage extends State<RegisterHome> {
                       ],
                     ),
                   ),
-                  if (model.isLoading)
+                  if (registerModel.isLoading)
                     Container(
                       color: Colors.black54,
                       child: Center(
@@ -207,25 +203,24 @@ class RegisterPage extends State<RegisterHome> {
                       ),
                     ),
                 ],
-              );
-            }),
+              ),
           ),
         ),
-      ),
-    );
+      );
   }
 
-  String? auth_error(e_code) {
-    if (e_code == 'user-disabled') {
+  String? authError(errorCode) {
+    if (errorCode == 'user-disabled') {
       return 'そのメールアドレスは利用できません';
-    } else if (e_code == 'invalid-email') {
+    } else if (errorCode == 'invalid-email') {
       return 'メールアドレスのフォーマットが正しくありません';
-    } else if (e_code == 'user-not-found') {
+    } else if (errorCode == 'user-not-found') {
       return 'ユーザーが見つかりません';
-    } else if (e_code == 'wrong-password') {
+    } else if (errorCode == 'wrong-password') {
       return 'パスワードが違います';
-    } else if (e_code == 'weak-password') {
+    } else if (errorCode == 'weak-password') {
       return 'パスワードが短い又は記述してください';
     }
+    return 'エラーが発生しました';
   }
 }

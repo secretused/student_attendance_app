@@ -3,9 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:provider/provider.dart';
 
-import '../mypage/my_model.dart';
 import '../setting.dart';
 import 'attendance_register.dart';
 

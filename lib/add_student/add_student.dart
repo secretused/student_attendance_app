@@ -1,30 +1,27 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../authentication/register_model.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-class AddStudent extends StatefulWidget {
+class AddStudent extends ConsumerStatefulWidget {
   String? gotCommunityName;
   AddStudent(String? communityName) {
     this.gotCommunityName = communityName;
   }
 
   @override
-  State<StatefulWidget> createState() {
-    return RegisterPage();
-  }
+  _AddStudentState createState() => _AddStudentState();
 }
 
-class RegisterPage extends State<AddStudent> {
+class _AddStudentState extends ConsumerState<AddStudent> {
   bool isHost = false;
-  void _changeSwitch(bool e) => setState(() => isHost = e);
+  // void _changeSwitch(bool e) => setState(() => isHost = e);
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<AddUserModel>(
-      create: (_) => AddUserModel(widget.gotCommunityName),
-      child: Scaffold(
+    final addUserModel = ref.watch(addUserModelProvider);
+      return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           centerTitle: true,
@@ -36,24 +33,23 @@ class RegisterPage extends State<AddStudent> {
         ),
         body: Container(
           child: Center(
-            child: Consumer<AddUserModel>(builder: (context, model, child) {
-              return Stack(
+              child: Stack(
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
                         TextField(
-                          controller: model.nameController,
+                          controller: addUserModel.nameController,
                           decoration: InputDecoration(
                             hintText: '名前　*',
                           ),
                           onChanged: (text) {
-                            model.setName(text);
+                            addUserModel.setName(text);
                           },
                         ),
                         TextField(
-                          controller: model.communityController,
+                          controller: addUserModel.communityController,
                           enabled: false,
                           decoration: InputDecoration(
                             hintText: widget.gotCommunityName,
@@ -64,44 +60,44 @@ class RegisterPage extends State<AddStudent> {
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly
                           ],
-                          controller: model.gradeController,
+                          controller: addUserModel.gradeController,
                           decoration: InputDecoration(
                             hintText: '期生・学年',
                           ),
                           onChanged: (text) {
-                            model.setGrade(text);
+                            addUserModel.setGrade(text);
                           },
                         ),
                         TextField(
-                          controller: model.departmentController,
+                          controller: addUserModel.departmentController,
                           decoration: InputDecoration(
                             hintText: '部署・学科',
                           ),
                           onChanged: (text) {
-                            model.setCommunity(
+                            addUserModel.setCommunity(
                                 widget.gotCommunityName as String);
-                            model.setDepartment(text);
+                            addUserModel.setDepartment(text);
                           },
                         ),
                         TextField(
-                          controller: model.classController,
+                          controller: addUserModel.classController,
                           decoration: InputDecoration(
                             hintText: 'チーム・クラス',
                           ),
                           onChanged: (text) {
-                            model.setClass(text);
+                            addUserModel.setClass(text);
                           },
                         ),
                         SizedBox(
                           height: 20,
                         ),
                         TextField(
-                          controller: model.emailController,
+                          controller: addUserModel.emailController,
                           decoration: InputDecoration(
                             hintText: 'Email *',
                           ),
                           onChanged: (text) {
-                            model.setEmail(text);
+                            addUserModel.setEmail(text);
                           },
                           inputFormatters: [
                             FilteringTextInputFormatter.allow(
@@ -114,21 +110,21 @@ class RegisterPage extends State<AddStudent> {
                             FilteringTextInputFormatter.digitsOnly,
                             LengthLimitingTextInputFormatter(11),
                           ],
-                          controller: model.phoneNumController,
+                          controller: addUserModel.phoneNumController,
                           decoration: InputDecoration(
                             hintText: '電話番号',
                           ),
                           onChanged: (text) {
-                            model.setPhoneNumber(text);
+                            addUserModel.setPhoneNumber(text);
                           },
                         ),
                         TextField(
-                          controller: model.authorController,
+                          controller: addUserModel.authorController,
                           decoration: InputDecoration(
                             hintText: 'パスワード *',
                           ),
                           onChanged: (text) {
-                            model.setPassword(text);
+                            addUserModel.setPassword(text);
                           },
                           inputFormatters: [
                             FilteringTextInputFormatter.allow(
@@ -147,7 +143,7 @@ class RegisterPage extends State<AddStudent> {
                                 isHost = value;
                               },
                             );
-                            model.setHost(isHost);
+                            addUserModel.setHost(isHost);
                           },
                         ),
                         ElevatedButton(
@@ -156,14 +152,14 @@ class RegisterPage extends State<AddStudent> {
                             onPrimary: Colors.black,
                           ),
                           onPressed: () async {
-                            model.startLoading();
+                            addUserModel.startLoading();
 
                             // 追加の処理
                             try {
-                              await model.addUser();
+                              await addUserModel.addUser();
                               Navigator.of(context).pop();
                             } on FirebaseAuthException catch (e) {
-                              String? authException = auth_error(e.code);
+                              String? authException = authError(e.code);
                               final snackBar = SnackBar(
                                 backgroundColor: Colors.red,
                                 content: Text(authException!),
@@ -171,7 +167,7 @@ class RegisterPage extends State<AddStudent> {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(snackBar);
                             } finally {
-                              model.endLoading();
+                              addUserModel.endLoading();
                             }
                           },
                           child: Text('登録する'),
@@ -179,7 +175,7 @@ class RegisterPage extends State<AddStudent> {
                       ],
                     ),
                   ),
-                  if (model.isLoading)
+                  if (addUserModel.isLoading)
                     Container(
                       color: Colors.black54,
                       child: Center(
@@ -187,25 +183,24 @@ class RegisterPage extends State<AddStudent> {
                       ),
                     ),
                 ],
-              );
-            }),
+              ),
           ),
         ),
-      ),
-    );
+      );
   }
 
-  String? auth_error(e_code) {
-    if (e_code == 'user-disabled') {
+  String? authError(errorCode) {
+    if (errorCode == 'user-disabled') {
       return 'そのメールアドレスは利用できません';
-    } else if (e_code == 'invalid-email') {
+    } else if (errorCode == 'invalid-email') {
       return 'メールアドレスのフォーマットが正しくありません';
-    } else if (e_code == 'user-not-found') {
+    } else if (errorCode == 'user-not-found') {
       return 'ユーザーが見つかりません';
-    } else if (e_code == 'wrong-password') {
+    } else if (errorCode == 'wrong-password') {
       return 'パスワードが違います';
-    } else if (e_code == 'weak-password') {
+    } else if (errorCode == 'weak-password') {
       return 'パスワードが短い又は記述してください';
     }
+    return 'エラーが発生しました';
   }
 }

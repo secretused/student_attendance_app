@@ -20,14 +20,14 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'パスワード変更',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Color.fromARGB(255, 67, 176, 190),
+        backgroundColor: const Color.fromARGB(255, 67, 176, 190),
       ),
       body: Container(
-        color: Color.fromARGB(255, 255, 255, 255),
+        color: const Color.fromARGB(255, 255, 255, 255),
         alignment: Alignment.center,
         child: Padding(
           padding: const EdgeInsets.only(right: 40.0, left: 40.0),
@@ -85,7 +85,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                       style: TextStyle(fontSize: 15),
                     ),
                     style: ElevatedButton.styleFrom(
-                      primary: Color.fromARGB(255, 66, 140, 224),
+                      backgroundColor: Color.fromARGB(255, 66, 140, 224),
                     ),
                     onPressed: () async {
                       if (_formGlobalKey.currentState!.validate()) {
