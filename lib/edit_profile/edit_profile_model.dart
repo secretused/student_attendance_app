@@ -1,24 +1,28 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class EditProfileModel extends ChangeNotifier {
-  EditProfileModel(
-    String? uid,
-    this.name,
-    this.department,
-    this.grade,
-    this.classroom,
-    this.phoneNumber,
-  ) {
-    // uidは不変
-    this.uid = uid;
-    nameController.text = name!;
-    departmentController.text = department!;
-    gradeController.text = grade!;
-    classController.text = classroom!;
-    phoneNumController.text = phoneNumber!;
-  }
+final editProfileModelProvider =
+Provider((ref) => EditProfileModel());
+
+class EditProfileModel {
+  // EditProfileModel(
+  //   String? uid,
+  //   this.name,
+  //   this.department,
+  //   this.grade,
+  //   this.classroom,
+  //   this.phoneNumber,
+  // ) {
+  //   // uidは不変
+  //   this.uid = uid;
+  //   nameController.text = name!;
+  //   departmentController.text = department!;
+  //   gradeController.text = grade!;
+  //   classController.text = classroom!;
+  //   phoneNumController.text = phoneNumber!;
+  // }
 
   String? uid;
   String? name;
@@ -37,32 +41,26 @@ class EditProfileModel extends ChangeNotifier {
 
   void setName(String name) {
     this.name = name;
-    notifyListeners();
   }
 
   void setDepartment(String department) {
     this.department = department;
-    notifyListeners();
   }
 
   void setGrade(String grade) {
     this.grade = grade;
-    notifyListeners();
   }
 
   void setClass(String classroom) {
     this.classroom = classroom;
-    notifyListeners();
   }
 
   void setPhoneNumber(String phoneNum) {
-    this.phoneNumber = phoneNum;
-    notifyListeners();
+    phoneNumber = phoneNum;
   }
 
   void setHost(bool isHost) {
     this.isHost = isHost;
-    notifyListeners();
   }
 
   bool isUpdated() {
@@ -74,11 +72,11 @@ class EditProfileModel extends ChangeNotifier {
   }
 
   Future update() async {
-    this.name = nameController.text;
-    this.department = departmentController.text;
-    this.grade = gradeController.text;
-    this.classroom = classController.text;
-    this.phoneNumber = phoneNumController.text;
+    name = nameController.text;
+    department = departmentController.text;
+    grade = gradeController.text;
+    classroom = classController.text;
+    phoneNumber = phoneNumController.text;
 
     // Authの名前変更
     final instance = FirebaseAuth.instance;
