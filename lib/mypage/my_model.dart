@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MyModel extends ChangeNotifier {
+final myModelProvider =
+Provider((ref) => MyModel()..fetchUser());
+
+class MyModel {
   bool isLoading = false;
   bool isCommunity = false;
 
@@ -18,18 +21,16 @@ class MyModel extends ChangeNotifier {
 
   void startLoading() {
     isLoading = true;
-    notifyListeners();
   }
 
   void endLoading() {
     isLoading = false;
-    notifyListeners();
   }
 
   Future fetchUser() async {
     final user = FirebaseAuth.instance.currentUser;
-    this.uid = user?.uid;
-    this.email = user?.email;
+    uid = user?.uid;
+    email = user?.email;
 
     if (user != null) {
       // ユーザ情報取得
@@ -37,24 +38,23 @@ class MyModel extends ChangeNotifier {
           await FirebaseFirestore.instance.collection('users').doc(uid).get();
       final data = snapshot.data();
 
-      this.name = data?["name"];
-      this.community = data?["community"];
-      this.grade = data?["grade"];
-      this.department = data?["department"];
-      this.classroom = data?["classroom"];
-      this.isHost = data?["isHost"];
-      this.phoneNumber = data?["phoneNumber"];
+      name = data?["name"];
+      community = data?["community"];
+      grade = data?["grade"];
+      department = data?["department"];
+      classroom = data?["classroom"];
+      isHost = data?["isHost"];
+      phoneNumber = data?["phoneNumber"];
 
-      notifyListeners();
       final getInstitue = await FirebaseFirestore.instance
           .collection('community')
           .doc(community)
           .get();
-      final community_data = getInstitue.data();
-      if (community_data?["community"].runtimeType != null) {
-        this.isCommunity = true;
+      final communityData = getInstitue.data();
+      if (communityData?["community"].runtimeType != null) {
+        isCommunity = true;
       } else {
-        this.isCommunity = false;
+        isCommunity = false;
       }
     }
   }

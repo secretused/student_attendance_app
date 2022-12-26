@@ -13,23 +13,21 @@ class MyQRCode extends StatefulWidget {
 }
 
 class _MyHomePageState extends State {
-  SettingClass setting_data = SettingClass();
+  SettingClass settingData = SettingClass();
   String qrCode = '';
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () => _backButtonPress(context),
-      child: ChangeNotifierProvider<MyModel>(
-        create: (_) => MyModel()..fetchUser(),
         child: Scaffold(
           appBar: AppBar(
             centerTitle: true,
-            title: Text(
+            title: const Text(
               'QRコード読み取り',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            backgroundColor: Color.fromARGB(255, 67, 176, 190),
+            backgroundColor: const Color.fromARGB(255, 67, 176, 190),
           ),
           body: Center(
             child: Consumer<MyModel>(builder: (context, model, child) {
@@ -45,8 +43,8 @@ class _MyHomePageState extends State {
                         size: 100,
                       ),
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
-                        onPrimary: Colors.black,
+                        backgroundColor: Colors.white,
+                        foregroundColor: Colors.black,
                         shape: const CircleBorder(
                           side: BorderSide(
                             color: Colors.black,
@@ -64,7 +62,6 @@ class _MyHomePageState extends State {
             }),
           ),
         ),
-      ),
     );
   }
 
@@ -94,7 +91,7 @@ class _MyHomePageState extends State {
     if (qrCode == QRCodeLink) {
       await Navigator.push(
         context,
-        setting_data.NavigationFade(AttendanceRegister(
+        settingData.NavigationFade(AttendanceRegister(
             community, isHost, department, grade, classroom, sameCommunity)),
       );
     } else {

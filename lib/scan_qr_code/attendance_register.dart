@@ -14,7 +14,7 @@ class ScreenArguments {
 }
 
 class AttendanceRegister extends StatelessWidget {
-  SettingClass setting_data = SettingClass();
+  SettingClass settingData = SettingClass();
 
   String? uid;
   String? email;
@@ -167,7 +167,7 @@ class AttendanceRegister extends StatelessWidget {
                             if (isHost == true) {
                               await Navigator.push(
                                 context,
-                                setting_data.NavigationFade(
+                                settingData.NavigationFade(
                                     AddCommunity(community)),
                               );
                             }

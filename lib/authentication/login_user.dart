@@ -10,7 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'reset_password.dart';
 
 class LoginPage extends StatelessWidget {
-  SettingClass setting_data = SettingClass();
+  SettingClass settingData = SettingClass();
   String? error_text;
 
   @override
@@ -100,7 +100,7 @@ class LoginPage extends StatelessWidget {
                             // 画面遷移
                             await Navigator.push(
                                 context,
-                                setting_data.NavigationFade(
+                                settingData.NavigationFade(
                                     ResetPasswordForm()));
                           },
                           child: Text(
@@ -120,7 +120,7 @@ class LoginPage extends StatelessWidget {
                             // 画面遷移
                             await Navigator.push(
                                 context,
-                                await setting_data.NavigationFade(
+                                await settingData.NavigationFade(
                                     RegisterHome()));
                           },
                           child: Text(

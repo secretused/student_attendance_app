@@ -6,7 +6,7 @@ import '../setting.dart';
 import 'change_QR_model.dart';
 
 class ChangeQRCode extends StatelessWidget {
-  SettingClass setting_data = SettingClass();
+  SettingClass settingData = SettingClass();
 
   String? gotCommunity;
   ChangeQRCode(String? community) {
@@ -32,7 +32,7 @@ class ChangeQRCode extends StatelessWidget {
                 onPressed: () async {
                   Navigator.push(
                     context,
-                    setting_data.NavigationFade(EditInstitutePageHome(
+                    settingData.NavigationFade(EditInstitutePageHome(
                         model.communityName!,
                         model.department!,
                         model.email!,

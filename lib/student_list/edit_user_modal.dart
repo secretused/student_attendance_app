@@ -25,7 +25,7 @@ class UserEditModal extends StatefulWidget {
 
 // 絞り込みモーダル
 class UserEditModalHome extends State<UserEditModal> {
-  SettingClass setting_data = SettingClass();
+  SettingClass settingData = SettingClass();
   late bool isCurrentUser = false;
   @override
   Widget build(BuildContext context) {
@@ -126,7 +126,7 @@ class UserEditModalHome extends State<UserEditModal> {
                                       // edit_profileに遷移
                                       Navigator.push(
                                         context,
-                                        setting_data.NavigationFade(
+                                        settingData.NavigationFade(
                                             EditProfilePage(
                                                 model.uid!,
                                                 model.name!,

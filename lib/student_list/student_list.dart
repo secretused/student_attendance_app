@@ -21,7 +21,7 @@ class StudentListHome extends StatefulWidget {
 }
 
 class StudentList extends State<StudentListHome> {
-  SettingClass setting_data = SettingClass();
+  SettingClass settingData = SettingClass();
   final setting_date = SettingClass();
   late bool showButton = false;
 
@@ -130,7 +130,7 @@ class StudentList extends State<StudentListHome> {
             onPressed: () {
               Navigator.push(
                 context,
-                setting_data.NavigationButtomSlide(
+                settingData.NavigationButtomSlide(
                     AddStudent(widget.communityName)),
               );
             },
