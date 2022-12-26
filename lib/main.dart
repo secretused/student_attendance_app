@@ -12,7 +12,7 @@ import 'management_home.dart';
 import 'authentication/login_user.dart';
 import 'mypage/my_model.dart';
 import 'mypage/my_page.dart';
-import 'add_institute/add_community.dart';
+import 'add_community/add_community.dart';
 import 'scan_qr_code/qr_code.dart';
 import 'option/usage.dart';
 import 'setting.dart';
