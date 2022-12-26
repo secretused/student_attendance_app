@@ -31,7 +31,7 @@ class ChangeQRCode extends ConsumerWidget {
             onPressed: () async {
               Navigator.push(
                 context,
-                settingData.NavigationFade(EditInstitutePageHome(
+                settingData.NavigationFade(EditInstitutePage(
                     qrChangeModel.communityName!,
                     qrChangeModel.department!,
                     qrChangeModel.email!,
