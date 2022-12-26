@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/services.dart';
 import 'package:vibration/vibration.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'management_home.dart';
 import 'authentication/login_user.dart';
@@ -21,7 +22,7 @@ void main() async {
   await Firebase.initializeApp();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
     (_) {
-      runApp(const MyApp());
+      runApp( const ProviderScope(child: MyApp()));
     },
   );
 }
@@ -79,9 +80,9 @@ class MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<MyModel>(
-      create: (_) => MyModel()..fechUser(),
+      create: (_) => MyModel()..fetchUser(),
       child: Consumer<MyModel>(builder: (context, model, child) {
-        model.fechUser();
+        model.fetchUser();
         late bool? isHost = model.isHost;
         late bool? isCommunity = model.isCommunity;
         return Scaffold(
@@ -142,7 +143,7 @@ class MyHomePageState extends State<MyHomePage> {
                       context,
                       setting_data.NavigationFade(LoginPage()),
                     ).then((value) {
-                      model.fechUser();
+                      model.fetchUser();
                     });
                   }
                 },
@@ -175,7 +176,7 @@ class MyHomePageState extends State<MyHomePage> {
                             ),
                           ),
                           onPressed: () async {
-                            model.fechUser();
+                            model.fetchUser();
                             if (FirebaseAuth.instance.currentUser != null) {
                               // 団体の有無
                               if (isCommunity == true) {
@@ -210,7 +211,7 @@ class MyHomePageState extends State<MyHomePage> {
                                     setting_data.NavigationFade(
                                         AddCommunity(model.community)),
                                   ).then((value) {
-                                    model.fechUser();
+                                    model.fetchUser();
                                   });
                                 } else {
                                   showDialog(
@@ -265,7 +266,7 @@ class MyHomePageState extends State<MyHomePage> {
                             ),
                           ),
                           onPressed: () {
-                            model.fechUser();
+                            model.fetchUser();
                             if (FirebaseAuth.instance.currentUser != null) {
                               if (isHost == true) {
                                 if (isCommunity == true) {
@@ -280,7 +281,7 @@ class MyHomePageState extends State<MyHomePage> {
                                     setting_data.NavigationFade(
                                         AddCommunity(model.community)),
                                   ).then((value) {
-                                    model.fechUser();
+                                    model.fetchUser();
                                   });
                                 }
                               } else {
@@ -338,7 +339,7 @@ class MyHomePageState extends State<MyHomePage> {
                           ),
                         ),
                         onPressed: () async {
-                          model.fechUser();
+                          model.fetchUser();
                           if (FirebaseAuth.instance.currentUser != null) {
                             // 管理者であるか
                             if (isHost == true) {
@@ -348,7 +349,7 @@ class MyHomePageState extends State<MyHomePage> {
                                 setting_data.NavigationFade(
                                     AddCommunity(model.community)),
                               ).then((value) {
-                                model.fechUser();
+                                model.fetchUser();
                               });
                             } else {
                               showDialog(

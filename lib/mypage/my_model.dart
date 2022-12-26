@@ -26,7 +26,7 @@ class MyModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future fechUser() async {
+  Future fetchUser() async {
     final user = FirebaseAuth.instance.currentUser;
     this.uid = user?.uid;
     this.email = user?.email;

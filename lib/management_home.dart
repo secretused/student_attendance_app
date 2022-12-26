@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:attendanc_management_app/mypage/my_model.dart';
-import 'add_institute/add_community.dart';
+import 'add_community/add_community.dart';
 import 'change_QR/change_QR.dart';
 import 'select_date/select_date.dart';
 import 'setting.dart';
@@ -15,7 +15,7 @@ class ManagementHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<MyModel>(
-      create: (_) => MyModel()..fechUser(),
+      create: (_) => MyModel()..fetchUser(),
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,

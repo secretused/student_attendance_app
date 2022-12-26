@@ -1,20 +1,17 @@
-import 'dart:ffi';
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final communityModelProvider =
-    StateNotifierProvider(
-  (ref) => CommunityModel(null));
+    Provider(
+  (ref) => CommunityModel());
 
-class CommunityModel extends StateNotifier {
+class CommunityModel {
 
-CommunityModel(String? community) : super(null) {
-    communityName = community;
-  }
+// CommunityModel(String? community){
+//     communityName = community;
+//   }
 
   final communityController = TextEditingController();
   final departmentController = TextEditingController();

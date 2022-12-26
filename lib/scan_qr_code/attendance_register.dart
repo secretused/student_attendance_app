@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import '../add_institute/add_community.dart';
+import '../add_community/add_community.dart';
 import '../setting.dart';
 
 class ScreenArguments {

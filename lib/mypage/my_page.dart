@@ -12,7 +12,7 @@ class MyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<MyModel>(
-      create: (_) => MyModel()..fechUser(),
+      create: (_) => MyModel()..fetchUser(),
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,

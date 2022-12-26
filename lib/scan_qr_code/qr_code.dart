@@ -21,7 +21,7 @@ class _MyHomePageState extends State {
     return WillPopScope(
       onWillPop: () => _backButtonPress(context),
       child: ChangeNotifierProvider<MyModel>(
-        create: (_) => MyModel()..fechUser(),
+        create: (_) => MyModel()..fetchUser(),
         child: Scaffold(
           appBar: AppBar(
             centerTitle: true,
