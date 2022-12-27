@@ -8,22 +8,24 @@ Provider((ref) => EditProfileModel());
 
 class EditProfileModel {
 
-  editProfileModel(
-    String? uid,
-    name,
-    department,
-    grade,
-    classroom,
-    phoneNumber,
-  ) {
-    // uidは不変
-    this.uid = uid;
-    nameController.text = name!;
-    departmentController.text = department!;
-    gradeController.text = grade!;
-    classController.text = classroom!;
-    phoneNumController.text = phoneNumber!;
-  }
+  // void editProfileModel(
+  //   String? uid,
+  //   name,
+  //   department,
+  //   grade,
+  //   classroom,
+  //   phoneNumber,
+  // ) {
+  //   // uidは不変
+  //   print("遷移でもってきてもらった最初の値-------------------------");
+  //   print(name!);
+  //   this.uid = uid;
+  //   nameController.text = name!;
+  //   departmentController.text = department!;
+  //   gradeController.text = grade!;
+  //   classController.text = classroom!;
+  //   phoneNumController.text = phoneNumber!;
+  // }
 
   String? uid;
   String? name;
@@ -34,45 +36,53 @@ class EditProfileModel {
   bool? isHost;
   bool nameNull = false;
 
-  final nameController = TextEditingController();
-  final departmentController = TextEditingController();
-  final gradeController = TextEditingController();
-  final classController = TextEditingController();
-  final phoneNumController = TextEditingController();
+  bool isLoading = false;
 
-  void setName(String name) {
-    this.name = name;
-  }
+  // final nameController = TextEditingController();
+  // final departmentController = TextEditingController();
+  // final gradeController = TextEditingController();
+  // final classController = TextEditingController();
+  // final phoneNumController = TextEditingController();
 
-  void setDepartment(String department) {
-    this.department = department;
-  }
 
-  void setGrade(String grade) {
-    this.grade = grade;
-  }
-
-  void setClass(String classroom) {
-    this.classroom = classroom;
-  }
-
-  void setPhoneNumber(String phoneNum) {
-    phoneNumber = phoneNum;
-  }
+  // void setName(String name) {
+  //   this.name = name;
+  // }
+  //
+  // void setDepartment(String department) {
+  //   this.department = department;
+  // }
+  //
+  // void setGrade(String grade) {
+  //   this.grade = grade;
+  // }
+  //
+  // void setClass(String classroom) {
+  //   this.classroom = classroom;
+  // }
+  //
+  // void setPhoneNumber(String phoneNum) {
+  //   phoneNumber = phoneNum;
+  // }
 
   void setHost(bool isHost) {
     this.isHost = isHost;
   }
 
   bool isUpdated() {
-    return (name != null &&
-        department != null &&
-        grade != null &&
-        phoneNumber != null &&
-        classroom != null);
+    return (name != null);
   }
 
-  Future update() async {
+  Future update(
+      nameController,
+      departmentController,
+      gradeController,
+      classController,
+      phoneNumController) async {
+    print("nameの中身ーーーーーーーーーーーーーーーーーーーーーー");
+    print(name);
+    print("uid------------");
+    print(uid);
     name = nameController.text;
     department = departmentController.text;
     grade = gradeController.text;

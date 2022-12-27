@@ -1,10 +1,8 @@
 import 'package:attendanc_management_app/create_QR/create_QR.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:provider/provider.dart';
 
 import 'package:attendanc_management_app/mypage/my_model.dart';
-import 'add_community/add_community.dart';
 import 'change_QR/change_QR.dart';
 import 'select_date/select_date.dart';
 import 'setting.dart';

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:provider/provider.dart';
 
 import '../setting.dart';
 import 'edit_profile_model.dart';
 
-class EditProfilePage extends ConsumerStatefulWidget {
+class EditProfilePage extends ConsumerWidget {
   @override
   EditProfilePage(
       this.uid,
@@ -19,7 +18,7 @@ class EditProfilePage extends ConsumerStatefulWidget {
       this.isHost,
       this.isCurrentUser,
       this.nowHost);
-  final String uid;
+  String uid;
   final String name;
   final String department;
   final String grade;
@@ -29,25 +28,50 @@ class EditProfilePage extends ConsumerStatefulWidget {
   late bool isHost;
   final bool isCurrentUser;
   final bool? nowHost;
+  // bool isLoading = false;
+  // bool setIsHost = false;
 
-  _EditProfilePageState createState() => _EditProfilePageState();
-}
+  final nameController = TextEditingController();
+  final departmentController = TextEditingController();
+  final gradeController = TextEditingController();
+  final classController = TextEditingController();
+  final phoneNumController = TextEditingController();
 
-class _EditProfilePageState extends ConsumerState<EditProfilePage> {
-  bool isLoading = false;
-  bool setIsHost = false;
+  //最初か監視して、init stateしたい
+  bool _isInitial = true;
+
+  void editProfileInitialize(
+      String _uid,
+      name,
+      department,
+      grade,
+      classroom,
+      phoneNumber,
+      ) {
+    // uidは不変
+    print("遷移でもってきてもらった最初の値-------------------------");
+    print(name!);
+    uid = _uid;
+    nameController.text = name!;
+    departmentController.text = department!;
+    gradeController.text = grade!;
+    classController.text = classroom!;
+    phoneNumController.text = phoneNumber!;
+    print("はい呼ばれました");
+    _isInitial = false;
+  }
 
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,WidgetRef ref) {
     final editProfileModel = ref.watch(editProfileModelProvider);
-    editProfileModel.editProfileModel(
-        widget.uid,
-        widget.name,
-        widget.department,
-        widget.grade,
-        widget.classroom,
-        widget.phoneNumber);
+    bool isLoading = ref.watch(editProfileModelProvider).isLoading;
+
+    if(_isInitial) {
+      editProfileInitialize(uid, name, department, grade, classroom, phoneNumber);
+    }
+    print(uid);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -64,44 +88,45 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
           child: Column(
             children: [
               TextField(
-                controller: editProfileModel.nameController,
+                controller: nameController,
                 decoration: InputDecoration(
                   hintText: '名前',
                   suffix: Text('必須',
                       style: TextStyle(color: Colors.red, fontSize: 13)),
                 ),
-                onChanged: (text) {
-                  editProfileModel.setName(text);
-                },
+                // onChanged: (text) {
+                //   editProfileModel.setName(text);
+                //   print(editProfileModel.nameController.text);
+                // },
               ),
               TextField(
-                controller: editProfileModel.departmentController,
+                controller: departmentController,
                 decoration: InputDecoration(
                   hintText: '部署・学科',
                 ),
-                onChanged: (text) {
-                  editProfileModel.setDepartment(text);
-                },
+                // onChanged: (text) {
+                //   editProfileModel.setDepartment(text);
+                // },
               ),
               TextField(
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                controller: editProfileModel.gradeController,
+                controller: gradeController,
                 decoration: InputDecoration(
                   hintText: '期生・学年',
                 ),
-                onChanged: (text) {
-                  editProfileModel.setGrade(text);
-                },
+                // onChanged: (text) {
+                //   editProfileModel.setGrade(text);
+                // },
               ),
               TextField(
-                controller: editProfileModel.classController,
+                controller: classController,
                 decoration: InputDecoration(
                   hintText: 'チーム・クラス',
                 ),
-                onChanged: (text) {
-                  editProfileModel.setClass(text);
-                },
+                // onChanged: (text) {
+                //   editProfileModel.setClass(text);
+                // },
               ),
               TextField(
                 keyboardType: TextInputType.number,
@@ -109,25 +134,25 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                   FilteringTextInputFormatter.digitsOnly,
                   LengthLimitingTextInputFormatter(11),
                 ],
-                controller: editProfileModel.phoneNumController,
+                controller: phoneNumController,
                 decoration: InputDecoration(
                   hintText: '電話番号',
                 ),
-                onChanged: (text) {
-                  editProfileModel.setPhoneNumber(text);
-                },
+                // onChanged: (text) {
+                //   editProfileModel.setPhoneNumber(text);
+                // },
               ),
-              (widget.nowHost == true)
+              (nowHost == true)
                   ? SizedBox(
                       height: 10,
                     )
                   : SizedBox(
                       height: 30,
                     ),
-              (widget.nowHost == true)
+              (nowHost == true)
                   ? Column(
                       children: [
-                        (widget.isHost)
+                        (isHost)
                             ? TextButton(
                                 onPressed: () async {
                                   var isCancel = await showDialog(
@@ -199,19 +224,20 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                   backgroundColor: Color.fromARGB(255, 66, 140, 224),
                   foregroundColor: Colors.black,
                 ),
-                onPressed: editProfileModel.isUpdated()
-                    ? () async {
-                        // 追加の処理
-                        editProfileModel.setHost(widget.isHost);
+                // onPressed: editProfileModel.isUpdated()
+                  onPressed: () async {
+                        // // 追加の処理
+                        // editProfileModel.setHost(widget.isHost);
                         try {
-                          setState(() {
                             isLoading = true;
-                          });
-                          await editProfileModel.update();
+                          await editProfileModel.update(
+                              nameController,
+                              departmentController,
+                              gradeController,
+                              classController,
+                              phoneNumController);
                           if (editProfileModel.nameNull) {
-                            setState(() {
                               isLoading = false;
-                            });
                             showDialog(
                               barrierDismissible: false,
                               context: context,
@@ -230,17 +256,17 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                             content: Text(e.toString()),
                           );
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          print(e.toString());
                         }
-                      }
-                    : null,
-                child: Text('更新する'),
+                      }, child: Text('更新する'),
+
               ),
-              (widget.isCurrentUser == true)
+              (isCurrentUser == true)
                   ? ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.transparent,
+                        backgroundColor: Colors.transparent,
                         elevation: 0,
-                        onPrimary: Colors.red,
+                        foregroundColor: Colors.red,
                       ),
                       onPressed: () async {
                         var isCancel = await showDialog(
@@ -273,7 +299,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                           );
                           if (isCancel != true) {
                             editProfileModel.deleteUser(
-                                widget.uid, widget.community);
+                                uid, community);
                             Navigator.popUntil(
                                 context, (route) => route.isFirst);
                           }

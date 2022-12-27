@@ -25,7 +25,7 @@ class MyPage extends ConsumerWidget {
           IconButton(
             icon: const Icon(Icons.edit),
             onPressed: () async {
-              Navigator.push(
+              await Navigator.push(
                 context,
                 settingData.NavigationFade(EditProfilePage(
                     myModel.uid!,
@@ -39,6 +39,7 @@ class MyPage extends ConsumerWidget {
                     isCurrentUser,
                     myModel.isHost ?? false)),
               );
+              myModel.fetchUser();
             },
           ),
         ],
