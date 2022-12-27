@@ -69,6 +69,10 @@ class EditProfileModel {
     this.isHost = isHost;
   }
 
+  void setUid(String uid) {
+    this.uid = uid;
+  }
+
   bool isUpdated() {
     return (name != null);
   }

@@ -70,7 +70,6 @@ class EditProfilePage extends ConsumerWidget {
     if(_isInitial) {
       editProfileInitialize(uid, name, department, grade, classroom, phoneNumber);
     }
-    print(uid);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -226,9 +225,10 @@ class EditProfilePage extends ConsumerWidget {
                 ),
                 // onPressed: editProfileModel.isUpdated()
                   onPressed: () async {
-                        // // 追加の処理
-                        // editProfileModel.setHost(widget.isHost);
+                        // 追加の処理
+                        editProfileModel.setHost(isHost);
                         try {
+                          editProfileModel.setUid(uid);
                             isLoading = true;
                           await editProfileModel.update(
                               nameController,
