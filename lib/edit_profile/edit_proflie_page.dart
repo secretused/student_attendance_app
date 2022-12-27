@@ -223,8 +223,8 @@ class EditProfilePage extends ConsumerWidget {
                   backgroundColor: Color.fromARGB(255, 66, 140, 224),
                   foregroundColor: Colors.black,
                 ),
-                // onPressed: editProfileModel.isUpdated()
-                  onPressed: () async {
+                onPressed: editProfileModel.isUpdated()
+                  ? () async {
                         // 追加の処理
                         editProfileModel.setHost(isHost);
                         try {
@@ -258,7 +258,7 @@ class EditProfilePage extends ConsumerWidget {
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                           print(e.toString());
                         }
-                      }, child: Text('更新する'),
+                      }:null, child: Text('更新する'),
 
               ),
               (isCurrentUser == true)
