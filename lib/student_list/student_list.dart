@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../add_student/add_student.dart';
 import '../select_date/picker_model.dart';
@@ -8,21 +8,20 @@ import '../select_date/picker_dialog.dart';
 import 'edit_user_modal.dart';
 import '../setting.dart';
 
-class StudentListHome extends StatefulWidget {
+class StudentList extends ConsumerStatefulWidget {
   String? communityName;
   bool? nowHost;
-  StudentListHome(String? community, bool? isHost) {
+  StudentList(String? community, bool? isHost) {
     this.communityName = community;
     this.nowHost = isHost;
   }
 
   @override
-  StudentList createState() => StudentList();
+  _StudentListState createState() => _StudentListState();
 }
 
-class StudentList extends State<StudentListHome> {
+class _StudentListState extends ConsumerState<StudentList> {
   SettingClass settingData = SettingClass();
-  final setting_date = SettingClass();
   late bool showButton = false;
 
   String? _selectedValue; //渡されてきた2つ目の値
@@ -31,11 +30,17 @@ class StudentList extends State<StudentListHome> {
   bool _isValue = false; //値が戻ってきたのか初期画面なのか判断
   bool _isHost = false; //管理者が選ばれた場合
 
+  bool _isInitial = true;
+
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<PickerModel>(
-      create: (_) => PickerModel(widget.communityName),
-      child: Consumer<PickerModel>(builder: (context, model, child) {
+    final pickerModel = ref.watch(pickerModelProvider);
+
+    if(_isInitial) {
+      pickerModel.setCommunityName(widget.communityName);
+      _isInitial = false;
+    }
+
         return Scaffold(
           appBar: AppBar(
             centerTitle: true,
@@ -71,7 +76,7 @@ class StudentList extends State<StudentListHome> {
                 icon: Icon(Icons.filter_alt_outlined),
                 onPressed: () async {
                   // 絞り込みモーダル表示(情報がない場合はアラート)
-                  bool listEmpty = await model.getChildData();
+                  bool listEmpty = await pickerModel.getChildData();
                   if (listEmpty == true) {
                     showDialog(
                       barrierDismissible: false,
@@ -95,7 +100,7 @@ class StudentList extends State<StudentListHome> {
                         _selectedIndex = pickerSelectedValue[0];
                         setState(() {
                           _isValue = true;
-                          _selectedField = model.dataBaseList?[_selectedIndex];
+                          _selectedField = pickerModel.dataBaseList?[_selectedIndex];
                           _selectedValue = pickerSelectedValue[1];
                         });
                       } else {
@@ -136,8 +141,6 @@ class StudentList extends State<StudentListHome> {
             },
           ),
         );
-      }),
-    );
   }
 
   Widget checkStreamBuilder(bool isValue) {

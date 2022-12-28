@@ -57,7 +57,7 @@ class ManagementHome extends ConsumerWidget {
                           if (myModel.isHost == true) {
                             await Navigator.push(
                               context,
-                              settingData.NavigationFade(StudentListHome(
+                              settingData.NavigationFade(StudentList(
                                   myModel.community, myModel.isHost)),
                             );
                           }
