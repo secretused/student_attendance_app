@@ -1,7 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class DetailUser extends ChangeNotifier {
+final editUserModelProvider =
+Provider((ref) => EditUserModel());
+
+class EditUserModel {
   bool isLoading = false;
   bool isCommunity = false;
 
@@ -18,12 +22,10 @@ class DetailUser extends ChangeNotifier {
 
   void startLoading() {
     isLoading = true;
-    notifyListeners();
   }
 
   void endLoading() {
     isLoading = false;
-    notifyListeners();
   }
 
   Future getUser(String? uid) async {
@@ -33,15 +35,13 @@ class DetailUser extends ChangeNotifier {
     final data = snapshot.data();
 
     this.uid = data?["uid"];
-    this.name = data?["name"];
-    this.email = data?["email"];
-    this.community = data?["community"];
-    this.grade = data?["grade"];
-    this.department = data?["department"];
-    this.classroom = data?["classroom"];
-    this.isHost = data?["isHost"];
-    this.phoneNumber = data?["phoneNumber"];
-
-    notifyListeners();
+    name = data?["name"];
+    email = data?["email"];
+    community = data?["community"];
+    grade = data?["grade"];
+    department = data?["department"];
+    classroom = data?["classroom"];
+    isHost = data?["isHost"];
+    phoneNumber = data?["phoneNumber"];
   }
 }
