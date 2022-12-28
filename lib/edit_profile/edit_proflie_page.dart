@@ -48,9 +48,6 @@ class EditProfilePage extends ConsumerWidget {
       classroom,
       phoneNumber,
       ) {
-    // uidは不変
-    print("遷移でもってきてもらった最初の値-------------------------");
-    print(name!);
     uid = _uid;
     nameController.text = name!;
     departmentController.text = department!;

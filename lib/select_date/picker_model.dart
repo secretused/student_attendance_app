@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class PickerModel extends ChangeNotifier {
+final pickerModelProvider =
+Provider((ref) => PickerModel()..getChildData());
+
+class PickerModel {
   String? communityName;
-  PickerModel(String? gotCommunity) {
-    this.communityName = gotCommunity;
+  setCommunityName(String? gotCommunity) {
+    communityName = gotCommunity;
   }
 
   // 一個目のPicker用
@@ -90,7 +93,6 @@ class PickerModel extends ChangeNotifier {
     tempPickerList.add("管理者");
     this.parentList = tempPickerList;
     // 情報がない場合Pickerを表示させない
-    notifyListeners();
 
     if (gotParentList!.isEmpty) {
       return true;
