@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
-import 'picker_list.dart';
+import 'picker_model.dart';
 
-class SelectInfo extends StatefulWidget {
+class PickerDialog extends StatefulWidget {
   String? gotCommunity;
-  SelectInfo(String? gotCommunity) {
+  PickerDialog(String? gotCommunity) {
     this.gotCommunity = gotCommunity;
   }
 
   @override
   State<StatefulWidget> createState() {
-    return SelectInfoHome();
+    return _PickerDialogState();
   }
 }
 
 // 絞り込みモーダル
-class SelectInfoHome extends State<SelectInfo> {
+class _PickerDialogState extends State<PickerDialog> {
   String? _selectedParent; //1つ目の選択肢のpicker
   String? _selectedParentValue; //決定された一つ目の選択肢
   String? _selectedChild; //2つ目の選択肢のpicker

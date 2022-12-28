@@ -45,9 +45,9 @@ class EditProfileModel {
   // final phoneNumController = TextEditingController();
 
 
-  // void setName(String name) {
-  //   this.name = name;
-  // }
+  void setName(String name) {
+    this.name = name;
+  }
   //
   // void setDepartment(String department) {
   //   this.department = department;

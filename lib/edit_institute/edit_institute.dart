@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:provider/provider.dart';
 
 import '../setting.dart';
 import 'edit_institute_model.dart';
@@ -298,7 +297,7 @@ class _EditInstitutePageState extends ConsumerState<EditInstitutePage> {
                   ),
                 ),
               ),
-              CirculeLoadingAction(visible: isLoading)
+              CircleLoadingAction(visible: isLoading)
             ],
           ),
         ),

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../add_student/add_student.dart';
-import '../select_date/picker_list.dart';
-import '../select_date/picker_modal.dart';
+import '../select_date/picker_model.dart';
+import '../select_date/picker_dialog.dart';
 import 'edit_user_modal.dart';
 import '../setting.dart';
 
@@ -85,7 +85,7 @@ class StudentList extends State<StudentListHome> {
                     List? pickerSelectedValue = await showDialog<List?>(
                       context: context,
                       builder: (_) {
-                        return SelectInfo(widget.communityName);
+                        return PickerDialog(widget.communityName);
                       },
                     );
 

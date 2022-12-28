@@ -6,8 +6,8 @@ import 'package:provider/provider.dart';
 
 import '../setting.dart';
 import '../student_list/edit_user_modal.dart';
-import 'picker_list.dart';
-import 'picker_modal.dart';
+import 'picker_model.dart';
+import 'picker_dialog.dart';
 
 class SelectDateHome extends StatefulWidget {
   String? gotCommunity;
@@ -79,7 +79,7 @@ class SelectDate extends State<SelectDateHome> {
                     List? pickerSelectedValue = await showDialog<List?>(
                       context: context,
                       builder: (_) {
-                        return SelectInfo(widget.gotCommunity);
+                        return PickerDialog(widget.gotCommunity);
                       },
                     );
                     // 戻るボタンではなく選択されて返ってきた場合

@@ -207,10 +207,9 @@ class ValidaterModal extends StatelessWidget {
     );
   }
 }
-
 // くるくる処理
-class CirculeLoadingAction extends StatelessWidget {
-  CirculeLoadingAction({required this.visible});
+class CircleLoadingAction extends StatelessWidget {
+  const CircleLoadingAction({Key? key, required this.visible}) : super(key: key);
 
   //表示状態
   final bool visible;
@@ -219,21 +218,19 @@ class CirculeLoadingAction extends StatelessWidget {
   Widget build(BuildContext context) {
     final double deviceWidth = MediaQuery.of(context).size.width;
     return visible
-        ? Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(top: 13.0),
-                  child: SizedBox(
-                    child: LinearProgressIndicator(),
-                    height: 5.0,
-                    width: deviceWidth * 0.90,
-                  ),
-                ),
-              ],
+        ? Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(top: 13.0),
+              child: SizedBox(
+                child: const LinearProgressIndicator(),
+                height: 5.0,
+                width: deviceWidth * 0.90,
+              ),
             ),
-          )
-        : Container();
+          ],
+        )
+        : const SizedBox.shrink();
   }
 }

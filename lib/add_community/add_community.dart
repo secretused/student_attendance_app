@@ -169,7 +169,7 @@ class _AddCommunityState extends ConsumerState<AddCommunity> {
                       },
                       child: Text('登録する'),
                     ),
-                    CirculeLoadingAction(visible: isLoading)
+                    CircleLoadingAction(visible: isLoading)
                   ],
                 ),
               ),

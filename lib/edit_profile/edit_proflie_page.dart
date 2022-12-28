@@ -93,19 +93,12 @@ class EditProfilePage extends ConsumerWidget {
                   suffix: Text('必須',
                       style: TextStyle(color: Colors.red, fontSize: 13)),
                 ),
-                // onChanged: (text) {
-                //   editProfileModel.setName(text);
-                //   print(editProfileModel.nameController.text);
-                // },
               ),
               TextField(
                 controller: departmentController,
                 decoration: InputDecoration(
                   hintText: '部署・学科',
                 ),
-                // onChanged: (text) {
-                //   editProfileModel.setDepartment(text);
-                // },
               ),
               TextField(
                 keyboardType: TextInputType.number,
@@ -114,18 +107,12 @@ class EditProfilePage extends ConsumerWidget {
                 decoration: InputDecoration(
                   hintText: '期生・学年',
                 ),
-                // onChanged: (text) {
-                //   editProfileModel.setGrade(text);
-                // },
               ),
               TextField(
                 controller: classController,
                 decoration: InputDecoration(
                   hintText: 'チーム・クラス',
                 ),
-                // onChanged: (text) {
-                //   editProfileModel.setClass(text);
-                // },
               ),
               TextField(
                 keyboardType: TextInputType.number,
@@ -137,9 +124,6 @@ class EditProfilePage extends ConsumerWidget {
                 decoration: InputDecoration(
                   hintText: '電話番号',
                 ),
-                // onChanged: (text) {
-                //   editProfileModel.setPhoneNumber(text);
-                // },
               ),
               (nowHost == true)
                   ? SizedBox(
@@ -223,8 +207,7 @@ class EditProfilePage extends ConsumerWidget {
                   backgroundColor: Color.fromARGB(255, 66, 140, 224),
                   foregroundColor: Colors.black,
                 ),
-                onPressed: editProfileModel.isUpdated()
-                  ? () async {
+                onPressed: () async {
                         // 追加の処理
                         editProfileModel.setHost(isHost);
                         try {
@@ -238,6 +221,7 @@ class EditProfilePage extends ConsumerWidget {
                               phoneNumController);
                           if (editProfileModel.nameNull) {
                               isLoading = false;
+                            // ref.watch(editProfileModelProvider).isLoading = false;
                             showDialog(
                               barrierDismissible: false,
                               context: context,
@@ -258,7 +242,7 @@ class EditProfilePage extends ConsumerWidget {
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                           print(e.toString());
                         }
-                      }:null, child: Text('更新する'),
+                      },child: Text('更新する'),
 
               ),
               (isCurrentUser == true)
@@ -314,7 +298,7 @@ class EditProfilePage extends ConsumerWidget {
                       ),
                     )
                   : const SizedBox.shrink(),
-              CirculeLoadingAction(visible: isLoading)
+              CircleLoadingAction(visible: isLoading)
             ],
           ),
         ),
