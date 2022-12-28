@@ -40,7 +40,7 @@ class ManagementHome extends ConsumerWidget {
                             await Navigator.push(
                               context,
                               settingData.NavigationFade(
-                                  SelectDateHome(myModel.community)),
+                                  SelectDate(myModel.community)),
                             );
                           }
                         },
