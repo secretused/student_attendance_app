@@ -64,13 +64,13 @@ class PickerModel {
     }).toList();
 
     // 初期化のための代入 => 選択肢1で使用
-    this.departmentList = tempDepartmentList;
-    this.classList = tempClassList;
+    departmentList = tempDepartmentList;
+    classList = tempClassList;
     // tempGradeListIntをStringで再代入
     tempGradeListInt.map((data) {
       tempGradeListString.add(data.toString());
     }).toList();
-    this.gradeList = tempGradeListString;
+    gradeList = tempGradeListString;
 
     // 初期化のための代入 => 選択肢2で使用
     if (!departmentList!.isEmpty) {
@@ -88,10 +88,10 @@ class PickerModel {
       tempBaseList.add("classroom");
       tempPickerList.add("チーム・クラス");
     }
-    this.gotParentList = tempParentList;
-    this.dataBaseList = tempBaseList;
+    gotParentList = tempParentList;
+    dataBaseList = tempBaseList;
     tempPickerList.add("管理者");
-    this.parentList = tempPickerList;
+    parentList = tempPickerList;
     // 情報がない場合Pickerを表示させない
 
     if (gotParentList!.isEmpty) {
