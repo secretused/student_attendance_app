@@ -35,11 +35,11 @@ class PickerModel {
     final List tempParentList = [];
     final List tempBaseList = [];
 
-    final department = await FirebaseFirestore.instance
+    final community = await FirebaseFirestore.instance
         .collection('users')
         .where("community", isEqualTo: communityName)
         .get();
-    documentList = department.docs;
+    documentList = community.docs;
 
     documentList.map((data) {
       late String departmentData = data["department"];
