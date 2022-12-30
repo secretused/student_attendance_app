@@ -39,6 +39,7 @@ class PickerModel {
         .collection('users')
         .where("community", isEqualTo: communityName)
         .get();
+
     documentList = community.docs;
 
     documentList.map((data) {

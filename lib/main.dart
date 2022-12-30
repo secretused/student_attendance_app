@@ -69,7 +69,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   final myController = TextEditingController();
   late String name;
 
-  final privacy_policy_url =
+  final privacyPolicyUrl =
       'https://qiita.com/utasan_com/private/ffebc0e73b8bae704306';
   final url = 'https://twitter.com/uta_app_vta';
   final secondUrl = 'https://qiita.com/utasan_com';
@@ -102,7 +102,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
             menuListTile(context, "シュッ席の使い方", AppUsage()),
             ListTile(
                 title: const Text("プライバシーポリシー"),
-                onTap: () => _privacyURL(privacy_policy_url)),
+                onTap: () => _privacyURL(privacyPolicyUrl)),
             ListTile(
                 title: const Text("お問い合わせ・ご意見"),
                 onTap: () => _launchURL(url, secondUrl)),
@@ -166,8 +166,8 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                       ),
                       style: ElevatedButton.styleFrom(
                         alignment: Alignment.center,
-                        primary: const Color.fromARGB(255, 51, 166, 243),
-                        onPrimary: Colors.black,
+                        backgroundColor: const Color.fromARGB(255, 51, 166, 243),
+                        foregroundColor: Colors.black,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -328,8 +328,8 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                     ),
                     style: ElevatedButton.styleFrom(
                       alignment: Alignment.center,
-                      primary: const Color.fromARGB(255, 61, 214, 125),
-                      onPrimary: Colors.black,
+                      backgroundColor: const Color.fromARGB(255, 61, 214, 125),
+                      foregroundColor: Colors.black,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),

@@ -3,17 +3,16 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../setting.dart';
-import 'edit_institute_model.dart';
+import 'edit_community_model.dart';
 
-class EditInstitutePage extends ConsumerStatefulWidget {
-  @override
+class EditCommunityPage extends ConsumerStatefulWidget {
   String? communityName;
   String? department;
   String? email;
   String? phoneNumber;
   String? link;
   String? qrLink;
-  EditInstitutePage(
+  EditCommunityPage(
     String? communityName,
     String? department,
     String? email,
@@ -32,7 +31,7 @@ class EditInstitutePage extends ConsumerStatefulWidget {
   _EditInstitutePageState createState() => _EditInstitutePageState();
 }
 
-class _EditInstitutePageState extends ConsumerState<EditInstitutePage> {
+class _EditInstitutePageState extends ConsumerState<EditCommunityPage> {
   bool isLoading = false;
 
   @override

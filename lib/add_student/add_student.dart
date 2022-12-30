@@ -21,7 +21,7 @@ class _AddStudentState extends ConsumerState<AddStudent> {
   @override
   Widget build(BuildContext context) {
     final addUserModel = ref.watch(addUserModelProvider);
-    addUserModel.addUserModel(widget.gotCommunityName);
+    addUserModel.setCommunityName(widget.gotCommunityName);
       return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(

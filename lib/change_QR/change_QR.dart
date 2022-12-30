@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../edit_institute/edit_institute.dart';
+import '../edit_community/edit_community.dart';
 import '../setting.dart';
 import 'change_QR_model.dart';
 
@@ -31,7 +31,7 @@ class ChangeQRCode extends ConsumerWidget {
             onPressed: () async {
               Navigator.push(
                 context,
-                settingData.NavigationFade(EditInstitutePage(
+                settingData.NavigationFade(EditCommunityPage(
                     qrChangeModel.communityName!,
                     qrChangeModel.department!,
                     qrChangeModel.email!,
