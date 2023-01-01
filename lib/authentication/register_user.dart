@@ -18,8 +18,6 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
   bool isHost = false;
   @override
   Widget build(BuildContext context) {
-    // キーボードの高さ
-    // final bottomSpace = MediaQuery.of(context).viewInsets.bottom;
     final registerModel = ref.watch(registerModelProvider);
       return Scaffold(
         resizeToAvoidBottomInset: false,

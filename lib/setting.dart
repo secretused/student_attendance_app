@@ -125,7 +125,7 @@ class ErrorModal extends StatelessWidget {
                   height: 35,
                   child: TextButton(
                     style: ElevatedButton.styleFrom(
-                      onPrimary: Color.fromARGB(255, 66, 140, 224),
+                      foregroundColor: Color.fromARGB(255, 66, 140, 224),
                     ),
                     child: Text(
                       'OK',
@@ -164,7 +164,7 @@ class ValidaterModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    late bool is_cancel = false;
+    late bool isCancel = false;
     return AlertDialog(
       title: Text(
         title,
@@ -185,14 +185,14 @@ class ValidaterModal extends StatelessWidget {
               children: [
                 TextButton(
                   onPressed: () {
-                    is_cancel = true;
-                    Navigator.pop(context, is_cancel);
+                    isCancel = true;
+                    Navigator.pop(context, isCancel);
                   },
                   child: Text(validate_cancel),
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.pop(context, is_cancel);
+                    Navigator.pop(context, isCancel);
                   },
                   child: Text(
                     validate_button,

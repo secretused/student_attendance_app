@@ -145,8 +145,8 @@ class ButtonDesign extends StatelessWidget {
             child: icon,
             style: ElevatedButton.styleFrom(
               alignment: Alignment.center,
-              primary: backgroundColor,
-              onPrimary: Colors.black,
+              backgroundColor: backgroundColor,
+              foregroundColor: Colors.black,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),

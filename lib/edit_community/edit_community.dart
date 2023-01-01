@@ -249,9 +249,9 @@ class _EditInstitutePageState extends ConsumerState<EditCommunityPage> {
               // 団体削除
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.transparent,
+                  backgroundColor: Colors.transparent,
                   elevation: 0,
-                  onPrimary: Colors.red,
+                  foregroundColor: Colors.red,
                 ),
                 onPressed: () async {
                   var isCancel = await showDialog(

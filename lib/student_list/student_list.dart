@@ -12,8 +12,8 @@ class StudentList extends ConsumerStatefulWidget {
   String? communityName;
   bool? nowHost;
   StudentList(String? community, bool? isHost) {
-    this.communityName = community;
-    this.nowHost = isHost;
+    communityName = community;
+    nowHost = isHost;
   }
 
   @override
@@ -236,7 +236,7 @@ class _StudentListState extends ConsumerState<StudentList> {
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(
-              child: const CircularProgressIndicator(),
+              child: CircularProgressIndicator(),
             );
           }
           if (snapshot.hasError) {

@@ -149,8 +149,8 @@ class _AddStudentState extends ConsumerState<AddStudent> {
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: Color.fromARGB(255, 66, 140, 224),
-                            onPrimary: Colors.black,
+                            backgroundColor: Color.fromARGB(255, 66, 140, 224),
+                            foregroundColor: Colors.black,
                           ),
                           onPressed: () async {
                             addUserModel.startLoading();

@@ -256,8 +256,8 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                       ),
                       style: ElevatedButton.styleFrom(
                         alignment: Alignment.center,
-                        primary: const Color.fromARGB(255, 240, 130, 41),
-                        onPrimary: Colors.black,
+                        backgroundColor: const Color.fromARGB(255, 240, 130, 41),
+                        foregroundColor: Colors.black,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),

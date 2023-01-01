@@ -70,8 +70,8 @@ class _PickerDialogState extends ConsumerState<PickerDialog> {
                             style: TextStyle(color: Colors.black),
                           ),
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.white,
-                            onPrimary: Colors.orange,
+                            backgroundColor: Colors.white,
+                            foregroundColor: Colors.orange,
                           ),
                           onPressed: () async {
                             // 自動で詳細のモーダルを表示
