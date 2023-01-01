@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final qrChangeModelProvider =
-Provider((ref) => QRChangeModel()..fetchInstitute());
+Provider((ref) => QRChangeModel()..fetchCommunity());
 
 class QRChangeModel {
   bool isLoading = false;
@@ -14,7 +14,7 @@ class QRChangeModel {
   String? link;
   String? qrLink;
 
-  qrChangeModel(String? gotCommunity) {
+  setCommunity(String? gotCommunity) {
     communityName = gotCommunity;
   }
 
@@ -26,7 +26,7 @@ class QRChangeModel {
     isLoading = false;
   }
 
-  void fetchInstitute() async {
+  void fetchCommunity() async {
     List<DocumentSnapshot> documentList = [];
 
     final snapshot = await FirebaseFirestore.instance

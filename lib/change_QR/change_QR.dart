@@ -16,7 +16,7 @@ class ChangeQRCode extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final qrChangeModel = ref.watch(qrChangeModelProvider);
-    qrChangeModel.qrChangeModel(gotCommunity);
+    qrChangeModel.setCommunity(gotCommunity);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
