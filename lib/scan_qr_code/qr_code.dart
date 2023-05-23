@@ -1,67 +1,63 @@
+import 'package:attendanc_management_app/scan_qr_code/qr_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../mypage/my_model.dart';
 import '../setting.dart';
 import 'attendance_register.dart';
 
-class MyQRCode extends StatefulWidget {
+class MyQRCode extends ConsumerStatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State {
-  SettingClass setting_data = SettingClass();
+class _MyHomePageState extends ConsumerState<MyQRCode> {
+  SettingClass settingData = SettingClass();
   String qrCode = '';
 
   @override
   Widget build(BuildContext context) {
+    final qrModel = ref.watch(qrModelProvider);
     return WillPopScope(
       onWillPop: () => _backButtonPress(context),
-      child: ChangeNotifierProvider<MyModel>(
-        create: (_) => MyModel()..fechUser(),
-        child: Scaffold(
-          appBar: AppBar(
-            centerTitle: true,
-            title: Text(
-              'QRコード読み取り',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            backgroundColor: Color.fromARGB(255, 67, 176, 190),
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text(
+            'QRコード読み取り',
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          body: Center(
-            child: Consumer<MyModel>(builder: (context, model, child) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 130, //横幅
-                    height: 130, //高さ
-                    child: ElevatedButton(
-                      child: const Icon(
-                        Icons.qr_code_2,
-                        size: 100,
+          backgroundColor: const Color.fromARGB(255, 67, 176, 190),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 130, //横幅
+                height: 130, //高さ
+                child: ElevatedButton(
+                  child: const Icon(
+                    Icons.qr_code_2,
+                    size: 100,
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.black,
+                    shape: const CircleBorder(
+                      side: BorderSide(
+                        color: Colors.black,
+                        width: 1,
+                        style: BorderStyle.solid,
                       ),
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
-                        onPrimary: Colors.black,
-                        shape: const CircleBorder(
-                          side: BorderSide(
-                            color: Colors.black,
-                            width: 1,
-                            style: BorderStyle.solid,
-                          ),
-                        ),
-                      ),
-                      onPressed: () => scanQrCode(model.community, model.isHost,
-                          model.department, model.grade, model.classroom),
                     ),
                   ),
-                ],
-              );
-            }),
+                  onPressed: () => scanQrCode(qrModel.community, qrModel.isHost,
+                      qrModel.department, qrModel.grade, qrModel.classroom),
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -94,7 +90,7 @@ class _MyHomePageState extends State {
     if (qrCode == QRCodeLink) {
       await Navigator.push(
         context,
-        setting_data.NavigationFade(AttendanceRegister(
+        settingData.NavigationFade(AttendanceRegister(
             community, isHost, department, grade, classroom, sameCommunity)),
       );
     } else {
@@ -102,7 +98,7 @@ class _MyHomePageState extends State {
         barrierDismissible: false,
         context: context,
         builder: (BuildContext context) {
-          return ErrorModal(error_message: "QRコードが違います\n違うQRコードを試してください");
+          return const ErrorModal(error_message: "QRコードが違います\n違うQRコードを試してください");
         },
       );
     }

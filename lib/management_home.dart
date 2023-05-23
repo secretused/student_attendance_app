@@ -1,22 +1,20 @@
 import 'package:attendanc_management_app/create_QR/create_QR.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:attendanc_management_app/mypage/my_model.dart';
-import 'add_institute/add_community.dart';
 import 'change_QR/change_QR.dart';
 import 'select_date/select_date.dart';
 import 'setting.dart';
 import 'student_list/student_list.dart';
 
-class ManagementHome extends StatelessWidget {
-  SettingClass setting_data = SettingClass();
+class ManagementHome extends ConsumerWidget {
+  SettingClass settingData = SettingClass();
 
   @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider<MyModel>(
-      create: (_) => MyModel()..fechUser(),
-      child: Scaffold(
+  Widget build(BuildContext context,WidgetRef ref) {
+    final myModel = ref.watch(myModelProvider);
+      return Scaffold(
         appBar: AppBar(
           centerTitle: true,
           title: const Text(
@@ -28,8 +26,7 @@ class ManagementHome extends StatelessWidget {
         body: Container(
           height: double.infinity,
           width: double.infinity,
-          child: Consumer<MyModel>(builder: (context, model, child) {
-            return Column(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
@@ -39,11 +36,11 @@ class ManagementHome extends StatelessWidget {
                     children: [
                       ButtonDesign(
                         onPressed: () async {
-                          if (model.isHost == true) {
+                          if (myModel.isHost == true) {
                             await Navigator.push(
                               context,
-                              setting_data.NavigationFade(
-                                  SelectDateHome(model.community)),
+                              settingData.NavigationFade(
+                                  SelectDate(myModel.community)),
                             );
                           }
                         },
@@ -57,11 +54,11 @@ class ManagementHome extends StatelessWidget {
                       ),
                       ButtonDesign(
                         onPressed: () async {
-                          if (model.isHost == true) {
+                          if (myModel.isHost == true) {
                             await Navigator.push(
                               context,
-                              setting_data.NavigationFade(StudentListHome(
-                                  model.community, model.isHost)),
+                              settingData.NavigationFade(StudentList(
+                                  myModel.community, myModel.isHost)),
                             );
                           }
                         },
@@ -81,11 +78,11 @@ class ManagementHome extends StatelessWidget {
                   children: [
                     ButtonDesign(
                       onPressed: () async {
-                        if (model.isHost == true) {
+                        if (myModel.isHost == true) {
                           await Navigator.push(
                             context,
-                            setting_data.NavigationFade(
-                                CreateQRCode(model.community)),
+                            settingData.NavigationFade(
+                                CreateQRCode(myModel.community)),
                           );
                         }
                       },
@@ -98,11 +95,11 @@ class ManagementHome extends StatelessWidget {
                     ),
                     ButtonDesign(
                       onPressed: () async {
-                        if (model.isHost == true) {
+                        if (myModel.isHost == true) {
                           await Navigator.push(
                             context,
-                            setting_data.NavigationFade(
-                                ChangeQRCode(model.community)),
+                            settingData.NavigationFade(
+                                ChangeQRCode(myModel.community)),
                           );
                         }
                       },
@@ -116,11 +113,9 @@ class ManagementHome extends StatelessWidget {
                   ],
                 ),
               ],
-            );
-          }),
-        ),
-      ),
-    );
+            ),
+          ),
+        );
   }
 }
 

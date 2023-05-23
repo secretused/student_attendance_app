@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'picker_list.dart';
+import 'picker_model.dart';
 
-class SelectInfo extends StatefulWidget {
+class PickerDialog extends ConsumerStatefulWidget {
   String? gotCommunity;
-  SelectInfo(String? gotCommunity) {
+  PickerDialog(String? gotCommunity, {Key? key}) : super(key: key) {
     this.gotCommunity = gotCommunity;
   }
 
   @override
-  State<StatefulWidget> createState() {
-    return SelectInfoHome();
-  }
+  _PickerDialogState createState() => _PickerDialogState();
 }
 
 // 絞り込みモーダル
-class SelectInfoHome extends State<SelectInfo> {
+class _PickerDialogState extends ConsumerState<PickerDialog> {
   String? _selectedParent; //1つ目の選択肢のpicker
   String? _selectedParentValue; //決定された一つ目の選択肢
   String? _selectedChild; //2つ目の選択肢のpicker
@@ -27,6 +25,9 @@ class SelectInfoHome extends State<SelectInfo> {
   int count = 0;
   bool _visible = false;
 
+  //最初か監視して、init stateしたい
+  bool _isInitial = true;
+
   @override
   Widget build(BuildContext context) {
     late List hostList = ["host"];
@@ -34,18 +35,21 @@ class SelectInfoHome extends State<SelectInfo> {
     final double deviceWidth = MediaQuery.of(context).size.width;
     final double deviceHeight = MediaQuery.of(context).size.height;
 
-    return ChangeNotifierProvider<PickerModel>(
-      create: (_) => PickerModel(widget.gotCommunity)..getChildData(),
-      child: Dialog(
+    final pickerModel = ref.watch(pickerModelProvider);
+    
+    if(_isInitial) {
+      pickerModel.setCommunityName(widget.gotCommunity);
+      _isInitial = false;
+    }
+
+      return Dialog(
         insetPadding: const EdgeInsets.all(0),
         elevation: 0,
         child: ConstrainedBox(
           constraints: BoxConstraints.expand(
               width: deviceWidth * 3 / 4, height: deviceHeight / 4),
           child: Stack(alignment: Alignment.center, children: [
-            Consumer<PickerModel>(
-              builder: (context, model, child) {
-                return Container(
+                Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(24),
@@ -72,8 +76,8 @@ class SelectInfoHome extends State<SelectInfo> {
                           onPressed: () async {
                             // 自動で詳細のモーダルを表示
                             int? result = await selectParentPicker(
-                                context, model.parentList);
-                            late int? hostNumber = model.parentList?.indexWhere(
+                                context, pickerModel.parentList);
+                            late int? hostNumber = pickerModel.parentList?.indexWhere(
                                 (parentList) => parentList == "管理者");
                             // 決定が押されたとき && 全てじゃない時
                             if (result != null &&
@@ -86,7 +90,7 @@ class SelectInfoHome extends State<SelectInfo> {
                               // 二つ目の選択肢の値をresultListで受け取る
                               var resultList = await selectChildPicker(
                                   context,
-                                  model.gotParentList?[result - 1],
+                                  pickerModel.gotParentList?[result - 1],
                                   pickerOneValue);
                               if (resultList.runtimeType == bool) {
                                 //戻るの場合: 二個目のpickerはinvisible
@@ -112,12 +116,12 @@ class SelectInfoHome extends State<SelectInfo> {
                           width: deviceWidth * 1 / 2,
                           child: ElevatedButton(
                             child: Text(
-                              model.gotParentList?[pickerOneValue - 1][0] ??
+                              pickerModel.gotParentList?[pickerOneValue - 1][0] ??
                                   "詳細",
                               style: TextStyle(color: Colors.black),
                             ),
                             style: ElevatedButton.styleFrom(
-                              primary: Colors.white,
+                              backgroundColor: Colors.white,
                             ),
                             onPressed: () {
                               //  押せないため処理なし
@@ -127,13 +131,10 @@ class SelectInfoHome extends State<SelectInfo> {
                       ),
                     ],
                   ),
-                );
-              },
-            )
+                ),
           ]),
         ),
-      ),
-    );
+      );
   }
 
   // 選択肢1

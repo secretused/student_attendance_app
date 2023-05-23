@@ -1,24 +1,30 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class EditProfileModel extends ChangeNotifier {
-  EditProfileModel(
-    String? uid,
-    this.name,
-    this.department,
-    this.grade,
-    this.classroom,
-    this.phoneNumber,
-  ) {
-    // uidは不変
-    this.uid = uid;
-    nameController.text = name!;
-    departmentController.text = department!;
-    gradeController.text = grade!;
-    classController.text = classroom!;
-    phoneNumController.text = phoneNumber!;
-  }
+final editProfileModelProvider =
+Provider((ref) => EditProfileModel());
+
+class EditProfileModel {
+
+  // void editProfileModel(
+  //   String? uid,
+  //   name,
+  //   department,
+  //   grade,
+  //   classroom,
+  //   phoneNumber,
+  // ) {
+  //   // uidは不変
+  //   print("遷移でもってきてもらった最初の値-------------------------");
+  //   print(name!);
+  //   this.uid = uid;
+  //   nameController.text = name!;
+  //   departmentController.text = department!;
+  //   gradeController.text = grade!;
+  //   classController.text = classroom!;
+  //   phoneNumController.text = phoneNumber!;
+  // }
 
   String? uid;
   String? name;
@@ -29,56 +35,62 @@ class EditProfileModel extends ChangeNotifier {
   bool? isHost;
   bool nameNull = false;
 
-  final nameController = TextEditingController();
-  final departmentController = TextEditingController();
-  final gradeController = TextEditingController();
-  final classController = TextEditingController();
-  final phoneNumController = TextEditingController();
+  bool isLoading = false;
+
+  // final nameController = TextEditingController();
+  // final departmentController = TextEditingController();
+  // final gradeController = TextEditingController();
+  // final classController = TextEditingController();
+  // final phoneNumController = TextEditingController();
+
 
   void setName(String name) {
     this.name = name;
-    notifyListeners();
   }
-
-  void setDepartment(String department) {
-    this.department = department;
-    notifyListeners();
-  }
-
-  void setGrade(String grade) {
-    this.grade = grade;
-    notifyListeners();
-  }
-
-  void setClass(String classroom) {
-    this.classroom = classroom;
-    notifyListeners();
-  }
-
-  void setPhoneNumber(String phoneNum) {
-    this.phoneNumber = phoneNum;
-    notifyListeners();
-  }
+  //
+  // void setDepartment(String department) {
+  //   this.department = department;
+  // }
+  //
+  // void setGrade(String grade) {
+  //   this.grade = grade;
+  // }
+  //
+  // void setClass(String classroom) {
+  //   this.classroom = classroom;
+  // }
+  //
+  // void setPhoneNumber(String phoneNum) {
+  //   phoneNumber = phoneNum;
+  // }
 
   void setHost(bool isHost) {
     this.isHost = isHost;
-    notifyListeners();
+  }
+
+  void setUid(String uid) {
+    this.uid = uid;
   }
 
   bool isUpdated() {
-    return (name != null &&
-        department != null &&
-        grade != null &&
-        phoneNumber != null &&
-        classroom != null);
+    return (name != null);
   }
 
-  Future update() async {
-    this.name = nameController.text;
-    this.department = departmentController.text;
-    this.grade = gradeController.text;
-    this.classroom = classController.text;
-    this.phoneNumber = phoneNumController.text;
+  Future update(
+      nameController,
+      departmentController,
+      gradeController,
+      classController,
+      phoneNumController) async {
+    print("nameの中身ーーーーーーーーーーーーーーーーーーーーーー");
+    print(name);
+    print("uid------------");
+    print(uid);
+    name = nameController.text;
+    department = departmentController.text;
+    grade = gradeController.text;
+    classroom = classController.text;
+    phoneNumber = phoneNumController.text;
 
     // Authの名前変更
     final instance = FirebaseAuth.instance;

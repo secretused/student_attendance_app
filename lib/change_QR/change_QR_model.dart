@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class QRChangeModel extends ChangeNotifier {
+final qrChangeModelProvider =
+Provider((ref) => QRChangeModel()..fetchInstitute());
+
+class QRChangeModel {
   bool isLoading = false;
   String? communityName;
 
@@ -10,23 +13,21 @@ class QRChangeModel extends ChangeNotifier {
   String? email;
   String? phoneNumber;
   String? link;
-  String? QRLink;
+  String? qrLink;
 
-  QRChangeModel(String? gotCommunity) {
+  qrChangeModel(String? gotCommunity) {
     this.communityName = gotCommunity;
   }
 
   void startLoading() {
     isLoading = true;
-    notifyListeners();
   }
 
   void endLoading() {
     isLoading = false;
-    notifyListeners();
   }
 
-  void fechInstitute() async {
+  void fetchInstitute() async {
     List<DocumentSnapshot> documentList = [];
     final user = FirebaseAuth.instance.currentUser;
 
@@ -37,13 +38,11 @@ class QRChangeModel extends ChangeNotifier {
     documentList = snapshot.docs;
 
     documentList.map((data) {
-      this.department = data["department"];
-      this.email = data["email"];
-      this.phoneNumber = data["phoneNumber"].toString();
-      this.link = data["link"];
-      this.QRLink = data["QRLink"];
+      department = data["department"];
+      email = data["email"];
+      phoneNumber = data["phoneNumber"].toString();
+      link = data["link"];
+      qrLink = data["QRLink"];
     }).toList();
-
-    notifyListeners();
   }
 }

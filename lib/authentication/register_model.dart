@@ -2,8 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class RegisterModel extends ChangeNotifier {
+final registerModelProvider =
+    Provider((ref) => RegisterModel());
+
+final addUserModelProvider =
+    Provider((ref) => AddUserModel());
+
+class RegisterModel {
   final emailController = TextEditingController();
   final authorController = TextEditingController();
   final phoneNumController = TextEditingController();
@@ -29,67 +36,56 @@ class RegisterModel extends ChangeNotifier {
 
   void startLoading() {
     isLoading = true;
-    notifyListeners();
   }
 
   void endLoading() {
     isLoading = false;
-    notifyListeners();
   }
 
   void setEmail(String email) {
     this.email = email;
-    notifyListeners();
   }
 
   void setPassword(String password) {
     this.password = password;
-    notifyListeners();
   }
 
   void setPhoneNumber(String phoneNum) {
-    this.phoneNumber = phoneNum;
-    notifyListeners();
+    phoneNumber = phoneNum;
   }
 
   void setName(String name) {
     this.name = name;
-    notifyListeners();
   }
 
   void setCommunity(String community) {
-    this.communityName = community;
-    notifyListeners();
+    communityName = community;
   }
 
   void setGrade(String grade) {
     this.grade = grade;
-    notifyListeners();
   }
 
   void setClass(String classroom) {
     this.classroom = classroom;
-    notifyListeners();
   }
 
   void setDepartment(String department) {
     this.department = department;
-    notifyListeners();
   }
 
   void setHost(bool isHost) {
     this.isHost = isHost;
-    notifyListeners();
   }
 
   Future signUp() async {
-    this.email = emailController.text;
-    this.password = authorController.text;
-    this.phoneNumber = phoneNumController.text;
-    this.name = nameController.text;
-    this.grade = gradeController.text;
-    this.classroom = classController.text;
-    this.department = departmentController.text;
+    email = emailController.text;
+    password = authorController.text;
+    phoneNumber = phoneNumController.text;
+    name = nameController.text;
+    grade = gradeController.text;
+    classroom = classController.text;
+    department = departmentController.text;
 
     if (email != null && password != null) {
       // firebaseauthでユーザー作成
@@ -134,7 +130,7 @@ class RegisterModel extends ChangeNotifier {
 }
 
 // UserListの追加ボタンからの処理
-class AddUserModel extends ChangeNotifier {
+class AddUserModel {
   final emailController = TextEditingController();
   final authorController = TextEditingController();
   final phoneNumController = TextEditingController();
@@ -158,74 +154,63 @@ class AddUserModel extends ChangeNotifier {
 
   bool isLoading = false;
 
-  AddUserModel(String? gotCommunityName) {
-    this.communityName = gotCommunityName;
+  addUserModel(String? gotCommunityName) {
+    communityName = gotCommunityName;
   }
 
   void startLoading() {
     isLoading = true;
-    notifyListeners();
   }
 
   void endLoading() {
     isLoading = false;
-    notifyListeners();
   }
 
   void setEmail(String email) {
     this.email = email;
-    notifyListeners();
   }
 
   void setPassword(String password) {
     this.password = password;
-    notifyListeners();
   }
 
   void setPhoneNumber(String phoneNum) {
-    this.phoneNumber = phoneNum;
-    notifyListeners();
+    phoneNumber = phoneNum;
   }
 
   void setName(String name) {
     this.name = name;
-    notifyListeners();
   }
 
   void setCommunity(String community) {
-    this.communityName = community;
-    notifyListeners();
+    communityName = community;
   }
 
   void setGrade(String grade) {
     this.grade = grade;
-    notifyListeners();
   }
 
   void setClass(String classroom) {
     this.classroom = classroom;
-    notifyListeners();
   }
 
   void setDepartment(String department) {
     this.department = department;
-    notifyListeners();
   }
 
   void setHost(bool isHost) {
     this.isHost = isHost;
-    notifyListeners();
   }
 
   // add_Student
   Future addUser() async {
-    this.email = emailController.text;
-    this.password = authorController.text;
-    this.phoneNumber = phoneNumController.text;
-    this.name = nameController.text;
-    this.grade = gradeController.text;
-    this.classroom = classController.text;
-    this.department = departmentController.text;
+    email = emailController.text;
+    password = authorController.text;
+    phoneNumber = phoneNumController.text;
+    name = nameController.text;
+    grade = gradeController.text;
+    classroom = classController.text;
+    department = departmentController.text;
 
     if (email != null && password != null) {
       FirebaseApp app = await Firebase.initializeApp(

@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class PickerModel extends ChangeNotifier {
+final pickerModelProvider =
+Provider((ref) => PickerModel()..getChildData());
+
+class PickerModel {
   String? communityName;
-  PickerModel(String? gotCommunity) {
-    this.communityName = gotCommunity;
+  setCommunityName(String? gotCommunity) {
+    communityName = gotCommunity;
   }
 
   // 一個目のPicker用
@@ -32,11 +35,11 @@ class PickerModel extends ChangeNotifier {
     final List tempParentList = [];
     final List tempBaseList = [];
 
-    final department = await FirebaseFirestore.instance
+    final community = await FirebaseFirestore.instance
         .collection('users')
         .where("community", isEqualTo: communityName)
         .get();
-    documentList = department.docs;
+    documentList = community.docs;
 
     documentList.map((data) {
       late String departmentData = data["department"];
@@ -61,13 +64,13 @@ class PickerModel extends ChangeNotifier {
     }).toList();
 
     // 初期化のための代入 => 選択肢1で使用
-    this.departmentList = tempDepartmentList;
-    this.classList = tempClassList;
+    departmentList = tempDepartmentList;
+    classList = tempClassList;
     // tempGradeListIntをStringで再代入
     tempGradeListInt.map((data) {
       tempGradeListString.add(data.toString());
     }).toList();
-    this.gradeList = tempGradeListString;
+    gradeList = tempGradeListString;
 
     // 初期化のための代入 => 選択肢2で使用
     if (!departmentList!.isEmpty) {
@@ -85,12 +88,11 @@ class PickerModel extends ChangeNotifier {
       tempBaseList.add("classroom");
       tempPickerList.add("チーム・クラス");
     }
-    this.gotParentList = tempParentList;
-    this.dataBaseList = tempBaseList;
+    gotParentList = tempParentList;
+    dataBaseList = tempBaseList;
     tempPickerList.add("管理者");
-    this.parentList = tempPickerList;
+    parentList = tempPickerList;
     // 情報がない場合Pickerを表示させない
-    notifyListeners();
 
     if (gotParentList!.isEmpty) {
       return true;
