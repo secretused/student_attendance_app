@@ -146,7 +146,7 @@ Widget qrCode(String? qrLink, GlobalKey<State<StatefulWidget>> _shareKey) {
   return RepaintBoundary(
     key: _shareKey,
     child: Center(
-      child: QrImage(
+      child: QrImageView(
         data: "$qrLink",
         size: 250,
       ),
