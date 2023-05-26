@@ -47,10 +47,10 @@ class PickerModel {
       late String classData = data["classroom"];
       late String gradeData = data["grade"];
       if (!tempDepartmentList.contains(departmentData) &&
-          !departmentData.isEmpty) {
+          departmentData.isNotEmpty) {
         tempDepartmentList.add(data["department"]);
       }
-      if (!gradeData.isEmpty) {
+      if (gradeData.isNotEmpty) {
         // int型に変換
         if (!tempGradeListInt.contains(int.parse(gradeData))) {
           // int型として追加
@@ -59,7 +59,7 @@ class PickerModel {
           tempGradeListInt.sort((a, b) => a - b);
         }
       }
-      if (!tempClassList.contains(classData) && !classData.isEmpty) {
+      if (!tempClassList.contains(classData) && classData.isNotEmpty) {
         tempClassList.add(data["classroom"]);
       }
     }).toList();
@@ -74,17 +74,17 @@ class PickerModel {
     gradeList = tempGradeListString;
 
     // 初期化のための代入 => 選択肢2で使用
-    if (!departmentList!.isEmpty) {
+    if (departmentList!.isNotEmpty) {
       tempParentList.add(departmentList);
       tempBaseList.add("department");
       tempPickerList.add("部署・学科");
     }
-    if (!gradeList!.isEmpty) {
+    if (gradeList!.isNotEmpty) {
       tempParentList.add(gradeList);
       tempBaseList.add("grade");
       tempPickerList.add("期生・学年");
     }
-    if (!classList!.isEmpty) {
+    if (classList!.isNotEmpty) {
       tempParentList.add(classList);
       tempBaseList.add("classroom");
       tempPickerList.add("チーム・クラス");

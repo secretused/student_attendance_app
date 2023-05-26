@@ -76,14 +76,14 @@ communityModel(String? community){
         .doc(communityName)
         .get();
     final data = snapshot.data();
-    this.gotData = data?["community"];
+    gotData = data?["community"];
     if (gotData != communityName) {
-      this.sameName = true;
+      sameName = true;
     } else {
-      this.sameName = false;
+      sameName = false;
     }
 
-    if (user != null && sameName == true) {
+    if (sameName == true) {
       // 確認モーダル
       if (phoneNumber!.isEmpty) {
         phoneNumber = "0000000000";

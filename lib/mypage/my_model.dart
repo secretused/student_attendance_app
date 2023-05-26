@@ -28,6 +28,7 @@ class MyModel {
   }
 
   Future fetchUser() async {
+    print('fetch user');
     final user = FirebaseAuth.instance.currentUser;
     uid = user?.uid;
     email = user?.email;
@@ -46,11 +47,11 @@ class MyModel {
       isHost = data?["isHost"];
       phoneNumber = data?["phoneNumber"];
 
-      final getInstitue = await FirebaseFirestore.instance
+      final getCommunity = await FirebaseFirestore.instance
           .collection('community')
           .doc(community)
           .get();
-      final communityData = getInstitue.data();
+      final communityData = getCommunity.data();
       if (communityData?["community"].runtimeType != null) {
         isCommunity = true;
       } else {

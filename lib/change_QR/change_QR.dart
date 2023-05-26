@@ -10,7 +10,7 @@ class ChangeQRCode extends ConsumerWidget {
 
   String? gotCommunity;
   ChangeQRCode(String? community) {
-    this.gotCommunity = community;
+    gotCommunity = community;
   }
 
   @override

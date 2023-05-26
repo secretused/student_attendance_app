@@ -142,7 +142,7 @@ class _SelectDateState extends ConsumerState<SelectDate> {
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(
-              child: const CircularProgressIndicator(),
+              child: CircularProgressIndicator(),
             );
           }
           if (snapshot.hasError) {
@@ -182,7 +182,7 @@ class _SelectDateState extends ConsumerState<SelectDate> {
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(
-              child: const CircularProgressIndicator(),
+              child: CircularProgressIndicator(),
             );
           }
           if (snapshot.hasError) {
@@ -221,7 +221,7 @@ class _SelectDateState extends ConsumerState<SelectDate> {
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(
-              child: const CircularProgressIndicator(),
+              child: CircularProgressIndicator(),
             );
           }
           if (snapshot.hasError) {
@@ -270,14 +270,12 @@ class _SelectDateState extends ConsumerState<SelectDate> {
           .where("createdAt", isEqualTo: _labelText)
           .where("community", isEqualTo: widget.gotCommunity)
           .get();
-      final community_data = getCommunity.docs;
+      final communityData = getCommunity.docs;
       try {
-        community_data.map((data) {
+        communityData.map((data) {
           isList = data["name"];
         }).toList();
-        if (isList != null) {
-          showButton = true;
-        }
+        showButton = true;
       } catch (e) {
         showButton = false;
       }

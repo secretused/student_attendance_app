@@ -43,10 +43,10 @@ class AttendanceRegister extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    this.uid = currentUser!.uid;
-    this.email = currentUser!.email;
-    this.name = currentUser!.displayName;
-    this.attendance = "入館";
+    uid = currentUser!.uid;
+    email = currentUser!.email;
+    name = currentUser!.displayName;
+    attendance = "入館";
 
     final double deviceWidth = MediaQuery.of(context).size.width;
     final double deviceHeight = MediaQuery.of(context).size.height;

@@ -119,8 +119,8 @@ class RegisterModel {
         });
       }
 
-      late String? current_uid = user?.uid;
-      if (email != null && current_uid != null) {
+      late String? currentUid = user?.uid;
+      if (email != null && currentUid != null) {
         // ログイン
         await FirebaseAuth.instance
             .signInWithEmailAndPassword(email: email!, password: password!);
@@ -221,7 +221,7 @@ class AddUserModel {
       app.delete();
 
       // IDとかがuserに入る
-      if (userCredential != null && name != null && communityName != null) {
+      if (name != null && communityName != null) {
         // firestoreに追加
         final id = userCredential.user?.uid;
         final doc = FirebaseFirestore.instance.collection("users").doc(id);

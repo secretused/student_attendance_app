@@ -101,21 +101,21 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                             backgroundColor: Colors.red,
                             margin: EdgeInsets.all(8),
                             duration: Duration(seconds: 3),
-                          )..show(context);
+                          ).show(context);
                         } else if (_result == 'ERROR_USER_NOT_FOUND') {
                           Flushbar(
                             message: "メールアドレスが登録されていません",
                             backgroundColor: Colors.red,
                             margin: EdgeInsets.all(8),
                             duration: Duration(seconds: 3),
-                          )..show(context);
+                          ).show(context);
                         } else {
                           Flushbar(
                             message: "メール送信に失敗しました",
                             backgroundColor: Colors.red,
                             margin: EdgeInsets.all(8),
                             duration: Duration(seconds: 3),
-                          )..show(context);
+                          ).show(context);
                         }
                       }
                     },

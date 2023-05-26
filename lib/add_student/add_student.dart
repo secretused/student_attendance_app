@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class AddStudent extends ConsumerStatefulWidget {
   String? gotCommunityName;
   AddStudent(String? communityName) {
-    this.gotCommunityName = communityName;
+    gotCommunityName = communityName;
   }
 
   @override
@@ -32,160 +32,158 @@ class _AddStudentState extends ConsumerState<AddStudent> {
           ),
           backgroundColor: Color.fromARGB(255, 67, 176, 190),
         ),
-        body: Container(
-          child: Center(
-              child: Stack(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        TextField(
-                          controller: addUserModel.nameController,
-                          decoration: InputDecoration(
-                            hintText: '名前　*',
-                          ),
-                          onChanged: (text) {
-                            addUserModel.setName(text);
-                          },
+        body: Center(
+            child: Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      TextField(
+                        controller: addUserModel.nameController,
+                        decoration: InputDecoration(
+                          hintText: '名前　*',
                         ),
-                        TextField(
-                          controller: addUserModel.communityController,
-                          enabled: false,
-                          decoration: InputDecoration(
-                            hintText: widget.gotCommunityName,
-                          ),
+                        onChanged: (text) {
+                          addUserModel.setName(text);
+                        },
+                      ),
+                      TextField(
+                        controller: addUserModel.communityController,
+                        enabled: false,
+                        decoration: InputDecoration(
+                          hintText: widget.gotCommunityName,
                         ),
-                        TextField(
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly
-                          ],
-                          controller: addUserModel.gradeController,
-                          decoration: InputDecoration(
-                            hintText: '期生・学年',
-                          ),
-                          onChanged: (text) {
-                            addUserModel.setGrade(text);
-                          },
+                      ),
+                      TextField(
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        controller: addUserModel.gradeController,
+                        decoration: InputDecoration(
+                          hintText: '期生・学年',
                         ),
-                        TextField(
-                          controller: addUserModel.departmentController,
-                          decoration: InputDecoration(
-                            hintText: '部署・学科',
-                          ),
-                          onChanged: (text) {
-                            addUserModel.setCommunity(
-                                widget.gotCommunityName as String);
-                            addUserModel.setDepartment(text);
-                          },
+                        onChanged: (text) {
+                          addUserModel.setGrade(text);
+                        },
+                      ),
+                      TextField(
+                        controller: addUserModel.departmentController,
+                        decoration: InputDecoration(
+                          hintText: '部署・学科',
                         ),
-                        TextField(
-                          controller: addUserModel.classController,
-                          decoration: InputDecoration(
-                            hintText: 'チーム・クラス',
-                          ),
-                          onChanged: (text) {
-                            addUserModel.setClass(text);
-                          },
+                        onChanged: (text) {
+                          addUserModel.setCommunity(
+                              widget.gotCommunityName as String);
+                          addUserModel.setDepartment(text);
+                        },
+                      ),
+                      TextField(
+                        controller: addUserModel.classController,
+                        decoration: InputDecoration(
+                          hintText: 'チーム・クラス',
                         ),
-                        SizedBox(
-                          height: 20,
+                        onChanged: (text) {
+                          addUserModel.setClass(text);
+                        },
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      TextField(
+                        controller: addUserModel.emailController,
+                        decoration: InputDecoration(
+                          hintText: 'Email *',
                         ),
-                        TextField(
-                          controller: addUserModel.emailController,
-                          decoration: InputDecoration(
-                            hintText: 'Email *',
-                          ),
-                          onChanged: (text) {
-                            addUserModel.setEmail(text);
-                          },
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(
-                                RegExp(r'[a-zA-Z0-9.@_-]')),
-                          ],
+                        onChanged: (text) {
+                          addUserModel.setEmail(text);
+                        },
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(
+                              RegExp(r'[a-zA-Z0-9.@_-]')),
+                        ],
+                      ),
+                      TextField(
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          LengthLimitingTextInputFormatter(11),
+                        ],
+                        controller: addUserModel.phoneNumController,
+                        decoration: InputDecoration(
+                          hintText: '電話番号',
                         ),
-                        TextField(
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                            LengthLimitingTextInputFormatter(11),
-                          ],
-                          controller: addUserModel.phoneNumController,
-                          decoration: InputDecoration(
-                            hintText: '電話番号',
-                          ),
-                          onChanged: (text) {
-                            addUserModel.setPhoneNumber(text);
-                          },
+                        onChanged: (text) {
+                          addUserModel.setPhoneNumber(text);
+                        },
+                      ),
+                      TextField(
+                        controller: addUserModel.authorController,
+                        decoration: InputDecoration(
+                          hintText: 'パスワード *',
                         ),
-                        TextField(
-                          controller: addUserModel.authorController,
-                          decoration: InputDecoration(
-                            hintText: 'パスワード *',
-                          ),
-                          onChanged: (text) {
-                            addUserModel.setPassword(text);
-                          },
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(
-                                RegExp(r'[a-zA-Z0-9]')),
-                          ],
+                        onChanged: (text) {
+                          addUserModel.setPassword(text);
+                        },
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(
+                              RegExp(r'[a-zA-Z0-9]')),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text("団体責任者・管理者"),
+                      Switch(
+                        value: isHost,
+                        onChanged: (value) {
+                          setState(
+                            () {
+                              isHost = value;
+                            },
+                          );
+                          addUserModel.setHost(isHost);
+                        },
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromARGB(255, 66, 140, 224),
+                          foregroundColor: Colors.black,
                         ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text("団体責任者・管理者"),
-                        Switch(
-                          value: isHost,
-                          onChanged: (value) {
-                            setState(
-                              () {
-                                isHost = value;
-                              },
-                            );
-                            addUserModel.setHost(isHost);
-                          },
-                        ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Color.fromARGB(255, 66, 140, 224),
-                            foregroundColor: Colors.black,
-                          ),
-                          onPressed: () async {
-                            addUserModel.startLoading();
+                        onPressed: () async {
+                          addUserModel.startLoading();
 
-                            // 追加の処理
-                            try {
-                              await addUserModel.addUser();
-                              Navigator.of(context).pop();
-                            } on FirebaseAuthException catch (e) {
-                              String? authException = authError(e.code);
-                              final snackBar = SnackBar(
-                                backgroundColor: Colors.red,
-                                content: Text(authException!),
-                              );
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
-                            } finally {
-                              addUserModel.endLoading();
-                            }
-                          },
-                          child: Text('登録する'),
-                        ),
-                      ],
+                          // 追加の処理
+                          try {
+                            await addUserModel.addUser();
+                            Navigator.of(context).pop();
+                          } on FirebaseAuthException catch (e) {
+                            String? authException = authError(e.code);
+                            final snackBar = SnackBar(
+                              backgroundColor: Colors.red,
+                              content: Text(authException!),
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          } finally {
+                            addUserModel.endLoading();
+                          }
+                        },
+                        child: Text('登録する'),
+                      ),
+                    ],
+                  ),
+                ),
+                if (addUserModel.isLoading)
+                  Container(
+                    color: Colors.black54,
+                    child: Center(
+                      child: CircularProgressIndicator(),
                     ),
                   ),
-                  if (addUserModel.isLoading)
-                    Container(
-                      color: Colors.black54,
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    ),
-                ],
-              ),
-          ),
+              ],
+            ),
         ),
       );
   }

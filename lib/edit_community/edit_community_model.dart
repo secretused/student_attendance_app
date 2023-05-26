@@ -35,7 +35,7 @@ class EditInstituteModel {
     link,
     qrLink,
   ) {
-    this.nowCommunityName = communityName;
+    nowCommunityName = communityName;
     communityController.text = communityName!;
     departmentController.text = department!;
     emailController.text = email!;

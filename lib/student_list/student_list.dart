@@ -155,7 +155,7 @@ class _StudentListState extends ConsumerState<StudentList> {
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(
-              child: const CircularProgressIndicator(),
+              child: CircularProgressIndicator(),
             );
           }
           if (snapshot.hasError) {
@@ -196,7 +196,7 @@ class _StudentListState extends ConsumerState<StudentList> {
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(
-              child: const CircularProgressIndicator(),
+              child: CircularProgressIndicator(),
             );
           }
           if (snapshot.hasError) {

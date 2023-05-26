@@ -70,9 +70,9 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   late String name;
 
   final privacyPolicyUrl =
-      'https://qiita.com/utasan_com/private/ffebc0e73b8bae704306';
-  final url = 'https://twitter.com/uta_app_vta';
-  final secondUrl = 'https://qiita.com/utasan_com';
+      Uri.parse('https://qiita.com/utasan_com/private/ffebc0e73b8bae704306');
+  final twitterUrl = Uri.parse('https://twitter.com/uta_app_vta');
+  final qiitaUrl = Uri.parse('https://qiita.com/utasan_com');
 
   SettingClass settingData = SettingClass();
 
@@ -105,7 +105,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                 onTap: () => _privacyURL(privacyPolicyUrl)),
             ListTile(
                 title: const Text("お問い合わせ・ご意見"),
-                onTap: () => _launchURL(url, secondUrl)),
+                onTap: () => _launchURL(twitterUrl, qiitaUrl)),
             ListTile(
               title: const Text("ライセンス情報"),
               onTap: () => showLicensePage(
@@ -386,22 +386,22 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   }
 
   // menuのListView
-  ListTile menuListTile(BuildContext context, String text, dynamic page_name) {
+  ListTile menuListTile(BuildContext context, String text, dynamic pageName) {
     return ListTile(
       title: Text(text),
       onTap: () {
         Navigator.push(
           context,
-          settingData.NavigationFade(page_name),
+          settingData.NavigationFade(pageName),
         );
       },
     );
   }
 
   /// PrivacyPolicy
-  Future _privacyURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
+  Future _privacyURL(Uri uri) async {
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
     } else {
       showDialog(
         context: context,
@@ -413,11 +413,11 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   }
 
   /// 問い合わせフォーム
-  Future _launchURL(String url, String secondUrl) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else if (secondUrl != null && await canLaunch(secondUrl)) {
-      await launch(secondUrl);
+  Future _launchURL(Uri twitterUri, Uri qiitaUri) async {
+    if (await canLaunchUrl(twitterUri)) {
+      await launchUrl(twitterUri);
+    } else if (await canLaunchUrl(qiitaUri)) {
+      await launchUrl(qiitaUri);
     } else {
       showDialog(
         context: context,
