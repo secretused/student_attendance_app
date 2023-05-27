@@ -99,7 +99,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                 color: Color.fromARGB(255, 67, 176, 190),
               ),
             ),
-            menuListTile(context, "シュッ席の使い方", AppUsage()),
+            menuListTile(context, "シュッ席の使い方", const AppUsage()),
             ListTile(
                 title: const Text("プライバシーポリシー"),
                 onTap: () => _privacyURL(privacyPolicyUrl)),

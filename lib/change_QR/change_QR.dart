@@ -20,14 +20,14 @@ class ChangeQRCode extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
+        title: const Text(
           '団体情報',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Color.fromARGB(255, 67, 176, 190),
+        backgroundColor: const Color.fromARGB(255, 67, 176, 190),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.edit),
+            icon: const Icon(Icons.edit),
             onPressed: () async {
               Navigator.push(
                 context,
@@ -56,12 +56,12 @@ class ChangeQRCode extends ConsumerWidget {
                       children: [
                         Text(
                           qrChangeModel.communityName ?? "名前なし",
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.w900,
                             fontSize: 25,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                       ],
@@ -71,11 +71,11 @@ class ChangeQRCode extends ConsumerWidget {
                       ? Column(
                           children: [
                             Text("${qrChangeModel.department}",
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontWeight: FontWeight.w900,
                                   fontSize: 18.5,
                                 )),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                           ],
@@ -84,7 +84,7 @@ class ChangeQRCode extends ConsumerWidget {
                   (qrChangeModel.email != "")
                       ? Column(
                           children: [
-                            Text(
+                            const Text(
                               "メールアドレス",
                               style: TextStyle(
                                 fontSize: 18,
@@ -93,11 +93,11 @@ class ChangeQRCode extends ConsumerWidget {
                             ),
                             Text(
                               "${qrChangeModel.email}",
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 18,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                           ],
@@ -106,7 +106,7 @@ class ChangeQRCode extends ConsumerWidget {
                   (qrChangeModel.phoneNumber != "0")
                       ? Column(
                           children: [
-                            Text(
+                            const Text(
                               "電話番号",
                               style: TextStyle(
                                 fontSize: 18,
@@ -115,11 +115,11 @@ class ChangeQRCode extends ConsumerWidget {
                             ),
                             Text(
                               "${qrChangeModel.phoneNumber}",
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 18,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                           ],
@@ -128,7 +128,7 @@ class ChangeQRCode extends ConsumerWidget {
                   (qrChangeModel.link != "")
                       ? Column(
                           children: [
-                            Text(
+                            const Text(
                               "関連リンク",
                               style: TextStyle(
                                 fontSize: 18,
@@ -137,11 +137,11 @@ class ChangeQRCode extends ConsumerWidget {
                             ),
                             Text(
                               "${qrChangeModel.link}",
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 18,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                           ],
@@ -150,7 +150,7 @@ class ChangeQRCode extends ConsumerWidget {
                   (qrChangeModel.qrLink != "")
                       ? Column(
                           children: [
-                            Text(
+                            const Text(
                               "QRLink",
                               style: TextStyle(
                                 fontSize: 18,
@@ -159,11 +159,11 @@ class ChangeQRCode extends ConsumerWidget {
                             ),
                             Text(
                               "${qrChangeModel.qrLink}",
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 18,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 18,
                             ),
                           ],
@@ -175,7 +175,7 @@ class ChangeQRCode extends ConsumerWidget {
             if (qrChangeModel.isLoading)
               Container(
                 color: Colors.black54,
-                child: Center(
+                child: const Center(
                   child: CircularProgressIndicator(),
                 ),
               ),

@@ -23,7 +23,7 @@ class ManagementHome extends ConsumerWidget {
           ),
           backgroundColor: const Color.fromARGB(255, 67, 176, 190),
         ),
-        body: Container(
+        body: SizedBox(
           height: double.infinity,
           width: double.infinity,
             child: Column(

@@ -43,7 +43,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                   width: 150,
                   height: 150,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Text(
@@ -53,12 +53,12 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                       fontSize: 20,
                       fontWeight: FontWeight.bold),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
                 TextFormField(
                   textAlign: TextAlign.center,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: '受信用メールアドレス',
                   ),
                   validator: (value) {
@@ -73,19 +73,19 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                         RegExp(r'[a-zA-Z0-9.@_-]')),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 SizedBox(
                   width: 100, //横幅
                   height: 40, //高さ
                   child: ElevatedButton(
-                    child: Text(
+                    child: const Text(
                       "送信",
                       style: TextStyle(fontSize: 15),
                     ),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromARGB(255, 66, 140, 224),
+                      backgroundColor: const Color.fromARGB(255, 66, 140, 224),
                     ),
                     onPressed: () async {
                       if (_formGlobalKey.currentState!.validate()) {
@@ -99,22 +99,22 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                           Flushbar(
                             message: "無効なメールアドレスです",
                             backgroundColor: Colors.red,
-                            margin: EdgeInsets.all(8),
-                            duration: Duration(seconds: 3),
+                            margin: const EdgeInsets.all(8),
+                            duration: const Duration(seconds: 3),
                           ).show(context);
                         } else if (_result == 'ERROR_USER_NOT_FOUND') {
                           Flushbar(
                             message: "メールアドレスが登録されていません",
                             backgroundColor: Colors.red,
-                            margin: EdgeInsets.all(8),
-                            duration: Duration(seconds: 3),
+                            margin: const EdgeInsets.all(8),
+                            duration: const Duration(seconds: 3),
                           ).show(context);
                         } else {
                           Flushbar(
                             message: "メール送信に失敗しました",
                             backgroundColor: Colors.red,
-                            margin: EdgeInsets.all(8),
-                            duration: Duration(seconds: 3),
+                            margin: const EdgeInsets.all(8),
+                            duration: const Duration(seconds: 3),
                           ).show(context);
                         }
                       }

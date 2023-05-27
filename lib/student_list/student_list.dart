@@ -52,28 +52,28 @@ class _StudentListState extends ConsumerState<StudentList> {
                     fit: BoxFit.fitWidth,
                     child: Text(
                       "$_selectedValue",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   );
                 } else {
                   // grade
                   return Text(
                     "$_selectedValue",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   );
                 }
               } else {
                 // 通常
-                return Text(
+                return const Text(
                   "全てのユーザー",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 );
               }
             })(),
-            backgroundColor: Color.fromARGB(255, 67, 176, 190),
+            backgroundColor: const Color.fromARGB(255, 67, 176, 190),
             actions: <Widget>[
               IconButton(
-                icon: Icon(Icons.filter_alt_outlined),
+                icon: const Icon(Icons.filter_alt_outlined),
                 onPressed: () async {
                   // 絞り込みモーダル表示(情報がない場合はアラート)
                   bool listEmpty = await pickerModel.getChildData();
@@ -82,7 +82,7 @@ class _StudentListState extends ConsumerState<StudentList> {
                       barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
-                        return ErrorModal(error_message: "絞り込めるデータがありません");
+                        return const ErrorModal(error_message: "絞り込めるデータがありません");
                       },
                     );
                   } else {
@@ -131,7 +131,7 @@ class _StudentListState extends ConsumerState<StudentList> {
             child: checkStreamBuilder(_isValue),
           ),
           floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.add),
+            child: const Icon(Icons.add),
             onPressed: () {
               Navigator.push(
                 context,
@@ -169,7 +169,7 @@ class _StudentListState extends ConsumerState<StudentList> {
                   title: Text('${data['name']}'),
                   trailing: (data['isHost'] != true)
                       ? Text('${data['department']}')
-                      : Text('管理者'),
+                      : const Text('管理者'),
                   subtitle: Text('${data['email']}'),
                   onTap: () async {
                     showDialog<List?>(
@@ -210,7 +210,7 @@ class _StudentListState extends ConsumerState<StudentList> {
                   title: Text('${data['name']}'),
                   trailing: (data['isHost'] != true)
                       ? Text('${data['department']}')
-                      : Text('管理者'),
+                      : const Text('管理者'),
                   subtitle: Text('${data['email']}'),
                   onTap: () async {
                     showDialog<List?>(
@@ -250,7 +250,7 @@ class _StudentListState extends ConsumerState<StudentList> {
                   title: Text('${data['name']}'),
                   trailing: (data['isHost'] != true)
                       ? Text('${data['department']}')
-                      : Text('管理者'),
+                      : const Text('管理者'),
                   subtitle: Text('${data['email']}'),
                   onTap: () async {
                     showDialog<List?>(

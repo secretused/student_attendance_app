@@ -50,29 +50,29 @@ class _SelectDateState extends ConsumerState<SelectDate> {
                 fit: BoxFit.fitWidth,
                 child: Text(
                   "${_labelText.substring(5, 11)}:$_selectedValue",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               );
             } else {
               // grade
               return Text(
                 "${_labelText.substring(5, 11)}:$_selectedValue",
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(fontWeight: FontWeight.bold),
               );
             }
           } else {
             // 通常
             return Text(
               _labelText,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             );
           }
         })(),
-        backgroundColor: Color.fromARGB(255, 67, 176, 190),
+        backgroundColor: const Color.fromARGB(255, 67, 176, 190),
         actions: <Widget>[
           Visibility(
             child: IconButton(
-              icon: Icon(Icons.filter_alt_outlined),
+              icon: const Icon(Icons.filter_alt_outlined),
               onPressed: () async {
                 // 絞り込みモーダル表示
                 pickerModel.getChildData();
@@ -121,7 +121,7 @@ class _SelectDateState extends ConsumerState<SelectDate> {
         child: checkStreamBuilder(_isValue),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(FontAwesomeIcons.solidCalendarAlt),
+        child: const Icon(FontAwesomeIcons.solidCalendarAlt),
         onPressed: () {
           _selectDate(context);
         },

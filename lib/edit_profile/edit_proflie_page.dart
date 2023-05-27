@@ -54,7 +54,6 @@ class EditProfilePage extends ConsumerWidget {
     gradeController.text = grade!;
     classController.text = classroom!;
     phoneNumController.text = phoneNumber!;
-    print("はい呼ばれました");
     _isInitial = false;
   }
 
@@ -72,11 +71,11 @@ class EditProfilePage extends ConsumerWidget {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'プロフィール編集',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Color.fromARGB(255, 67, 176, 190),
+        backgroundColor: const Color.fromARGB(255, 67, 176, 190),
       ),
       body: Center(
         child: Padding(
@@ -85,7 +84,7 @@ class EditProfilePage extends ConsumerWidget {
             children: [
               TextField(
                 controller: nameController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: '名前',
                   suffix: Text('必須',
                       style: TextStyle(color: Colors.red, fontSize: 13)),
@@ -93,7 +92,7 @@ class EditProfilePage extends ConsumerWidget {
               ),
               TextField(
                 controller: departmentController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: '部署・学科',
                 ),
               ),
@@ -101,13 +100,13 @@ class EditProfilePage extends ConsumerWidget {
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 controller: gradeController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: '期生・学年',
                 ),
               ),
               TextField(
                 controller: classController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'チーム・クラス',
                 ),
               ),
@@ -118,15 +117,15 @@ class EditProfilePage extends ConsumerWidget {
                   LengthLimitingTextInputFormatter(11),
                 ],
                 controller: phoneNumController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: '電話番号',
                 ),
               ),
               (nowHost == true)
-                  ? SizedBox(
+                  ? const SizedBox(
                       height: 10,
                     )
-                  : SizedBox(
+                  : const SizedBox(
                       height: 30,
                     ),
               (nowHost == true)
@@ -139,7 +138,7 @@ class EditProfilePage extends ConsumerWidget {
                                     barrierDismissible: false,
                                     context: context,
                                     builder: (BuildContext context) {
-                                      return ValidaterModal(
+                                      return const ValidaterModal(
                                         title: "確認画面",
                                         validate_message: "本当に管理者権限を\n無効にしますか？",
                                         validate_button: "OK",
@@ -155,7 +154,7 @@ class EditProfilePage extends ConsumerWidget {
                                         context, (route) => route.isFirst);
                                   }
                                 },
-                                child: Text(
+                                child: const Text(
                                   '管理者権限を無効にする',
                                   style: TextStyle(
                                     fontSize: 15,
@@ -169,7 +168,7 @@ class EditProfilePage extends ConsumerWidget {
                                     barrierDismissible: false,
                                     context: context,
                                     builder: (BuildContext context) {
-                                      return ValidaterModal(
+                                      return const ValidaterModal(
                                         title: "確認画面",
                                         validate_message: "本当に管理者権限を\n有効にしますか？",
                                         validate_button: "OK",
@@ -185,7 +184,7 @@ class EditProfilePage extends ConsumerWidget {
                                         context, (route) => route.isFirst);
                                   }
                                 },
-                                child: Text(
+                                child: const Text(
                                   '管理者権限を有効にする',
                                   style: TextStyle(
                                     fontSize: 15,
@@ -193,7 +192,7 @@ class EditProfilePage extends ConsumerWidget {
                                   ),
                                 ),
                               ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                       ],
@@ -201,7 +200,7 @@ class EditProfilePage extends ConsumerWidget {
                   : const SizedBox.shrink(),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromARGB(255, 66, 140, 224),
+                  backgroundColor: const Color.fromARGB(255, 66, 140, 224),
                   foregroundColor: Colors.black,
                 ),
                 onPressed: () async {
@@ -223,7 +222,7 @@ class EditProfilePage extends ConsumerWidget {
                               barrierDismissible: false,
                               context: context,
                               builder: (BuildContext context) {
-                                return ErrorModal(error_message: "名前を入力してください");
+                                return const ErrorModal(error_message: "名前を入力してください");
                               },
                             );
                           } else {
@@ -233,13 +232,13 @@ class EditProfilePage extends ConsumerWidget {
                           }
                         } catch (e) {
                           final snackBar = SnackBar(
-                            backgroundColor: Color.fromARGB(255, 185, 70, 61),
+                            backgroundColor: const Color.fromARGB(255, 185, 70, 61),
                             content: Text(e.toString()),
                           );
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                           print(e.toString());
                         }
-                      },child: Text('更新する'),
+                      },child: const Text('更新する'),
 
               ),
               (isCurrentUser == true)
@@ -254,7 +253,7 @@ class EditProfilePage extends ConsumerWidget {
                           barrierDismissible: false,
                           context: context,
                           builder: (BuildContext context) {
-                            return ValidaterModal(
+                            return const ValidaterModal(
                               title: "確認画面",
                               validate_message: "アカウントを削除します\n削除しますか？",
                               validate_button: "削除",
@@ -268,7 +267,7 @@ class EditProfilePage extends ConsumerWidget {
                             barrierDismissible: false,
                             context: context,
                             builder: (BuildContext context) {
-                              return ValidaterModal(
+                              return const ValidaterModal(
                                 title: "削除画面",
                                 validate_message:
                                     "全ての記録データが削除されます\n復元は不可能です\n本当に削除しますか？",
@@ -286,7 +285,7 @@ class EditProfilePage extends ConsumerWidget {
                           }
                         }
                       },
-                      child: Text(
+                      child: const Text(
                         'アカウント削除',
                         style: TextStyle(
                           fontSize: 15,

@@ -55,26 +55,26 @@ class _UserEditModalState extends ConsumerState<UserEditModal> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 (editUserModel.isHost == true)
-                    ? Text(
+                    ? const Text(
                         "管理者",
                         style: TextStyle(
                           fontSize: 11,
                           backgroundColor: Color.fromARGB(255, 255, 255, 0),
                         ),
                       )
-                    : SizedBox(
+                    : const SizedBox(
                         height: 10,
                       ),
                 Text(
                   editUserModel.name ?? "名前",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 1,
                 ),
                 Text(
                   widget.uid ?? "ユーザーID",
-                  style: TextStyle(fontSize: 10),
+                  style: const TextStyle(fontSize: 10),
                 ),
                 Text(
                   editUserModel.email ?? "メールアドレス",
@@ -85,7 +85,7 @@ class _UserEditModalState extends ConsumerState<UserEditModal> {
                     (editUserModel.department != "")
                         ? Column(
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Text("${editUserModel.department}"),
@@ -95,7 +95,7 @@ class _UserEditModalState extends ConsumerState<UserEditModal> {
                     (editUserModel.grade != "")
                         ? Column(
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Text(" ${editUserModel.grade}期生"),
@@ -122,7 +122,7 @@ class _UserEditModalState extends ConsumerState<UserEditModal> {
                                 backgroundColor: Colors.transparent,
                                 elevation: 0,
                                 foregroundColor:
-                                    Color.fromARGB(255, 51, 166, 243),
+                                    const Color.fromARGB(255, 51, 166, 243),
                               ),
                               onPressed: () {
                                 // edit_profileに遷移
@@ -141,13 +141,13 @@ class _UserEditModalState extends ConsumerState<UserEditModal> {
                                       widget.nowHost)),
                                 );
                               },
-                              child: Text(
+                              child: const Text(
                                 '編集',
                                 style: TextStyle(fontSize: 17),
                               ),
                             ),
                           )
-                        : SizedBox.shrink()
+                        : const SizedBox.shrink()
                   ],
                 )
               ],

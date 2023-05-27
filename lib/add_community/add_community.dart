@@ -166,7 +166,7 @@ class _AddCommunityState extends ConsumerState<AddCommunity> {
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       }
                     },
-                    child: Text('登録する'),
+                    child: const Text('登録する'),
                   ),
                   CircleLoadingAction(visible: isLoading)
                 ],

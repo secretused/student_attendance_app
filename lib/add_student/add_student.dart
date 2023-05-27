@@ -26,11 +26,11 @@ class _AddStudentState extends ConsumerState<AddStudent> {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           centerTitle: true,
-          title: Text(
+          title: const Text(
             'ユーザー追加',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          backgroundColor: Color.fromARGB(255, 67, 176, 190),
+          backgroundColor: const Color.fromARGB(255, 67, 176, 190),
         ),
         body: Center(
             child: Stack(
@@ -41,7 +41,7 @@ class _AddStudentState extends ConsumerState<AddStudent> {
                     children: [
                       TextField(
                         controller: addUserModel.nameController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: '名前　*',
                         ),
                         onChanged: (text) {
@@ -61,7 +61,7 @@ class _AddStudentState extends ConsumerState<AddStudent> {
                           FilteringTextInputFormatter.digitsOnly
                         ],
                         controller: addUserModel.gradeController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: '期生・学年',
                         ),
                         onChanged: (text) {
@@ -70,7 +70,7 @@ class _AddStudentState extends ConsumerState<AddStudent> {
                       ),
                       TextField(
                         controller: addUserModel.departmentController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: '部署・学科',
                         ),
                         onChanged: (text) {
@@ -81,19 +81,19 @@ class _AddStudentState extends ConsumerState<AddStudent> {
                       ),
                       TextField(
                         controller: addUserModel.classController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: 'チーム・クラス',
                         ),
                         onChanged: (text) {
                           addUserModel.setClass(text);
                         },
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       TextField(
                         controller: addUserModel.emailController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: 'Email *',
                         ),
                         onChanged: (text) {
@@ -111,7 +111,7 @@ class _AddStudentState extends ConsumerState<AddStudent> {
                           LengthLimitingTextInputFormatter(11),
                         ],
                         controller: addUserModel.phoneNumController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: '電話番号',
                         ),
                         onChanged: (text) {
@@ -120,7 +120,7 @@ class _AddStudentState extends ConsumerState<AddStudent> {
                       ),
                       TextField(
                         controller: addUserModel.authorController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: 'パスワード *',
                         ),
                         onChanged: (text) {
@@ -131,10 +131,10 @@ class _AddStudentState extends ConsumerState<AddStudent> {
                               RegExp(r'[a-zA-Z0-9]')),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
-                      Text("団体責任者・管理者"),
+                      const Text("団体責任者・管理者"),
                       Switch(
                         value: isHost,
                         onChanged: (value) {
@@ -148,7 +148,7 @@ class _AddStudentState extends ConsumerState<AddStudent> {
                       ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromARGB(255, 66, 140, 224),
+                          backgroundColor: const Color.fromARGB(255, 66, 140, 224),
                           foregroundColor: Colors.black,
                         ),
                         onPressed: () async {
@@ -170,7 +170,7 @@ class _AddStudentState extends ConsumerState<AddStudent> {
                             addUserModel.endLoading();
                           }
                         },
-                        child: Text('登録する'),
+                        child: const Text('登録する'),
                       ),
                     ],
                   ),
@@ -178,7 +178,7 @@ class _AddStudentState extends ConsumerState<AddStudent> {
                 if (addUserModel.isLoading)
                   Container(
                     color: Colors.black54,
-                    child: Center(
+                    child: const Center(
                       child: CircularProgressIndicator(),
                     ),
                   ),

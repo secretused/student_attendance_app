@@ -23,11 +23,11 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           centerTitle: true,
-          title: Text(
+          title: const Text(
             '新規登録',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          backgroundColor: Color.fromARGB(255, 67, 176, 190),
+          backgroundColor: const Color.fromARGB(255, 67, 176, 190),
         ),
         body: GestureDetector(
           behavior: HitTestBehavior.opaque, //画面外タップを検知するために必要
@@ -41,7 +41,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                       children: [
                         TextFormField(
                           controller: registerModel.nameController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: '名前 *',
                           ),
                           onChanged: (text) {
@@ -50,7 +50,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                         ),
                         TextField(
                           controller: registerModel.communityController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: '所属団体名 *',
                           ),
                           onChanged: (text) {
@@ -59,7 +59,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                         ),
                         TextField(
                           controller: registerModel.departmentController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: '部署・学科',
                           ),
                           onChanged: (text) {
@@ -72,7 +72,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                             FilteringTextInputFormatter.digitsOnly
                           ],
                           controller: registerModel.gradeController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: '期生・学年',
                           ),
                           onChanged: (text) {
@@ -81,19 +81,19 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                         ),
                         TextField(
                           controller: registerModel.classController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: 'チーム・クラス',
                           ),
                           onChanged: (text) {
                             registerModel.setClass(text);
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         TextField(
                           controller: registerModel.emailController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: 'Email *',
                           ),
                           onChanged: (text) {
@@ -112,7 +112,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                             LengthLimitingTextInputFormatter(11),
                           ],
                           controller: registerModel.phoneNumController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: '電話番号',
                           ),
                           onChanged: (text) {
@@ -121,7 +121,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                         ),
                         TextField(
                           controller: registerModel.authorController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: 'パスワード *',
                           ),
                           onChanged: (text) {
@@ -132,10 +132,10 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                                 RegExp(r'[a-zA-Z0-9]')),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
-                        Text("団体責任者・管理者"),
+                        const Text("団体責任者・管理者"),
                         Switch(
                           value: isHost,
                           onChanged: (value) {
@@ -149,7 +149,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color.fromARGB(255, 66, 140, 224),
+                            backgroundColor: const Color.fromARGB(255, 66, 140, 224),
                             foregroundColor: Colors.black,
                           ),
                           onPressed: () async {
@@ -160,7 +160,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                                 showDialog(
                                   context: context,
                                   builder: (BuildContext context) {
-                                    return ErrorModal(
+                                    return const ErrorModal(
                                         error_message: "名前を入力してください");
                                   },
                                 );
@@ -168,7 +168,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                                 showDialog(
                                   context: context,
                                   builder: (BuildContext context) {
-                                    return ErrorModal(
+                                    return const ErrorModal(
                                         error_message: "団体名を入力してください");
                                   },
                                 );
@@ -188,7 +188,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                               registerModel.endLoading();
                             }
                           },
-                          child: Text('登録する'),
+                          child: const Text('登録する'),
                         ),
                       ],
                     ),
@@ -196,7 +196,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                   if (registerModel.isLoading)
                     Container(
                       color: Colors.black54,
-                      child: Center(
+                      child: const Center(
                         child: CircularProgressIndicator(),
                       ),
                     ),

@@ -15,7 +15,7 @@ class AppUsage extends StatelessWidget {
         ),
         backgroundColor: const Color.fromARGB(255, 67, 176, 190),
       ),
-      body: Container(
+      body: SizedBox(
         width: deviceWidth,
         child: Padding(
           padding: const EdgeInsets.all(20.0),

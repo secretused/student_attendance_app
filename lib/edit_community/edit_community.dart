@@ -28,6 +28,7 @@ class EditCommunityPage extends ConsumerStatefulWidget {
     this.qrLink = qrLink;
   }
 
+  @override
   _EditInstitutePageState createState() => _EditInstitutePageState();
 }
 
@@ -48,11 +49,11 @@ class _EditInstitutePageState extends ConsumerState<EditCommunityPage> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
+        title: const Text(
           '団体情報変更',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Color.fromARGB(255, 67, 176, 190),
+        backgroundColor: const Color.fromARGB(255, 67, 176, 190),
       ),
       body: Center(
         child: Padding(
@@ -61,7 +62,7 @@ class _EditInstitutePageState extends ConsumerState<EditCommunityPage> {
             children: [
               TextField(
                 controller: editInstituteModel.communityController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: '団体名',
                   suffix: Text('必須',
                       style: TextStyle(color: Colors.red, fontSize: 13)),
@@ -72,7 +73,7 @@ class _EditInstitutePageState extends ConsumerState<EditCommunityPage> {
               ),
               TextField(
                 controller: editInstituteModel.departmentController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: '支店・部署名',
                 ),
                 onChanged: (text) {
@@ -81,7 +82,7 @@ class _EditInstitutePageState extends ConsumerState<EditCommunityPage> {
               ),
               TextField(
                 controller: editInstituteModel.emailController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'メールアドレス',
                 ),
                 onChanged: (text) {
@@ -95,7 +96,7 @@ class _EditInstitutePageState extends ConsumerState<EditCommunityPage> {
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 controller: editInstituteModel.phoneNumberController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: '電話番号',
                 ),
                 onChanged: (text) {
@@ -104,7 +105,7 @@ class _EditInstitutePageState extends ConsumerState<EditCommunityPage> {
               ),
               TextField(
                 controller: editInstituteModel.linkController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: '関連リンク',
                 ),
                 onChanged: (text) {
@@ -113,7 +114,7 @@ class _EditInstitutePageState extends ConsumerState<EditCommunityPage> {
               ),
               TextField(
                 controller: editInstituteModel.qrLinkController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'QRコード読み取り先リンク',
                   suffix: Text('必須',
                       style: TextStyle(color: Colors.red, fontSize: 13)),
@@ -122,12 +123,12 @@ class _EditInstitutePageState extends ConsumerState<EditCommunityPage> {
                   editInstituteModel.setqrLink(text);
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: 24,
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromARGB(255, 66, 140, 224),
+                  backgroundColor: const Color.fromARGB(255, 66, 140, 224),
                   foregroundColor: Colors.black,
                 ),
                 onPressed: editInstituteModel.isUpdated()
@@ -149,7 +150,7 @@ class _EditInstitutePageState extends ConsumerState<EditCommunityPage> {
                               barrierDismissible: false,
                               context: context,
                               builder: (BuildContext context) {
-                                return ErrorModal(
+                                return const ErrorModal(
                                     error_message:
                                         "既にこの団体は存在しています\n他の団体名を設定してください");
                               },
@@ -165,7 +166,7 @@ class _EditInstitutePageState extends ConsumerState<EditCommunityPage> {
                                 barrierDismissible: false,
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return ErrorModal(
+                                  return const ErrorModal(
                                       error_message: "QRリンクが入力されていません");
                                 },
                               );
@@ -179,7 +180,7 @@ class _EditInstitutePageState extends ConsumerState<EditCommunityPage> {
                                 barrierDismissible: false,
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return ValidaterModal(
+                                  return const ValidaterModal(
                                     title: "団体名称変更",
                                     validate_message:
                                         "全てのユーザー情報が変更されます\n本当に団体情報を変更しますか？",
@@ -203,7 +204,7 @@ class _EditInstitutePageState extends ConsumerState<EditCommunityPage> {
                                 barrierDismissible: false,
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return ValidaterModal(
+                                  return const ValidaterModal(
                                     title: "確認画面",
                                     validate_message: "団体情報を変更しますか？",
                                     validate_button: "変更",
@@ -229,7 +230,7 @@ class _EditInstitutePageState extends ConsumerState<EditCommunityPage> {
                               barrierDismissible: false,
                               context: context,
                               builder: (BuildContext context) {
-                                return ErrorModal(
+                                return const ErrorModal(
                                     error_message: "団体名が入力されていません");
                               },
                             );
@@ -244,7 +245,7 @@ class _EditInstitutePageState extends ConsumerState<EditCommunityPage> {
                         }
                       }
                     : null,
-                child: Text('更新する'),
+                child: const Text('更新する'),
               ),
               // 団体削除
               ElevatedButton(
@@ -258,7 +259,7 @@ class _EditInstitutePageState extends ConsumerState<EditCommunityPage> {
                     barrierDismissible: false,
                     context: context,
                     builder: (BuildContext context) {
-                      return ValidaterModal(
+                      return const ValidaterModal(
                         title: "確認画面",
                         validate_message: "この団体を削除します\n削除しますか？",
                         validate_button: "削除",
@@ -272,7 +273,7 @@ class _EditInstitutePageState extends ConsumerState<EditCommunityPage> {
                       barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
-                        return ValidaterModal(
+                        return const ValidaterModal(
                           title: "削除画面",
                           validate_message:
                               "団体と全てのデータが削除されます\n復元は不可能です\n本当に削除しますか？",
@@ -288,7 +289,7 @@ class _EditInstitutePageState extends ConsumerState<EditCommunityPage> {
                     }
                   }
                 },
-                child: Text(
+                child: const Text(
                   '団体データ削除',
                   style: TextStyle(
                     fontSize: 15,

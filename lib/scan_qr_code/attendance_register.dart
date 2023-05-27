@@ -63,7 +63,7 @@ class AttendanceRegister extends ConsumerWidget {
         backgroundColor: const Color.fromARGB(255, 67, 176, 190),
       ),
       body: Center(
-        child: Container(
+        child: SizedBox(
           height: deviceHeight * 0.5,
           width: double.infinity,
           child: Stack(

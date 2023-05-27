@@ -57,7 +57,7 @@ class _PickerDialogState extends ConsumerState<PickerDialog> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      Text(
+                      const Text(
                         "絞り込み",
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20),
@@ -67,7 +67,7 @@ class _PickerDialogState extends ConsumerState<PickerDialog> {
                         child: ElevatedButton(
                           child: Text(
                             _selectedParentValue ?? "選択してください",
-                            style: TextStyle(color: Colors.black),
+                            style: const TextStyle(color: Colors.black),
                           ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.white,
@@ -118,7 +118,7 @@ class _PickerDialogState extends ConsumerState<PickerDialog> {
                             child: Text(
                               pickerModel.gotParentList?[pickerOneValue - 1][0] ??
                                   "詳細",
-                              style: TextStyle(color: Colors.black),
+                              style: const TextStyle(color: Colors.black),
                             ),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.white,
@@ -142,7 +142,7 @@ class _PickerDialogState extends ConsumerState<PickerDialog> {
     return showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return Container(
+        return SizedBox(
           height: MediaQuery.of(context).size.height / 3,
           child: Column(
             children: [
@@ -150,11 +150,11 @@ class _PickerDialogState extends ConsumerState<PickerDialog> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   CupertinoButton(
-                    child: Text("戻る"),
+                    child: const Text("戻る"),
                     onPressed: () => Navigator.pop(context, null),
                   ),
                   CupertinoButton(
-                    child: Text("決定"),
+                    child: const Text("決定"),
                     onPressed: () {
                       setState(() {
                         _selectedParentValue = _selectedParent;
@@ -173,7 +173,7 @@ class _PickerDialogState extends ConsumerState<PickerDialog> {
                   ),
                 ],
               ),
-              Container(
+              SizedBox(
                 height: MediaQuery.of(context).size.height / 4,
                 child: CupertinoPicker(
                   itemExtent: 40,
@@ -203,7 +203,7 @@ class _PickerDialogState extends ConsumerState<PickerDialog> {
     return showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return Container(
+        return SizedBox(
           height: MediaQuery.of(context).size.height / 3,
           child: Column(
             children: [
@@ -211,11 +211,11 @@ class _PickerDialogState extends ConsumerState<PickerDialog> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   CupertinoButton(
-                    child: Text("戻る"),
+                    child: const Text("戻る"),
                     onPressed: () => Navigator.pop(context, false),
                   ),
                   CupertinoButton(
-                      child: Text("決定"),
+                      child: const Text("決定"),
                       onPressed: () {
                         setState(() {
                           if (_selectedChild == null) {
@@ -233,7 +233,7 @@ class _PickerDialogState extends ConsumerState<PickerDialog> {
                       }),
                 ],
               ),
-              Container(
+              SizedBox(
                 height: MediaQuery.of(context).size.height / 4,
                 child: CupertinoPicker(
                     itemExtent: 40,

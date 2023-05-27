@@ -85,7 +85,7 @@ class EditInstituteModel {
     link = linkController.text;
     qrLink = qrLinkController.text;
 
-    late String? sameCommunity = null;
+    late String? sameCommunity;
     // 団体名を変更しようとしているとき
     FirebaseFirestore.instance
         .collection('community')
@@ -95,7 +95,7 @@ class EditInstituteModel {
       sameCommunity = snapshot.get('community');
     });
     // ↑この処理を終わらせている
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     if (communityName != nowCommunityName) {
       if (sameCommunity.runtimeType == String) {
         // 同じ団体あり 1-1
