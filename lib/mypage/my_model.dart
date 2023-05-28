@@ -52,7 +52,7 @@ class MyModel {
           .doc(community)
           .get();
       final communityData = getCommunity.data();
-      if (communityData?["community"].runtimeType != null) {
+      if (communityData?["community"] != null) {
         isCommunity = true;
       } else {
         isCommunity = false;

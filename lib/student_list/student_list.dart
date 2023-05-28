@@ -11,7 +11,7 @@ import '../setting.dart';
 class StudentList extends ConsumerStatefulWidget {
   String? communityName;
   bool? nowHost;
-  StudentList(String? community, bool? isHost) {
+  StudentList(String? community, bool? isHost, {Key? key}) : super(key: key) {
     communityName = community;
     nowHost = isHost;
   }

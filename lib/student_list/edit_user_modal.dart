@@ -9,7 +9,7 @@ class UserEditModal extends ConsumerStatefulWidget {
   String? uid;
   bool? nowHost;
   bool? fromUserList;
-  UserEditModal(String? uid, bool? nowHost, bool fromUserList) {
+  UserEditModal(String? uid, bool? nowHost, bool fromUserList, {Key? key}) : super(key: key) {
     this.uid = uid;
     // UserListからかMyPageからか見極め
     this.nowHost = nowHost;

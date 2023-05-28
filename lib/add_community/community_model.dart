@@ -68,9 +68,6 @@ communityModel(String? community){
     link = linkController.text;
     qrLink = qrLinkController.text;
 
-    // IDとかがuserに入る
-    var user = FirebaseAuth.instance.currentUser!;
-
     final snapshot = await FirebaseFirestore.instance
         .collection('community')
         .doc(communityName)
@@ -94,7 +91,6 @@ communityModel(String? community){
   }
 
   // firestoreに団体追加
-  @override
   void addInstitute() async {
     var user = FirebaseAuth.instance.currentUser!;
     final uid = user.uid;

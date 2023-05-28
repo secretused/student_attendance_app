@@ -6,10 +6,9 @@ import 'community_model.dart';
 import '../setting.dart';
 
 class AddCommunity extends ConsumerStatefulWidget {
-  @override
   String? community;
-  AddCommunity(String? community) {
-    this.community = community;
+  AddCommunity(String? community, {Key? key}) : super(key: key) {
+    community = community;
   }
 
   @override
