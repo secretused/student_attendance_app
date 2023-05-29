@@ -17,7 +17,8 @@ class EditProfilePage extends ConsumerWidget {
       this.community,
       this.isHost,
       this.isCurrentUser,
-      this.nowHost);
+      this.nowHost, {Key? key}) : super(key: key);
+
   String uid;
   final String name;
   final String department;
@@ -28,8 +29,7 @@ class EditProfilePage extends ConsumerWidget {
   late bool isHost;
   final bool isCurrentUser;
   final bool? nowHost;
-  // bool isLoading = false;
-  // bool setIsHost = false;
+
 
   final nameController = TextEditingController();
   final departmentController = TextEditingController();

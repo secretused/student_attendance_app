@@ -7,25 +7,6 @@ Provider((ref) => EditProfileModel());
 
 class EditProfileModel {
 
-  // void editProfileModel(
-  //   String? uid,
-  //   name,
-  //   department,
-  //   grade,
-  //   classroom,
-  //   phoneNumber,
-  // ) {
-  //   // uidは不変
-  //   print("遷移でもってきてもらった最初の値-------------------------");
-  //   print(name!);
-  //   this.uid = uid;
-  //   nameController.text = name!;
-  //   departmentController.text = department!;
-  //   gradeController.text = grade!;
-  //   classController.text = classroom!;
-  //   phoneNumController.text = phoneNumber!;
-  // }
-
   String? uid;
   String? name;
   String? department;
@@ -34,35 +15,12 @@ class EditProfileModel {
   String? phoneNumber;
   bool? isHost;
   bool nameNull = false;
-
   bool isLoading = false;
-
-  // final nameController = TextEditingController();
-  // final departmentController = TextEditingController();
-  // final gradeController = TextEditingController();
-  // final classController = TextEditingController();
-  // final phoneNumController = TextEditingController();
 
 
   void setName(String name) {
     this.name = name;
   }
-  //
-  // void setDepartment(String department) {
-  //   this.department = department;
-  // }
-  //
-  // void setGrade(String grade) {
-  //   this.grade = grade;
-  // }
-  //
-  // void setClass(String classroom) {
-  //   this.classroom = classroom;
-  // }
-  //
-  // void setPhoneNumber(String phoneNum) {
-  //   phoneNumber = phoneNum;
-  // }
 
   void setHost(bool isHost) {
     this.isHost = isHost;
@@ -72,9 +30,6 @@ class EditProfileModel {
     this.uid = uid;
   }
 
-  bool isUpdated() {
-    return (name != null);
-  }
 
   Future update(
       nameController,
@@ -82,10 +37,6 @@ class EditProfileModel {
       gradeController,
       classController,
       phoneNumController) async {
-    print("nameの中身ーーーーーーーーーーーーーーーーーーーーーー");
-    print(name);
-    print("uid------------");
-    print(uid);
     name = nameController.text;
     department = departmentController.text;
     grade = gradeController.text;

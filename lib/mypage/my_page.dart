@@ -68,14 +68,6 @@ class MyPage extends ConsumerWidget {
                           ),
                         )
                       : const SizedBox.shrink(),
-                  (myModel.uid != "")
-                      ? Text(
-                          "ID:${myModel.uid}",
-                          style: const TextStyle(
-                            fontSize: 13,
-                          ),
-                        )
-                      : const SizedBox.shrink(),
                   const SizedBox(
                     height: 12,
                   ),
