@@ -120,7 +120,7 @@ class _EditInstitutePageState extends ConsumerState<EditCommunityPage> {
                       style: TextStyle(color: Colors.red, fontSize: 13)),
                 ),
                 onChanged: (text) {
-                  editInstituteModel.setqrLink(text);
+                  editInstituteModel.setQrLink(text);
                 },
               ),
               const SizedBox(

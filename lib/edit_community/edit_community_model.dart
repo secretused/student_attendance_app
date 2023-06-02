@@ -64,7 +64,7 @@ class EditInstituteModel {
     this.link = link;
   }
 
-  void setqrLink(String qrLink) {
+  void setQrLink(String qrLink) {
     this.qrLink = qrLink;
   }
 

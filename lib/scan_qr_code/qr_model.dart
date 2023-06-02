@@ -56,7 +56,7 @@ class QRModel {
     this.community = community;
   }
 
-  void setisHost(bool isHost) {
+  void setIsHost(bool isHost) {
     this.isHost = isHost;
   }
 

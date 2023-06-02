@@ -147,7 +147,7 @@ class AttendanceRegister extends ConsumerWidget {
                         qrModel.setGrade(grade!);
                         qrModel.setClassRoom(classroom!);
                         qrModel.setCommunity(community!);
-                        qrModel.setisHost(isHost ?? false);
+                        qrModel.setIsHost(isHost ?? false);
                         // 追加の処理
                         if (sameCommunity != null) {
                           try {
