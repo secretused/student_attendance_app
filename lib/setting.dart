@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-class SettingClass extends StatelessWidget {
+class NavigationSettings extends StatelessWidget {
+  const NavigationSettings({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -8,7 +10,7 @@ class SettingClass extends StatelessWidget {
   }
 
 // ページ遷移(フェードイン)
-  PageRouteBuilder<dynamic> NavigationFade(pageName) {
+  PageRouteBuilder<dynamic> navigationFade(pageName) {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) {
         return pageName;
@@ -28,7 +30,7 @@ class SettingClass extends StatelessWidget {
   }
 
   // ページ遷移(下から上)
-  PageRouteBuilder<dynamic> NavigationButtomSlide(pageName) {
+  PageRouteBuilder<dynamic> navigationButtomSlide(pageName) {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) {
         return pageName;
@@ -49,7 +51,7 @@ class SettingClass extends StatelessWidget {
   }
 
   // ページ遷移(右から左)
-  PageRouteBuilder<dynamic> NavigationButtonCutIn(pageName) {
+  PageRouteBuilder<dynamic> navigationButtonCutIn(pageName) {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) {
         return pageName;
@@ -146,8 +148,8 @@ class ErrorModal extends StatelessWidget {
 }
 
 // 確認モーダルUI
-class ValidaterModal extends StatelessWidget {
-  const ValidaterModal({
+class ValidatorModal extends StatelessWidget {
+  const ValidatorModal({
     required this.title,
     required this.validate_message,
     required this.validate_button,

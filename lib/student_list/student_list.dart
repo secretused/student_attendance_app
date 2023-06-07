@@ -21,7 +21,7 @@ class StudentList extends ConsumerStatefulWidget {
 }
 
 class _StudentListState extends ConsumerState<StudentList> {
-  SettingClass settingData = SettingClass();
+  final navigation = const NavigationSettings();
   late bool showButton = false;
 
   String? _selectedValue; //渡されてきた2つ目の値
@@ -135,7 +135,7 @@ class _StudentListState extends ConsumerState<StudentList> {
             onPressed: () {
               Navigator.push(
                 context,
-                settingData.NavigationButtomSlide(
+                navigation.navigationButtomSlide(
                     AddStudent(widget.communityName)),
               );
             },

@@ -50,34 +50,25 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.lightBlue,
       ),
-      home: const MyHomePage(title: '入館管理'),
+      home: MyHomePage(),
     );
   }
 }
 
-class MyHomePage extends ConsumerStatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
 
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends ConsumerState<MyHomePage> {
-  final myFocusNode = FocusNode();
-  final myController = TextEditingController();
-  late String name;
+class MyHomePage extends ConsumerWidget {
 
   final privacyPolicyUrl =
       Uri.parse('https://qiita.com/utasan_com/private/ffebc0e73b8bae704306');
   final twitterUrl = Uri.parse('https://twitter.com/uta_app_vta');
   final qiitaUrl = Uri.parse('https://qiita.com/utasan_com');
 
-  SettingClass settingData = SettingClass();
+  final navigation = const NavigationSettings();
+
+  MyHomePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,WidgetRef ref) {
     final myModel = ref.watch(myModelProvider);
     // model.fetchUser();
     late bool? isHost = myModel.isHost;
@@ -102,10 +93,10 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
             menuListTile(context, "シュッ席の使い方", const AppUsage()),
             ListTile(
                 title: const Text("プライバシーポリシー"),
-                onTap: () => _privacyURL(privacyPolicyUrl)),
+                onTap: () => _privacyURL(privacyPolicyUrl,context)),
             ListTile(
                 title: const Text("お問い合わせ・ご意見"),
-                onTap: () => _launchURL(twitterUrl, qiitaUrl)),
+                onTap: () => _launchURL(twitterUrl, qiitaUrl,context)),
             ListTile(
               title: const Text("ライセンス情報"),
               onTap: () => showLicensePage(
@@ -119,9 +110,9 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
       ),
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
-          widget.title,
-          style: const TextStyle(fontWeight: FontWeight.bold),
+        title: const Text(
+          "入管管理",
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: const Color.fromARGB(255, 67, 176, 190),
         actions: <Widget>[
@@ -132,13 +123,13 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
               if (FirebaseAuth.instance.currentUser != null) {
                 Navigator.push(
                   context,
-                  settingData.NavigationButtonCutIn(MyPage()),
+                  navigation.navigationButtonCutIn(MyPage()),
                 );
               } else {
                 // ユーザ登録・ログイン
                 Navigator.push(
                   context,
-                  settingData.NavigationFade(LoginPage()),
+                  navigation.navigationFade(LoginPage()),
                 ).then((value) {
                   myModel.fetchUser();
                 });
@@ -179,7 +170,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                           if (isCommunity == true) {
                             var result = await Navigator.push(
                               context,
-                              settingData.NavigationFade(MyQRCode()),
+                              navigation.navigationFade(MyQRCode()),
                             );
                             if (result != false) {
                               Vibration.vibrate();
@@ -205,7 +196,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                               // 団体追加
                               Navigator.push(
                                 context,
-                                settingData.NavigationFade(
+                                navigation.navigationFade(
                                     AddCommunity(myModel.community)),
                               ).then((value) {
                                 myModel.fetchUser();
@@ -225,7 +216,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                           // ユーザ登録・ログイン
                           Navigator.push(
                             context,
-                            settingData.NavigationFade(LoginPage()),
+                            navigation.navigationFade(LoginPage()),
                           );
                         }
                       },
@@ -269,12 +260,12 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                             if (isCommunity == true) {
                               Navigator.push(
                                 context,
-                                settingData.NavigationFade(ManagementHome()),
+                                navigation.navigationFade(ManagementHome()),
                               );
                             } else {
                               Navigator.push(
                                 context,
-                                settingData.NavigationFade(
+                                navigation.navigationFade(
                                     AddCommunity(myModel.community)),
                               ).then((value) {
                                 myModel.fetchUser();
@@ -293,7 +284,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                           // ユーザ登録・ログイン
                           Navigator.push(
                             context,
-                            settingData.NavigationFade(LoginPage()),
+                            navigation.navigationFade(LoginPage()),
                           );
                         }
                       },
@@ -342,7 +333,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                           // 団体追加
                           Navigator.push(
                             context,
-                            settingData.NavigationFade(
+                            navigation.navigationFade(
                                 AddCommunity(myModel.community)),
                           ).then((value) {
                             myModel.fetchUser();
@@ -361,7 +352,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                         // ユーザ登録・ログイン
                         Navigator.push(
                           context,
-                          settingData.NavigationFade(LoginPage()),
+                          navigation.navigationFade(LoginPage()),
                         );
                       }
                     },
@@ -392,14 +383,14 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
       onTap: () {
         Navigator.push(
           context,
-          settingData.NavigationFade(pageName),
+          navigation.navigationFade(pageName),
         );
       },
     );
   }
 
   /// PrivacyPolicy
-  Future _privacyURL(Uri uri) async {
+  Future _privacyURL(Uri uri,BuildContext context) async {
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri);
     } else {
@@ -413,7 +404,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   }
 
   /// 問い合わせフォーム
-  Future _launchURL(Uri twitterUri, Uri qiitaUri) async {
+  Future _launchURL(Uri twitterUri, Uri qiitaUri,BuildContext context) async {
     if (await canLaunchUrl(twitterUri)) {
       await launchUrl(twitterUri);
     } else if (await canLaunchUrl(qiitaUri)) {

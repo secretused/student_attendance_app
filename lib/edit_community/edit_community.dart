@@ -180,7 +180,7 @@ class _EditInstitutePageState extends ConsumerState<EditCommunityPage> {
                                 barrierDismissible: false,
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return const ValidaterModal(
+                                  return const ValidatorModal(
                                     title: "団体名称変更",
                                     validate_message:
                                         "全てのユーザー情報が変更されます\n本当に団体情報を変更しますか？",
@@ -204,7 +204,7 @@ class _EditInstitutePageState extends ConsumerState<EditCommunityPage> {
                                 barrierDismissible: false,
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return const ValidaterModal(
+                                  return const ValidatorModal(
                                     title: "確認画面",
                                     validate_message: "団体情報を変更しますか？",
                                     validate_button: "変更",
@@ -259,7 +259,7 @@ class _EditInstitutePageState extends ConsumerState<EditCommunityPage> {
                     barrierDismissible: false,
                     context: context,
                     builder: (BuildContext context) {
-                      return const ValidaterModal(
+                      return const ValidatorModal(
                         title: "確認画面",
                         validate_message: "この団体を削除します\n削除しますか？",
                         validate_button: "削除",
@@ -273,7 +273,7 @@ class _EditInstitutePageState extends ConsumerState<EditCommunityPage> {
                       barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
-                        return const ValidaterModal(
+                        return const ValidatorModal(
                           title: "削除画面",
                           validate_message:
                               "団体と全てのデータが削除されます\n復元は不可能です\n本当に削除しますか？",

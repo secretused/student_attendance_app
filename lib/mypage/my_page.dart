@@ -6,7 +6,7 @@ import '../setting.dart';
 import 'my_model.dart';
 
 class MyPage extends ConsumerWidget {
-  SettingClass settingData = SettingClass();
+  final navigation = const NavigationSettings();
   late bool isCurrentUser = true;
 
   @override
@@ -26,7 +26,7 @@ class MyPage extends ConsumerWidget {
             onPressed: () async {
               await Navigator.push(
                 context,
-                settingData.NavigationFade(EditProfilePage(
+                navigation.navigationFade(EditProfilePage(
                     myModel.uid!,
                     myModel.name!,
                     myModel.department!,

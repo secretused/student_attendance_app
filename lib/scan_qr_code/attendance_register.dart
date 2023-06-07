@@ -14,7 +14,7 @@ class ScreenArguments {
 }
 
 class AttendanceRegister extends ConsumerWidget {
-  SettingClass settingData = SettingClass();
+  final navigation = const NavigationSettings();
 
   String? uid;
   String? email;
@@ -111,9 +111,7 @@ class AttendanceRegister extends ConsumerWidget {
                                 fontSize: 18,
                               ),
                             ),
-                            const SizedBox(
-                              height: 20,
-                            ),
+                            const SizedBox(height: 20),
                             Text(
                               "$createdAt",
                               style: const TextStyle(
@@ -129,9 +127,7 @@ class AttendanceRegister extends ConsumerWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 35,
-                    ),
+                    const SizedBox(height: 35),
                     const Text("上記内容で入館しますか？"),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -168,8 +164,7 @@ class AttendanceRegister extends ConsumerWidget {
                           if (isHost == true) {
                             await Navigator.push(
                               context,
-                              settingData.NavigationFade(
-                                  AddCommunity(community)),
+                              navigation.navigationFade(AddCommunity(community)),
                             );
                           }
                         }

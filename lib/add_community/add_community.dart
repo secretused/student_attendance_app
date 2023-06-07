@@ -120,7 +120,7 @@ class _AddCommunityState extends ConsumerState<AddCommunity> {
                               barrierDismissible: false,
                               context: context,
                               builder: (BuildContext context) {
-                                return const ValidaterModal(
+                                return const ValidatorModal(
                                   title: "確認画面",
                                   validate_message: "この内容で登録しますか？",
                                   validate_button: "登録",

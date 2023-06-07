@@ -9,7 +9,9 @@ import 'setting.dart';
 import 'student_list/student_list.dart';
 
 class ManagementHome extends ConsumerWidget {
-  SettingClass settingData = SettingClass();
+  final navigation = const NavigationSettings();
+
+  const ManagementHome({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context,WidgetRef ref) {
@@ -39,7 +41,7 @@ class ManagementHome extends ConsumerWidget {
                           if (myModel.isHost == true) {
                             await Navigator.push(
                               context,
-                              settingData.NavigationFade(
+                              navigation.navigationFade(
                                   SelectDate(myModel.community)),
                             );
                           }
@@ -57,7 +59,7 @@ class ManagementHome extends ConsumerWidget {
                           if (myModel.isHost == true) {
                             await Navigator.push(
                               context,
-                              settingData.NavigationFade(StudentList(
+                              navigation.navigationFade(StudentList(
                                   myModel.community, myModel.isHost)),
                             );
                           }
@@ -81,7 +83,7 @@ class ManagementHome extends ConsumerWidget {
                         if (myModel.isHost == true) {
                           await Navigator.push(
                             context,
-                            settingData.NavigationFade(
+                            navigation.navigationFade(
                                 CreateQRCode(myModel.community)),
                           );
                         }
@@ -98,7 +100,7 @@ class ManagementHome extends ConsumerWidget {
                         if (myModel.isHost == true) {
                           await Navigator.push(
                             context,
-                            settingData.NavigationFade(
+                            navigation.navigationFade(
                                 ChangeQRCode(myModel.community)),
                           );
                         }

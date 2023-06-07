@@ -13,7 +13,7 @@ class MyQRCode extends ConsumerStatefulWidget {
 }
 
 class _MyHomePageState extends ConsumerState<MyQRCode> {
-  SettingClass settingData = SettingClass();
+  final navigation = const NavigationSettings();
   String qrCode = '';
 
   @override
@@ -90,7 +90,7 @@ class _MyHomePageState extends ConsumerState<MyQRCode> {
     if (qrCode == QRCodeLink) {
       await Navigator.push(
         context,
-        settingData.NavigationFade(AttendanceRegister(
+        navigation.navigationFade(AttendanceRegister(
             community, isHost, department, grade, classroom, sameCommunity)),
       );
     } else {
