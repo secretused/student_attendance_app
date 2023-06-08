@@ -6,7 +6,7 @@ import '../setting.dart';
 import 'change_QR_model.dart';
 
 class ChangeQRCode extends ConsumerWidget {
-  final navigation = const NavigationSettings();
+  
 
   String? gotCommunity;
   ChangeQRCode(String? community) {
@@ -31,7 +31,7 @@ class ChangeQRCode extends ConsumerWidget {
             onPressed: () async {
               Navigator.push(
                 context,
-                navigation.navigationFade(EditCommunityPage(
+                NavigationSettings.navigationFade(EditCommunityPage(
                     qrChangeModel.communityName!,
                     qrChangeModel.department!,
                     qrChangeModel.email!,

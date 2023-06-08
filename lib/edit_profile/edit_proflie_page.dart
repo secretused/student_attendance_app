@@ -140,10 +140,10 @@ class EditProfilePage extends ConsumerWidget {
                                     builder: (BuildContext context) {
                                       return const ValidatorModal(
                                         title: "確認画面",
-                                        validate_message: "本当に管理者権限を\n無効にしますか？",
-                                        validate_button: "OK",
+                                        validateMessage: "本当に管理者権限を\n無効にしますか？",
+                                        validateButton: "OK",
                                         colors: Colors.lightBlue,
-                                        validate_cancel: "キャンセル",
+                                        validateCancel: "キャンセル",
                                       );
                                     },
                                   );
@@ -170,10 +170,10 @@ class EditProfilePage extends ConsumerWidget {
                                     builder: (BuildContext context) {
                                       return const ValidatorModal(
                                         title: "確認画面",
-                                        validate_message: "本当に管理者権限を\n有効にしますか？",
-                                        validate_button: "OK",
+                                        validateMessage: "本当に管理者権限を\n有効にしますか？",
+                                        validateButton: "OK",
                                         colors: Colors.lightBlue,
-                                        validate_cancel: "キャンセル",
+                                        validateCancel: "キャンセル",
                                       );
                                     },
                                   );
@@ -222,7 +222,7 @@ class EditProfilePage extends ConsumerWidget {
                               barrierDismissible: false,
                               context: context,
                               builder: (BuildContext context) {
-                                return const ErrorModal(error_message: "名前を入力してください");
+                                return const ErrorModal(errorMessage: "名前を入力してください");
                               },
                             );
                           } else {
@@ -255,10 +255,10 @@ class EditProfilePage extends ConsumerWidget {
                           builder: (BuildContext context) {
                             return const ValidatorModal(
                               title: "確認画面",
-                              validate_message: "アカウントを削除します\n削除しますか？",
-                              validate_button: "削除",
+                              validateMessage: "アカウントを削除します\n削除しますか？",
+                              validateButton: "削除",
                               colors: Colors.red,
-                              validate_cancel: "キャンセル",
+                              validateCancel: "キャンセル",
                             );
                           },
                         );
@@ -269,11 +269,11 @@ class EditProfilePage extends ConsumerWidget {
                             builder: (BuildContext context) {
                               return const ValidatorModal(
                                 title: "削除画面",
-                                validate_message:
+                                validateMessage:
                                     "全ての記録データが削除されます\n復元は不可能です\n本当に削除しますか？",
-                                validate_button: "削除",
+                                validateButton: "削除",
                                 colors: Colors.red,
-                                validate_cancel: "キャンセル",
+                                validateCancel: "キャンセル",
                               );
                             },
                           );

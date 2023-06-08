@@ -13,7 +13,7 @@ class MyQRCode extends ConsumerStatefulWidget {
 }
 
 class _MyHomePageState extends ConsumerState<MyQRCode> {
-  final navigation = const NavigationSettings();
+  
   String qrCode = '';
 
   @override
@@ -90,7 +90,7 @@ class _MyHomePageState extends ConsumerState<MyQRCode> {
     if (qrCode == QRCodeLink) {
       await Navigator.push(
         context,
-        navigation.navigationFade(AttendanceRegister(
+        NavigationSettings.navigationFade(AttendanceRegister(
             community, isHost, department, grade, classroom, sameCommunity)),
       );
     } else {
@@ -98,7 +98,7 @@ class _MyHomePageState extends ConsumerState<MyQRCode> {
         barrierDismissible: false,
         context: context,
         builder: (BuildContext context) {
-          return const ErrorModal(error_message: "QRコードが違います\n違うQRコードを試してください");
+          return const ErrorModal(errorMessage: "QRコードが違います\n違うQRコードを試してください");
         },
       );
     }

@@ -10,7 +10,7 @@ class NavigationSettings extends StatelessWidget {
   }
 
 // ページ遷移(フェードイン)
-  PageRouteBuilder<dynamic> navigationFade(pageName) {
+  static PageRouteBuilder<dynamic> navigationFade(pageName) {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) {
         return pageName;
@@ -30,7 +30,7 @@ class NavigationSettings extends StatelessWidget {
   }
 
   // ページ遷移(下から上)
-  PageRouteBuilder<dynamic> navigationButtomSlide(pageName) {
+  static PageRouteBuilder<dynamic> navigationButtomSlide(pageName) {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) {
         return pageName;
@@ -51,7 +51,7 @@ class NavigationSettings extends StatelessWidget {
   }
 
   // ページ遷移(右から左)
-  PageRouteBuilder<dynamic> navigationButtonCutIn(pageName) {
+  static PageRouteBuilder<dynamic> navigationButtonCutIn(pageName) {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) {
         return pageName;
@@ -70,38 +70,16 @@ class NavigationSettings extends StatelessWidget {
       },
     );
   }
-
-// 閉じるボタン
-  Widget closeButton(
-    BuildContext context,
-    double buttonSize,
-    Function() onPressed,
-  ) {
-    return SizedBox(
-      width: buttonSize * 1.2,
-      height: buttonSize * 1.2,
-      child: FloatingActionButton(
-        child: Icon(
-          Icons.clear,
-          size: buttonSize,
-          color: Colors.white,
-        ),
-        onPressed: () {
-          onPressed();
-        },
-      ),
-    );
-  }
 }
 
 // 例外・エラーモーダルUI
 class ErrorModal extends StatelessWidget {
   const ErrorModal({
-    required this.error_message,
+    required this.errorMessage,
     Key? key,
   }) : super(key: key);
 
-  final String error_message;
+  final String errorMessage;
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +92,7 @@ class ErrorModal extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            error_message,
+            errorMessage,
             textAlign: TextAlign.center,
           ),
           Row(
@@ -151,17 +129,17 @@ class ErrorModal extends StatelessWidget {
 class ValidatorModal extends StatelessWidget {
   const ValidatorModal({
     required this.title,
-    required this.validate_message,
-    required this.validate_button,
-    required this.validate_cancel,
+    required this.validateMessage,
+    required this.validateButton,
+    required this.validateCancel,
     required this.colors,
     Key? key,
   }) : super(key: key);
 
   final String title;
-  final String validate_message;
-  final String validate_button;
-  final String validate_cancel;
+  final String validateMessage;
+  final String validateButton;
+  final String validateCancel;
   final Color colors;
 
   @override
@@ -176,7 +154,7 @@ class ValidatorModal extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            validate_message,
+            validateMessage,
             textAlign: TextAlign.center,
           ),
           Padding(
@@ -190,14 +168,14 @@ class ValidatorModal extends StatelessWidget {
                     isCancel = true;
                     Navigator.pop(context, isCancel);
                   },
-                  child: Text(validate_cancel),
+                  child: Text(validateCancel),
                 ),
                 TextButton(
                   onPressed: () {
                     Navigator.pop(context, isCancel);
                   },
                   child: Text(
-                    validate_button,
+                    validateButton,
                     style: TextStyle(color: colors),
                   ),
                 ),

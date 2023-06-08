@@ -161,7 +161,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                                   context: context,
                                   builder: (BuildContext context) {
                                     return const ErrorModal(
-                                        error_message: "名前を入力してください");
+                                        errorMessage: "名前を入力してください");
                                   },
                                 );
                               } else if (registerModel.communityName == null) {
@@ -169,7 +169,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                                   context: context,
                                   builder: (BuildContext context) {
                                     return const ErrorModal(
-                                        error_message: "団体名を入力してください");
+                                        errorMessage: "団体名を入力してください");
                                   },
                                 );
                               }

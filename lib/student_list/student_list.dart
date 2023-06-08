@@ -21,7 +21,7 @@ class StudentList extends ConsumerStatefulWidget {
 }
 
 class _StudentListState extends ConsumerState<StudentList> {
-  final navigation = const NavigationSettings();
+
   late bool showButton = false;
 
   String? _selectedValue; //渡されてきた2つ目の値
@@ -82,7 +82,7 @@ class _StudentListState extends ConsumerState<StudentList> {
                       barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
-                        return const ErrorModal(error_message: "絞り込めるデータがありません");
+                        return const ErrorModal(errorMessage: "絞り込めるデータがありません");
                       },
                     );
                   } else {
@@ -135,7 +135,7 @@ class _StudentListState extends ConsumerState<StudentList> {
             onPressed: () {
               Navigator.push(
                 context,
-                navigation.navigationButtomSlide(
+                NavigationSettings.navigationButtomSlide(
                     AddStudent(widget.communityName)),
               );
             },

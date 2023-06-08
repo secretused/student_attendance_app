@@ -63,7 +63,7 @@ class MyHomePage extends ConsumerWidget {
   final twitterUrl = Uri.parse('https://twitter.com/uta_app_vta');
   final qiitaUrl = Uri.parse('https://qiita.com/utasan_com');
 
-  final navigation = const NavigationSettings();
+  
 
   MyHomePage({Key? key}) : super(key: key);
 
@@ -123,13 +123,13 @@ class MyHomePage extends ConsumerWidget {
               if (FirebaseAuth.instance.currentUser != null) {
                 Navigator.push(
                   context,
-                  navigation.navigationButtonCutIn(MyPage()),
+                  NavigationSettings.navigationButtonCutIn(MyPage()),
                 );
               } else {
                 // ユーザ登録・ログイン
                 Navigator.push(
                   context,
-                  navigation.navigationFade(LoginPage()),
+                  NavigationSettings.navigationFade(LoginPage()),
                 ).then((value) {
                   myModel.fetchUser();
                 });
@@ -170,7 +170,7 @@ class MyHomePage extends ConsumerWidget {
                           if (isCommunity == true) {
                             var result = await Navigator.push(
                               context,
-                              navigation.navigationFade(MyQRCode()),
+                              NavigationSettings.navigationFade(MyQRCode()),
                             );
                             if (result != false) {
                               Vibration.vibrate();
@@ -196,7 +196,7 @@ class MyHomePage extends ConsumerWidget {
                               // 団体追加
                               Navigator.push(
                                 context,
-                                navigation.navigationFade(
+                                NavigationSettings.navigationFade(
                                     AddCommunity(myModel.community)),
                               ).then((value) {
                                 myModel.fetchUser();
@@ -206,7 +206,7 @@ class MyHomePage extends ConsumerWidget {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return const ErrorModal(
-                                      error_message:
+                                      errorMessage:
                                           "団体が存在していません\n管理者は団体を登録してください");
                                 },
                               );
@@ -216,7 +216,7 @@ class MyHomePage extends ConsumerWidget {
                           // ユーザ登録・ログイン
                           Navigator.push(
                             context,
-                            navigation.navigationFade(LoginPage()),
+                            NavigationSettings.navigationFade(LoginPage()),
                           );
                         }
                       },
@@ -260,12 +260,12 @@ class MyHomePage extends ConsumerWidget {
                             if (isCommunity == true) {
                               Navigator.push(
                                 context,
-                                navigation.navigationFade(ManagementHome()),
+                                NavigationSettings.navigationFade(ManagementHome()),
                               );
                             } else {
                               Navigator.push(
                                 context,
-                                navigation.navigationFade(
+                                NavigationSettings.navigationFade(
                                     AddCommunity(myModel.community)),
                               ).then((value) {
                                 myModel.fetchUser();
@@ -276,7 +276,7 @@ class MyHomePage extends ConsumerWidget {
                               context: context,
                               builder: (BuildContext context) {
                                 return const ErrorModal(
-                                    error_message: "管理者権限がありません");
+                                    errorMessage: "管理者権限がありません");
                               },
                             );
                           }
@@ -284,7 +284,7 @@ class MyHomePage extends ConsumerWidget {
                           // ユーザ登録・ログイン
                           Navigator.push(
                             context,
-                            navigation.navigationFade(LoginPage()),
+                            NavigationSettings.navigationFade(LoginPage()),
                           );
                         }
                       },
@@ -333,7 +333,7 @@ class MyHomePage extends ConsumerWidget {
                           // 団体追加
                           Navigator.push(
                             context,
-                            navigation.navigationFade(
+                            NavigationSettings.navigationFade(
                                 AddCommunity(myModel.community)),
                           ).then((value) {
                             myModel.fetchUser();
@@ -343,7 +343,7 @@ class MyHomePage extends ConsumerWidget {
                             context: context,
                             builder: (BuildContext context) {
                               return const ErrorModal(
-                                  error_message:
+                                  errorMessage:
                                       "団体が存在していません\n管理者は団体を登録してください");
                             },
                           );
@@ -352,7 +352,7 @@ class MyHomePage extends ConsumerWidget {
                         // ユーザ登録・ログイン
                         Navigator.push(
                           context,
-                          navigation.navigationFade(LoginPage()),
+                          NavigationSettings.navigationFade(LoginPage()),
                         );
                       }
                     },
@@ -383,7 +383,7 @@ class MyHomePage extends ConsumerWidget {
       onTap: () {
         Navigator.push(
           context,
-          navigation.navigationFade(pageName),
+          NavigationSettings.navigationFade(pageName),
         );
       },
     );
@@ -397,7 +397,7 @@ class MyHomePage extends ConsumerWidget {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return const ErrorModal(error_message: "問い合わせ先で詳細を\nご確認ください");
+          return const ErrorModal(errorMessage: "問い合わせ先で詳細を\nご確認ください");
         },
       );
     }
@@ -413,7 +413,7 @@ class MyHomePage extends ConsumerWidget {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return const ErrorModal(error_message: "AppStoreから\nお問合わせください");
+          return const ErrorModal(errorMessage: "AppStoreから\nお問合わせください");
         },
       );
     }

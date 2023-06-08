@@ -78,7 +78,7 @@ class CreateQRCode extends ConsumerWidget {
                             context: context,
                             builder: (BuildContext context) {
                               return const ErrorModal(
-                                  error_message:
+                                  errorMessage:
                                       "QRコードを認識できませんでした\nもう一度読み込んでください");
                             },
                           );

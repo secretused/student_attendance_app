@@ -151,7 +151,7 @@ class _EditInstitutePageState extends ConsumerState<EditCommunityPage> {
                               context: context,
                               builder: (BuildContext context) {
                                 return const ErrorModal(
-                                    error_message:
+                                    errorMessage:
                                         "既にこの団体は存在しています\n他の団体名を設定してください");
                               },
                             );
@@ -167,7 +167,7 @@ class _EditInstitutePageState extends ConsumerState<EditCommunityPage> {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return const ErrorModal(
-                                      error_message: "QRリンクが入力されていません");
+                                      errorMessage: "QRリンクが入力されていません");
                                 },
                               );
                             } else if (editInstituteModel.changeInstituteName ==
@@ -182,11 +182,11 @@ class _EditInstitutePageState extends ConsumerState<EditCommunityPage> {
                                 builder: (BuildContext context) {
                                   return const ValidatorModal(
                                     title: "団体名称変更",
-                                    validate_message:
+                                    validateMessage:
                                         "全てのユーザー情報が変更されます\n本当に団体情報を変更しますか？",
-                                    validate_button: "変更",
+                                    validateButton: "変更",
                                     colors: Colors.lightBlue,
-                                    validate_cancel: "キャンセル",
+                                    validateCancel: "キャンセル",
                                   );
                                 },
                               );
@@ -206,10 +206,10 @@ class _EditInstitutePageState extends ConsumerState<EditCommunityPage> {
                                 builder: (BuildContext context) {
                                   return const ValidatorModal(
                                     title: "確認画面",
-                                    validate_message: "団体情報を変更しますか？",
-                                    validate_button: "変更",
+                                    validateMessage: "団体情報を変更しますか？",
+                                    validateButton: "変更",
                                     colors: Colors.lightBlue,
-                                    validate_cancel: "キャンセル",
+                                    validateCancel: "キャンセル",
                                   );
                                 },
                               );
@@ -231,7 +231,7 @@ class _EditInstitutePageState extends ConsumerState<EditCommunityPage> {
                               context: context,
                               builder: (BuildContext context) {
                                 return const ErrorModal(
-                                    error_message: "団体名が入力されていません");
+                                    errorMessage: "団体名が入力されていません");
                               },
                             );
                           } else {
@@ -261,10 +261,10 @@ class _EditInstitutePageState extends ConsumerState<EditCommunityPage> {
                     builder: (BuildContext context) {
                       return const ValidatorModal(
                         title: "確認画面",
-                        validate_message: "この団体を削除します\n削除しますか？",
-                        validate_button: "削除",
+                        validateMessage: "この団体を削除します\n削除しますか？",
+                        validateButton: "削除",
                         colors: Colors.red,
-                        validate_cancel: "キャンセル",
+                        validateCancel: "キャンセル",
                       );
                     },
                   );
@@ -275,11 +275,11 @@ class _EditInstitutePageState extends ConsumerState<EditCommunityPage> {
                       builder: (BuildContext context) {
                         return const ValidatorModal(
                           title: "削除画面",
-                          validate_message:
+                          validateMessage:
                               "団体と全てのデータが削除されます\n復元は不可能です\n本当に削除しますか？",
-                          validate_button: "削除",
+                          validateButton: "削除",
                           colors: Colors.red,
-                          validate_cancel: "キャンセル",
+                          validateCancel: "キャンセル",
                         );
                       },
                     );

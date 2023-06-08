@@ -14,7 +14,7 @@ class ScreenArguments {
 }
 
 class AttendanceRegister extends ConsumerWidget {
-  final navigation = const NavigationSettings();
+  
 
   String? uid;
   String? email;
@@ -164,7 +164,7 @@ class AttendanceRegister extends ConsumerWidget {
                           if (isHost == true) {
                             await Navigator.push(
                               context,
-                              navigation.navigationFade(AddCommunity(community)),
+                              NavigationSettings.navigationFade(AddCommunity(community)),
                             );
                           }
                         }

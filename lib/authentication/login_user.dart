@@ -10,7 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'reset_password.dart';
 
 class LoginPage extends ConsumerWidget {
-  final navigation = const NavigationSettings();
+  
   String? errorText;
 
   @override
@@ -97,7 +97,7 @@ class LoginPage extends ConsumerWidget {
                           // 画面遷移
                           await Navigator.push(
                               context,
-                              navigation.navigationFade(
+                              NavigationSettings.navigationFade(
                                   ResetPasswordForm()));
                         },
                         child: const Text(
@@ -117,7 +117,7 @@ class LoginPage extends ConsumerWidget {
                           // 画面遷移
                           await Navigator.push(
                               context,
-                              navigation.navigationFade(
+                              NavigationSettings.navigationFade(
                                   RegisterPage()));
                         },
                         child: const Text(

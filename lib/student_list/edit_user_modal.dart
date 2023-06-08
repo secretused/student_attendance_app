@@ -23,9 +23,8 @@ class UserEditModal extends ConsumerStatefulWidget {
 
 // 絞り込みモーダル
 class _UserEditModalState extends ConsumerState<UserEditModal> {
-  final navigation = const NavigationSettings();
-  late bool isCurrentUser = false;
 
+  late bool isCurrentUser = false;
   bool _isInitial = true;
 
   @override
@@ -128,7 +127,7 @@ class _UserEditModalState extends ConsumerState<UserEditModal> {
                                 // edit_profileに遷移
                                 Navigator.push(
                                   context,
-                                  navigation.navigationFade(EditProfilePage(
+                                  NavigationSettings.navigationFade(EditProfilePage(
                                       editUserModel.uid!,
                                       editUserModel.name!,
                                       editUserModel.department!,

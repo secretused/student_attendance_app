@@ -122,10 +122,10 @@ class _AddCommunityState extends ConsumerState<AddCommunity> {
                               builder: (BuildContext context) {
                                 return const ValidatorModal(
                                   title: "確認画面",
-                                  validate_message: "この内容で登録しますか？",
-                                  validate_button: "登録",
+                                  validateMessage: "この内容で登録しますか？",
+                                  validateButton: "登録",
                                   colors: Colors.lightBlue,
-                                  validate_cancel: "キャンセル",
+                                  validateCancel: "キャンセル",
                                 );
                               },
                             );
@@ -142,7 +142,7 @@ class _AddCommunityState extends ConsumerState<AddCommunity> {
                               context: context,
                               builder: (BuildContext context) {
                                 return const ErrorModal(
-                                    error_message: "QRリンクを入力してください");
+                                    errorMessage: "QRリンクを入力してください");
                               },
                             );
                           }
@@ -152,7 +152,7 @@ class _AddCommunityState extends ConsumerState<AddCommunity> {
                             context: context,
                             builder: (BuildContext context) {
                               return const ErrorModal(
-                                  error_message:
+                                  errorMessage:
                                       "既にこの団体は存在しています\n他の団体名でログインしてください");
                             },
                           );
